@@ -16,7 +16,6 @@ import re
 import ast
 import operator
 import random
-import subprocess
 import sys
 from datetime import datetime
 from decimal import Decimal, localcontext, ROUND_HALF_EVEN, ROUND_HALF_UP
@@ -40,9 +39,11 @@ try:
 except ImportError:
     cairo = None
 
-CONFIG_FILE = os.path.expanduser("~/.config/xcalculator_bounds.json")
-HISTORY_FILE = os.path.expanduser("~/.config/xcalculator_history.json")
+CONFIG_DIR = os.path.join(GLib.get_user_config_dir(), "xcalculator")     # ~/.config/xcalculator
+CONFIG_FILE = os.path.join(CONFIG_DIR, "settings.json")
+HISTORY_FILE = os.path.join(CONFIG_DIR, "history.json")
 MAX_SAVED_HISTORY = 500
+APP_ID = "io.github.xlcheese.Xcalculator"     # also the name of the .desktop and metainfo files
 APP_VERSION = "0.9"
 APP_WEBSITE = "https://github.com/xlcheese/Xcalculator"
 APP_AUTHORS = ["Wesley Hayslip"]
@@ -964,7 +965,7 @@ Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defau
   <b>Thousands separators</b>  1234567 shows as 1,234,567 in answers, the history and the printout (not while typing, and not in Programmer mode). Copy still gives plain digits.
   <b>Angle units</b>  degrees or radians for sin, cos and tan. The Rad/Deg button in Scientific changes the same setting.
   <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.
-  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator_history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file.
+  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file.
 
 <b>Modes</b>
 Switch off the modes you don't use, and they disappear from the Mode menu. At least one mode stays on."""),
@@ -1276,7 +1277,7 @@ class PrintPreview(Gtk.Window):
     SCALE = 0.75                            # preview pixels per point
 
     def __init__(self, calculator, entries, page_setup):
-        super().__init__(title="Print Preview - Xcalculator", transient_for=calculator)
+        super().__init__(title="Print Preview - Xcalculator", transient_for=calculator, destroy_with_parent=True)
         self.calculator, self.entries, self.page_setup = calculator, entries, page_setup
         self.printed_at = datetime.now()
         self.paper_width = page_setup.get_paper_width(Gtk.Unit.POINTS)
@@ -1376,7 +1377,7 @@ class PreferencesWindow(Gtk.Window):
     Every change takes effect at once."""
 
     def __init__(self, calculator):
-        super().__init__(title="Xcalculator Preferences", transient_for=calculator)
+        super().__init__(title="Xcalculator Preferences", transient_for=calculator, destroy_with_parent=True)
         self.calculator = calculator
         self.syncing = False
         self.set_default_size(620, 640)
@@ -1498,7 +1499,7 @@ class PreferencesWindow(Gtk.Window):
         self.keep_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_keep_history(s.get_active())))
         self.row(box, "Keep history after closing", self.keep_switch,
                  "Show the saved history when Xcalculator opens. It is always saved, "
-                 "in ~/.config/xcalculator_history.json")
+                 "in ~/.config/xcalculator/history.json")
         delete = Gtk.Button(label="Delete Saved History…")
         delete.connect("clicked", self.on_delete_history)
         self.row(box, "Saved history", delete, "Clear the history and delete the saved file")
@@ -1567,7 +1568,7 @@ class HelpWindow(Gtk.Window):
     """Help → Documentation: one page per topic, picked from a list on the left."""
 
     def __init__(self, calculator):
-        super().__init__(title="Help - Xcalculator", transient_for=calculator)
+        super().__init__(title="Help - Xcalculator", transient_for=calculator, destroy_with_parent=True)
         self.set_default_size(860, 700)
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
@@ -1647,6 +1648,47 @@ def points_layout_maker(cr):
     return lambda: Pango.Layout.new(context)
 
 
+class SavedHistory:
+    """The saved history file, shared by every window: each answer is added to the end."""
+    rows = None                             # read from the file the first time it's needed
+
+    @classmethod
+    def load(cls):
+        if cls.rows is None:
+            cls.rows = []
+            try:
+                with open(HISTORY_FILE) as f:
+                    cls.rows = [r for r in json.load(f)
+                                if isinstance(r, dict) and "formula" in r and "result" in r][-MAX_SAVED_HISTORY:]
+            except FileNotFoundError:
+                pass
+            except Exception as e:
+                print(f"Failed to read saved history: {e}")
+        return cls.rows
+
+    @classmethod
+    def add(cls, row):
+        rows = cls.load()
+        rows.append(row)
+        del rows[:-MAX_SAVED_HISTORY]       # keep the newest 500 lines
+        try:
+            os.makedirs(CONFIG_DIR, exist_ok=True)
+            with open(HISTORY_FILE, "w") as f:
+                json.dump(rows, f)
+        except Exception as e:
+            print(f"Failed to save history: {e}")
+
+    @classmethod
+    def delete(cls):
+        cls.rows = []
+        try:
+            os.remove(HISTORY_FILE)
+        except FileNotFoundError:
+            pass
+        except OSError as e:
+            print(f"Failed to delete saved history: {e}")
+
+
 class XCalculator(Gtk.Window):
     # button label -> text inserted into the expression
     FUNCTION_MAP = {
@@ -1701,8 +1743,8 @@ class XCalculator(Gtk.Window):
         "abs(", "round(", "floor(", "ceil(", "int(", "frac(", "sgn(", "sec(", "csc(", "cot(",
     ]
 
-    def __init__(self):
-        super().__init__(title="Xcalculator")
+    def __init__(self, application=None):
+        super().__init__(title="Xcalculator", application=application)
         self.set_border_width(0)
         self.set_decorated(True)
 
@@ -1759,7 +1801,6 @@ class XCalculator(Gtk.Window):
         # Preferences (General and Modes pages)
         self.thousands = False
         self.keep_history = False       # show the saved history when the calculator opens
-        self.saved_before = []          # saved history not shown in the window (kept in the file)
         self.enabled_modes = list(VALID_MODES)
         self.result_value = None        # the answer on screen, unrounded, to re-show if decimals change
         self.preferences_window = None
@@ -1829,7 +1870,7 @@ class XCalculator(Gtk.Window):
 
         quit_item = Gtk.MenuItem(label="Quit")
         quit_item.add_accelerator("activate", accel_group, Gdk.KEY_q, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
-        quit_item.connect("activate", lambda w: Gtk.main_quit())
+        quit_item.connect("activate", self.quit_calculator)
         file_menu.append(quit_item)
 
         edit_menu = Gtk.Menu()
@@ -2082,7 +2123,8 @@ class XCalculator(Gtk.Window):
 
         self.connect("configure-event", self.on_window_resized)
         self.connect("key-press-event", self.on_key_pressed)
-        self.connect("destroy", Gtk.main_quit)
+        if application is None:
+            self.connect("destroy", Gtk.main_quit)     # run on its own; an application quits after its last window
         self.display.grab_focus_without_selecting()     # show the cursor from the start
         self.update_print_actions()
         self.apply_enabled_modes()
@@ -2242,10 +2284,8 @@ class XCalculator(Gtk.Window):
         """View → Clear History empties the window; the saved file keeps the record."""
         for child in self.history_listbox.get_children():
             self.history_listbox.remove(child)
-        self.saved_before += [{k: e[k] for k in self.HISTORY_KEYS} for e in self.history_entries]
         self.history_entries = []
         self.update_print_actions()
-        self.save_history()
 
     def change_font_zoom(self, widget, direction):
         new_size = self.base_font_size + direction
@@ -2923,7 +2963,7 @@ class XCalculator(Gtk.Window):
                                          "restore": list(restore) if restore else None, "grouping": grouping})
             self.update_print_actions()
             if save:
-                self.save_history()
+                SavedHistory.add({k: self.history_entries[-1][k] for k in self.HISTORY_KEYS})
             self.history_listbox.show_all()
             GLib.idle_add(self.scroll_to_bottom)
         except Exception as e:
@@ -3902,9 +3942,23 @@ class XCalculator(Gtk.Window):
     # File menu: new window and printing
     # ------------------------------------------------------------------
 
-    def open_new_window(self, widget):
-        """File → New Window: start another, separate calculator."""
-        subprocess.Popen([sys.executable, os.path.abspath(__file__)], start_new_session=True)
+    def open_new_window(self, widget=None):
+        """File → New Window: another calculator window, sharing the preferences and the saved history."""
+        XCalculator(application=self.get_application()).show_all()
+
+    def quit_calculator(self, widget=None):
+        """File → Quit closes every window."""
+        application = self.get_application()
+        if application is None:
+            Gtk.main_quit()
+        else:
+            application.quit()
+
+    def other_calculators(self):
+        """The other open calculator windows, which share the Preferences settings."""
+        application = self.get_application()
+        return [w for w in (application.get_windows() if application else [])
+                if isinstance(w, XCalculator) and w is not self]
 
     # ------------------------------------------------------------------
     # Preferences
@@ -3922,7 +3976,7 @@ class XCalculator(Gtk.Window):
         if self.preferences_window is not None:
             self.preferences_window.sync()
 
-    def set_number_format(self, decimals=None, show_all=None, thousands=None):
+    def set_number_format(self, decimals=None, show_all=None, thousands=None, everywhere=True):
         if decimals is not None:
             NUMBER_FORMAT["decimals"] = decimals
         if show_all is not None:
@@ -3944,6 +3998,10 @@ class XCalculator(Gtk.Window):
         for row in self.history_listbox.get_children():     # thousands separators in the history
             row.get_child().get_child().result_widget.get_child().refresh()
         self.save_window_settings()
+        if everywhere:
+            for window in self.other_calculators():
+                window.set_number_format(decimals, show_all, thousands, everywhere=False)
+                window.sync_preferences()
 
     def set_programmer_format(self, base, bits):
         if self.current_mode == "Programmer":
@@ -3952,13 +4010,17 @@ class XCalculator(Gtk.Window):
             self.prog_base, self.prog_bits = base, bits
             self.save_window_settings()
 
-    def set_mode_enabled(self, mode, enabled):
+    def set_mode_enabled(self, mode, enabled, everywhere=True):
         if enabled and mode not in self.enabled_modes:
             self.enabled_modes = [m for m in VALID_MODES if m in self.enabled_modes or m == mode]
         elif not enabled and mode in self.enabled_modes and len(self.enabled_modes) > 1:
             self.enabled_modes = [m for m in self.enabled_modes if m != mode]
         self.apply_enabled_modes()
         self.save_window_settings()
+        if everywhere:
+            for window in self.other_calculators():
+                window.set_mode_enabled(mode, enabled, everywhere=False)
+                window.sync_preferences()
 
     def apply_enabled_modes(self):
         """Hide switched-off modes from the Mode menu; leave a switched-off mode if it's in use."""
@@ -3969,43 +4031,28 @@ class XCalculator(Gtk.Window):
 
     HISTORY_KEYS = ("formula", "result", "clickable", "click_text", "restore", "grouping")
 
-    def set_keep_history(self, keep):
+    def set_keep_history(self, keep, everywhere=True):
         """Whether the saved history is shown when the calculator opens. It is always saved."""
         self.keep_history = keep
         self.save_window_settings()
-
-    def save_history(self):
-        """The saved file is the full record: earlier sessions, then this one (newest 500 lines)."""
-        try:
-            os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
-            rows = self.saved_before + [{k: e[k] for k in self.HISTORY_KEYS} for e in self.history_entries]
-            with open(HISTORY_FILE, "w") as f:
-                json.dump(rows[-MAX_SAVED_HISTORY:], f)
-        except Exception as e:
-            print(f"Failed to save history: {e}")
+        if everywhere:
+            for window in self.other_calculators():
+                window.set_keep_history(keep, everywhere=False)
+                window.sync_preferences()
 
     def delete_saved_history(self):
-        """Preferences → Delete Saved History: empties the history and its saved file."""
-        self.clear_history(None)            # (this moves the window's lines into the record...)
-        self.saved_before = []              # (...which is then emptied)
-        try:
-            os.remove(HISTORY_FILE)
-        except FileNotFoundError:
-            pass
-        except OSError as e:
-            print(f"Failed to delete saved history: {e}")
+        """Preferences → Delete Saved History: empties the history in every window, and its saved file."""
+        SavedHistory.delete()
+        for window in [self] + self.other_calculators():
+            window.clear_history(None)
 
     def load_saved_history(self):
         """Read the saved record; show it in the window only if Keep history is on."""
-        if not os.path.exists(HISTORY_FILE):
+        rows = SavedHistory.load()
+        if not self.keep_history:
             return
         try:
-            with open(HISTORY_FILE) as f:
-                rows = [r for r in json.load(f) if isinstance(r, dict) and "formula" in r and "result" in r]
-            if not self.keep_history:
-                self.saved_before = rows[-MAX_SAVED_HISTORY:]
-                return
-            for row in rows[-MAX_SAVED_HISTORY:]:
+            for row in list(rows):
                 restore = row.get("restore")
                 if restore and not (len(restore) == 4 and restore[0] in CONVERTER_UNITS):
                     restore = None
@@ -4019,8 +4066,8 @@ class XCalculator(Gtk.Window):
         """Preferences → Reset to Defaults."""
         self.set_angle_mode(False)
         self.set_programmer_format(10, 64)
-        self.enabled_modes = list(VALID_MODES)
-        self.apply_enabled_modes()
+        for mode in VALID_MODES:
+            self.set_mode_enabled(mode, True)
         self.set_keep_history(False)        # the saved file itself is left alone
         self.set_number_format(DEFAULT_DECIMALS, False, False)
         self.sync_preferences()
@@ -4238,11 +4285,19 @@ class XCalculator(Gtk.Window):
         self.update_display()
 
 
+class XcalculatorApplication(Gtk.Application):
+    """One Xcalculator program: opening it again from the menu opens another window in it."""
+
+    def __init__(self):
+        super().__init__(application_id=APP_ID)
+
+    def do_activate(self):
+        XCalculator(application=self).show_all()
+
+
 if __name__ == "__main__":
-    GLib.set_prgname("xcalculator")         # the window's class matches xcalculator.desktop,
+    GLib.set_prgname("xcalculator")         # the window's class matches the .desktop file,
     Gdk.set_program_class("Xcalculator")    # so the panel groups the window with its menu entry
     GLib.set_application_name("Xcalculator")
     Gtk.Window.set_default_icon_name("accessories-calculator")    # the icon theme's calculator, like Xed's
-    app = XCalculator()
-    app.show_all()
-    Gtk.main()
+    sys.exit(XcalculatorApplication().run(sys.argv))
