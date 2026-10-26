@@ -8,6 +8,8 @@
 # It is distributed WITHOUT ANY WARRANTY; see <https://www.gnu.org/licenses/>.
 # SPDX-License-Identifier: GPL-3.0-or-later
 import gi
+import gettext
+import locale
 import math
 import traceback
 import json
@@ -23,6 +25,26 @@ from fractions import Fraction
 gi.require_version('Gtk', '3.0')
 gi.require_version('PangoCairo', '1.0')
 from gi.repository import Gtk, Gdk, GLib, Pango, PangoCairo
+
+# Translations: share/locale/<language>/LC_MESSAGES/xcalculator.mo, two folders up from this
+# file. That is /usr/share/locale once installed, and usr/share/locale in the source folder
+# after "make".
+TEXT_DOMAIN = "xcalculator"
+LOCALE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "share", "locale"))
+try:
+    locale.setlocale(locale.LC_ALL, "")
+except locale.Error:
+    pass
+gettext.bindtextdomain(TEXT_DOMAIN, LOCALE_DIR)
+gettext.textdomain(TEXT_DOMAIN)
+_ = gettext.gettext
+
+
+def N_(text):
+    """Marks text for translation where it is also used as a name in the code (a mode, a
+    category, a unit); it is translated with _() only when shown."""
+    return text
+
 
 # High-precision maths (package python3-mpmath): up to 50 decimal places instead of 15.
 # Without it the calculator uses ordinary floating-point numbers.
@@ -48,7 +70,7 @@ APP_VERSION = "0.9"
 APP_WEBSITE = "https://github.com/xlcheese/Xcalculator"
 APP_AUTHORS = ["Wesley Hayslip"]
 APP_COPYRIGHT = "Copyright © 2026 Wesley Hayslip"
-APP_CREDIT = "Developed with the help of Claude, an AI assistant by Anthropic"
+APP_CREDIT = _("Developed with the help of Claude, an AI assistant by Anthropic")
 
 DEFAULT_FONT_SIZE = 15
 HISTORY_MIN_HEIGHT = 75     # results area: first-time height and the smallest allowed (~3½ lines)
@@ -56,7 +78,7 @@ HISTORY_MIN_HEIGHT = 75     # results area: first-time height and the smallest a
 MODE_WIDTHS = {"Basic": 340, "Scientific": 460, "Financial": 500,
                "Programmer": 500, "Unit Converter": 500}
 
-VALID_MODES = ("Basic", "Scientific", "Financial", "Programmer", "Unit Converter")
+VALID_MODES = (N_("Basic"), N_("Scientific"), N_("Financial"), N_("Programmer"), N_("Unit Converter"))
 MODE_KEYS = {"Basic": "b", "Scientific": "s", "Financial": "f", "Programmer": "p", "Unit Converter": "u"}
 
 
@@ -608,7 +630,7 @@ def _prog_apply(op, a, b, bits):
         return ~result if op == 'NAND' else result
     if op in ('<<', '>>'):
         if b < 0:
-            raise ProgrammerError("Shift amount must not be negative")
+            raise ProgrammerError(_("Shift amount must not be negative"))
         if b >= bits:                       # everything shifted out
             return 0 if op == '<<' or a >= 0 else -1
         return a << b if op == '<<' else a >> b
@@ -698,279 +720,211 @@ def prog_convert(expr, old_base, old_bits, new_base, new_bits):
 
 
 PROG_TOOLTIPS = {
-    'HEX': "Hexadecimal (base 16): digits 0-9 and A-F. FF = 255",
-    'DEC': "Decimal (base 10): ordinary numbers, shown with a sign",
-    'OCT': "Octal (base 8): digits 0-7. 17 = 15",
-    'BIN': "Binary (base 2): digits 0 and 1. 1010 = 10",
-    'QWORD': "Word size: click to cycle 64 → 32 → 16 → 8 bits.\n"
-             "Results wrap around like a real register.",
-    '<<': "Shift left: move the bits left, filling with 0.\n1 << 4 = 16 (multiplies by 2 each step)",
-    '>>': "Shift right: move the bits right, keeping the sign.\n16 >> 2 = 4 (divides by 2 each step)",
-    'AND': "Bitwise AND: 1 only where both bits are 1.\n1100 AND 1010 = 1000",
-    'OR': "Bitwise OR: 1 where either bit is 1.\n1100 OR 1010 = 1110",
-    'XOR': "Bitwise XOR: 1 where the bits differ.\n1100 XOR 1010 = 0110",
-    'NOT': "Bitwise NOT: flip every bit of the next number.\nNOT 0 = -1 (all bits set)",
-    'NAND': "NOT (a AND b)",
-    'NOR': "NOT (a OR b)",
-    'mod': "Remainder after whole-number division. 17 mod 5 = 2",
-    '÷': "Whole-number division; the remainder is dropped. 17 ÷ 5 = 3",
-    '±': "Change the sign (two's complement negate)",
+    'HEX': _("Hexadecimal (base 16): digits 0-9 and A-F. FF = 255"),
+    'DEC': _("Decimal (base 10): ordinary numbers, shown with a sign"),
+    'OCT': _("Octal (base 8): digits 0-7. 17 = 15"),
+    'BIN': _("Binary (base 2): digits 0 and 1. 1010 = 10"),
+    'QWORD': _("Word size: click to cycle 64 → 32 → 16 → 8 bits.\n"
+             "Results wrap around like a real register."),
+    '<<': _("Shift left: move the bits left, filling with 0.\n1 << 4 = 16 (multiplies by 2 each step)"),
+    '>>': _("Shift right: move the bits right, keeping the sign.\n16 >> 2 = 4 (divides by 2 each step)"),
+    'AND': _("Bitwise AND: 1 only where both bits are 1.\n1100 AND 1010 = 1000"),
+    'OR': _("Bitwise OR: 1 where either bit is 1.\n1100 OR 1010 = 1110"),
+    'XOR': _("Bitwise XOR: 1 where the bits differ.\n1100 XOR 1010 = 0110"),
+    'NOT': _("Bitwise NOT: flip every bit of the next number.\nNOT 0 = -1 (all bits set)"),
+    'NAND': _("NOT (a AND b)"),
+    'NOR': _("NOT (a OR b)"),
+    'mod': _("Remainder after whole-number division. 17 mod 5 = 2"),
+    '÷': _("Whole-number division; the remainder is dropped. 17 ÷ 5 = 3"),
+    '±': _("Change the sign (two's complement negate)"),
 }
-
-PROG_GUIDE = """Programmer mode works with whole numbers stored in a fixed number of bits, the way a computer does.
-
-Number bases (HEX, DEC, OCT, BIN)
-Click a base to type and show numbers in it. The number on screen is converted when you switch. The lines under the display always show the current value in all four bases.
-
-Word size (QWORD / DWORD / WORD / BYTE)
-The number of bits: 64, 32, 16 or 8. Numbers are signed: in BYTE the range is -128 to 127, and 127 + 1 wraps around to -128. In HEX, OCT and BIN you see the raw bits, so -1 in BYTE shows as FF.
-
-Bitwise operators
-AND, OR and XOR compare two numbers bit by bit. NOT flips every bit of the next number. NAND and NOR are NOT AND and NOT OR. Example: in BIN, 1100 AND 1010 = 1000.
-
-Shifts
-<< moves bits left (each step doubles the number); >> moves them right (each step halves it).
-
-Arithmetic
-+, −, × work as usual. ÷ drops the remainder and mod gives it: 17 ÷ 5 = 3 and 17 mod 5 = 2.
-
-Order of operations (first to last)
-NOT and minus sign, then × ÷ mod, then + −, then << >>, then AND, then XOR, then OR. Use parentheses when unsure.
-
-Try it
-1. Click HEX, type FF, press =. The lines below show DEC 255.
-2. Click BYTE (cycle the word size) and DEC 255 becomes -1.
-3. Click BIN and try 1100 XOR 1010 =.
-
-Keyboard
-All of Basic's keys work here too (except the decimal point: whole numbers only), plus:
-  a–f  hex digits
-  & | ^ ~  AND, OR, XOR, NOT
-  < >  shift left and right
-  ( )  parentheses
-Two keys mean something different here: ^ is XOR (not power) and % is mod (not percent).
-
-Hover over any button for a short explanation."""
-
-# The Programmer guide is plain text; these lines are shown in bold, like the other pages' headings.
-PROG_GUIDE_HEADINGS = (
-    "Number bases (HEX, DEC, OCT, BIN)", "Word size (QWORD / DWORD / WORD / BYTE)", "Bitwise operators",
-    "Shifts", "Arithmetic", "Order of operations (first to last)", "Try it", "Keyboard",
-)
-
-
-def prog_guide_markup():
-    """PROG_GUIDE for the Documentation window: bold headings, and bold keys in the Keyboard list."""
-    lines, in_keyboard = [], False
-    for line in PROG_GUIDE.split("\n"):
-        if line in PROG_GUIDE_HEADINGS:
-            in_keyboard = line == "Keyboard"
-            lines.append(f"<b>{GLib.markup_escape_text(line)}</b>")
-        elif in_keyboard and line.startswith("  ") and "  " in line[2:]:
-            keys, what = line[2:].split("  ", 1)        # "  a–f  hex digits"
-            lines.append(f"  <b>{GLib.markup_escape_text(keys)}</b>  {GLib.markup_escape_text(what)}")
-        else:
-            lines.append(GLib.markup_escape_text(line))
-    return "\n".join(lines)
-
 
 # Help → Keyboard Shortcuts: (group, [(accelerator, what it does)]), in two columns like Xed
 SHORTCUTS_PAGE = "shortcuts"
 SHORTCUT_COLUMNS = (
-    (("Windows", (("<Control>n", "Open a new window"),
-                  ("<Control>w", "Close the window"),
-                  ("<Control>q", "Quit Xcalculator"))),
-     ("Modes", (("<Control><Alt>b", "Switch to Basic"),
-                ("<Control><Alt>s", "Switch to Scientific"),
-                ("<Control><Alt>f", "Switch to Financial"),
-                ("<Control><Alt>p", "Switch to Programmer"),
-                ("<Control><Alt>u", "Switch to Unit Converter"))),
-     ("Help", (("F1", "Open the documentation"),
-               ("<Control>F1", "Show the keyboard shortcuts"))),
-     ("Printing", (("<Control>p", "Print the history"),
-                   ("<Shift><Control>p", "Preview the printout")))),
-    (("Copy and Paste", (("<Control>c", "Copy the display, or the highlighted part"),
-                         ("<Control>x", "Cut the highlighted part"),
-                         ("<Control>v", "Paste a number or calculation"),
-                         ("<Control>a", "Highlight everything in the display"))),
-     ("Text Size", (("<Control>equal", "Larger text"),
-                    ("<Control>minus", "Smaller text"),
-                    ("<Control>0", "Normal text size"))),
-     ("Scientific", (("<Control>r", "Square root (²√x)"),
-                     ("<Control>i", "Reciprocal (1/x)"))),
-     ("Programmer", (("<Control>h", "Switch to HEX"),
-                     ("<Control>d", "Switch to DEC"),
-                     ("<Control>o", "Switch to OCT"),
-                     ("<Control>b", "Switch to BIN")))),
+    ((_("Windows"), (("<Control>n", _("Open a new window")),
+                     ("<Control>w", _("Close the window")),
+                     ("<Control>q", _("Quit Xcalculator")))),
+     (_("Modes"), (("<Control><Alt>b", _("Switch to Basic")),
+                   ("<Control><Alt>s", _("Switch to Scientific")),
+                   ("<Control><Alt>f", _("Switch to Financial")),
+                   ("<Control><Alt>p", _("Switch to Programmer")),
+                   ("<Control><Alt>u", _("Switch to Unit Converter")))),
+     (_("Help"), (("F1", _("Open the documentation")),
+                  ("<Control>F1", _("Show the keyboard shortcuts")))),
+     (_("Printing"), (("<Control>p", _("Print the history")),
+                      ("<Shift><Control>p", _("Preview the printout"))))),
+    ((_("Copy and Paste"), (("<Control>c", _("Copy the display, or the highlighted part")),
+                            ("<Control>x", _("Cut the highlighted part")),
+                            ("<Control>v", _("Paste a number or calculation")),
+                            ("<Control>a", _("Highlight everything in the display")))),
+     (_("Text Size"), (("<Control>equal", _("Larger text")),
+                       ("<Control>minus", _("Smaller text")),
+                       ("<Control>0", _("Normal text size")))),
+     (_("Scientific"), (("<Control>r", _("Square root (²√x)")),
+                        ("<Control>i", _("Reciprocal (1/x)")))),
+     (_("Programmer"), (("<Control>h", _("Switch to HEX")),
+                        ("<Control>d", _("Switch to DEC")),
+                        ("<Control>o", _("Switch to OCT")),
+                        ("<Control>b", _("Switch to BIN"))))),
 )
 
-# Help → Documentation: (page title, the mode it explains or None, Pango markup)
+# Help → Documentation: (page name, the mode it explains or None, paragraphs of Pango markup).
+# The name is translated when shown; it also picks the page, so it stays in English here.
 HELP_PAGES = (
-    ("Getting Started", None, """<big><b>Getting Started</b></big>
-
-Xcalculator has five modes. Pick one from the <b>Mode</b> menu:
-  • <b>Basic</b> for everyday sums
-  • <b>Scientific</b> for powers, roots, trigonometry, logarithms and more
-  • <b>Financial</b> for loans, savings, cash flows and depreciation
-  • <b>Programmer</b> for hexadecimal, binary and bitwise work
-  • <b>Unit Converter</b> for lengths, weights, temperatures and more
-
-<b>Typing</b>
-Click the buttons or use the keyboard. Click in the display, or use the arrow keys, to move the cursor; typing, Backspace and Delete work at the cursor. Highlighted text is replaced by what you type.
-
-<b>The history</b>
-Every answer is added to the history above the display. Click an answer to use it in your next calculation, or click a calculation to bring it back. <b>View → Clear History</b> empties it, and <b>File → Print</b> prints it like an adding-machine tape. The history is saved when you close; see Preferences to show it again next time.
-
-<b>Long numbers</b>
-An answer too wide for the window is shown in scientific notation, like 3.7×10²⁰. Widen the window to see it in full. Copy and the history always keep the full number.
-
-<b>Copy and paste</b>
-<b>Edit → Copy</b> copies the display. <b>Edit → Paste</b> pastes a number or a simple calculation.
-
-<b>Window size and text size</b>
-Stretch the history taller and every mode keeps that height. Each mode remembers its own width. <b>View → Larger Font</b>, <b>Smaller Font</b> and <b>Reset Font Size</b> change the text size, and <b>View → Reset View</b> returns to the original window size.
-
-<b>Preferences</b>
-<b>Edit → Preferences</b> sets decimal places, thousands separators, angle units and more, and which modes appear in the Mode menu."""),
-
-    ("Basic", "Basic", """<big><b>Basic</b></big>
-
-The everyday keypad. Every other mode builds on it.
-
-  <b>⌫</b>  delete the character before the cursor
-  <b>Clear</b>  start again
-  <b>%</b>  percent: 50% = 0.5, and 200 × 15% = 30
-  <b>±</b>  change the sign of the number you are typing
-  <b>=</b>  work out the answer (or press Enter)
-
-Multiplication and division are done before addition and subtraction, so 2 + 3 × 4 = 14.
-
-<b>Typing with the keyboard</b>
-  <b>0–9</b>, <b>.</b>  numbers
-  <b>+  -  *  /</b>  add, subtract, multiply, divide
-  <b>%</b>  percent
-  <b>Enter</b> or <b>=</b>  work out the answer
-  <b>Backspace</b>  delete before the cursor;  <b>Delete</b>  delete after it
-  <b>Escape</b>  clear
-  <b>← →  Home  End</b>  move the cursor;  hold <b>Shift</b> to highlight
-
-The other modes use these keys too; each mode's page lists what it adds or changes. For the Ctrl shortcuts, see the Keyboard page."""),
-
-    ("Scientific", "Scientific", """<big><b>Scientific</b></big>
-
-Everything in Basic, plus:
-
-<b>Powers and roots</b>
-  <b>x²</b>, <b>x³</b>, <b>xʸ</b>  powers;  <b>eˣ</b>, <b>10ˣ</b>  powers of e and 10
-  <b>²√x</b>, <b>³√x</b>, <b>ʸ√x</b>  square, cube and y-th roots;  <b>1/x</b>  reciprocal
-  <b>EE</b>  times ten to the power: 3 EE 5 = 300000
-
-<b>Trigonometry</b>
-  <b>sin</b>, <b>cos</b>, <b>tan</b> and the hyperbolic <b>sinh</b>, <b>cosh</b>, <b>tanh</b>
-  <b>2nd</b>  switches these buttons to their inverses (sin⁻¹ and so on)
-  <b>Rad</b> / <b>Deg</b>  switches between radians and degrees. Degrees are used until you switch.
-
-<b>Logarithms and constants</b>
-  <b>ln</b>  natural logarithm;  <b>log₁₀</b>  base-10 logarithm
-  <b>π</b>, <b>e</b>  the constants;  <b>Rand</b>  a random number between 0 and 1
-  <b>x!</b>  factorial: 5! = 120
-
-<b>More functions</b>
-  <b>|x|</b>  absolute value: |−5| = 5
-  <b>nCr</b>  combinations, when order doesn't matter: 5 nCr 2 = 10
-  <b>nPr</b>  permutations, when order matters: 5 nPr 2 = 20
-  <b>round</b>  to the nearest whole number: round(2.5) = 3
-  <b>mod</b>  the remainder: 17 mod 5 = 2
-  <b>f(x)</b>  a menu of more functions, each with a short explanation
-
-<b>Memory</b>
-  <b>M+</b> adds the display to the memory, <b>M−</b> subtracts it, <b>MR</b> recalls it and <b>MC</b> clears it.
-
-<b>Keyboard</b>
-All of Basic's keys work here too, plus:
-  <b>^</b>  power;  <b>( )</b>  parentheses;  <b>!</b>  factorial;  <b>e</b>  the constant e;  <b>p</b>  π"""),
-
-    ("Financial", "Financial", """<big><b>Financial</b></big>
-
-The lines under the display always show the values stored so far.
-
-<b>Loans and savings (time value of money)</b>
-The five keys <b>N</b>, <b>I/Y</b>, <b>PV</b>, <b>PMT</b> and <b>FV</b> are the number of payments, the yearly interest rate in percent, the present value, the payment and the future value.
-  1. Type a number and press a key to store it. Press a key on its own to see what it holds.
-  2. Store four of the five.
-  3. Press <b>CPT</b>, then the fifth key, to work it out.
-Money you receive is positive and money you pay out is negative. For a loan of 20,000, store PV = 20000, and the payment PMT comes out negative.
-  <b>P/Y</b>  payments per year (12 to start); type a number and press P/Y to change it
-  <b>BGN</b>  switches between payments at the end of each period (END) and the beginning (BGN)
-
-<b>Cash flows</b>
-  <b>CFj</b>  type an amount and press CFj; the first one is the starting amount, usually an investment entered as negative
-  <b>Nj</b>  type a count and press Nj to repeat the last cash flow that many times
-  <b>NPV</b>  type the discount rate in percent and press NPV for the net present value
-  <b>IRR</b>  the internal rate of return
-
-<b>Loan schedule (amortization)</b>
-With the loan stored, type a payment number and press <b>P1</b>, then another and press <b>P2</b>.
-  <b>BAL</b>  the balance left after payment P2
-  <b>PRN</b>, <b>INT</b>  the principal and the interest paid from P1 to P2
-
-<b>Depreciation</b>
-Store the asset's life in years as N, its cost as PV and its salvage value as FV. Type a year and press <b>SL</b> (straight line), <b>SYD</b> (sum of the years' digits) or <b>DB</b> (declining balance; store the declining percent, such as 200, as I/Y).
-
-<b>Interest rates</b>
-  <b>EFF</b>  type a nominal yearly rate for the effective yearly rate, compounding P/Y times a year
-  <b>NOM</b>  the reverse
-
-<b>Business</b>
-  <b>Mrgn</b>  profit margin: cost Mrgn price, then =. 60 Mrgn 100 = 40 (percent)
-  <b>Δ%</b>  percent change: old Δ% new, then =. 80 Δ% 100 = 25 (percent)
-
-<b>Clear All</b> erases every stored financial value.
-
-Financial answers are worked out to about 15 significant digits, whatever the decimal places setting: far more than money needs.
-
-<b>Keyboard</b>
-All of Basic's keys work here too, plus <b>( )</b> for parentheses. The financial keys (N, PMT, CPT and so on) are on the buttons only."""),
-
-    ("Programmer", "Programmer", None),     # filled from PROG_GUIDE below
-
-    ("Unit Converter", "Unit Converter", """<big><b>Unit Converter</b></big>
-
-  1. Pick a category: Angle, Area, Density, Digital Storage, Energy, Length, Mass, Pressure, Speed, Temperature, Time or Volume.
-  2. Pick a unit beside each box.
-  3. Type a number in either box. The other box converts as you type; the box with the green outline is the one you are typing in.
-
-The line under the boxes shows the formula used. ≈ means the number in it is rounded.
-
-  <b>Capture</b> (or Enter)  saves the conversion to the history
-  <b>±</b>  makes the number negative, for temperatures below zero
-
-Click a captured line in the history to bring back that conversion: its category, both units and the number.
-
-Conversions use the official definitions (for example, 1 inch is exactly 2.54 cm) and are shown with the decimal places set in Preferences. The converter remembers your category and the units you chose in each.
-
-<b>Keyboard</b>
-Basic's number, Backspace, Delete, Escape and cursor keys work here too. Two keys work differently:
-  <b>-</b>  makes the number negative (like ±)
-  <b>Enter</b> or <b>=</b>  Capture
-The other operator keys (+ * / %) do nothing here, since the converter has no operators."""),
-
-    ("Preferences", None, """<big><b>Preferences</b></big>
-
-Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history.
-
-<b>General</b>
-  <b>Decimal places</b>  how many places answers are rounded to, from 0 to 50 (10 to start). Up to 50 places uses high-precision maths from the python3-mpmath package, which is installed with Xcalculator; without it the limit is 15. Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.
-  <b>Show all decimal places</b>  pads answers with zeros, so with 2 places 19.5 shows as 19.50. Handy for money.
-  <b>Thousands separators</b>  1234567 shows as 1,234,567 in answers, the history and the printout (not while typing, and not in Programmer mode). Copy still gives plain digits.
-  <b>Angle units</b>  degrees or radians for sin, cos and tan. The Rad/Deg button in Scientific changes the same setting.
-  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.
-  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file.
-
-<b>Modes</b>
-Switch off the modes you don't use, and they disappear from the Mode menu. At least one mode stays on."""),
-
-    ("Keyboard", None, SHORTCUTS_PAGE),     # drawn with key caps, like Xed's shortcuts window
+    (N_("Getting Started"), None, (
+        # Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
+        _("Xcalculator has five modes. Pick one from the <b>Mode</b> menu:\n"
+          "  • <b>Basic</b> for everyday sums\n"
+          "  • <b>Scientific</b> for powers, roots, trigonometry, logarithms and more\n"
+          "  • <b>Financial</b> for loans, savings, cash flows and depreciation\n"
+          "  • <b>Programmer</b> for hexadecimal, binary and bitwise work\n"
+          "  • <b>Unit Converter</b> for lengths, weights, temperatures and more"),
+        _("<b>Typing</b>\n"
+          "Click the buttons or use the keyboard. Click in the display, or use the arrow keys, to move the cursor; typing, Backspace and Delete work at the cursor. Highlighted text is replaced by what you type."),
+        _("<b>The history</b>\n"
+          "Every answer is added to the history above the display. Click an answer to use it in your next calculation, or click a calculation to bring it back. <b>View → Clear History</b> empties it, and <b>File → Print</b> prints it like an adding-machine tape. The history is saved as you go; see Preferences to show it again the next time Xcalculator opens."),
+        _("<b>Long numbers</b>\n"
+          "An answer too wide for the window is shown in scientific notation, like 3.7×10²⁰. Widen the window to see it in full. Copy and the history always keep the full number."),
+        _("<b>Copy and paste</b>\n"
+          "<b>Edit → Copy</b> copies the display. <b>Edit → Paste</b> pastes a number or a simple calculation."),
+        _("<b>Window size and text size</b>\n"
+          "Stretch the history taller and every mode keeps that height. Each mode remembers its own width. <b>View → Larger Font</b>, <b>Smaller Font</b> and <b>Reset Font Size</b> change the text size, and <b>View → Reset View</b> returns to the original window size."),
+        _("<b>Preferences</b>\n"
+          "<b>Edit → Preferences</b> sets decimal places, thousands separators, angle units and more, and which modes appear in the Mode menu."),
+    )),
+    (N_("Basic"), "Basic", (
+        _("The everyday keypad. Every other mode builds on it."),
+        _("  <b>⌫</b>  delete the character before the cursor\n"
+          "  <b>Clear</b>  start again\n"
+          "  <b>%</b>  percent: 50% = 0.5, and 200 × 15% = 30\n"
+          "  <b>±</b>  change the sign of the number you are typing\n"
+          "  <b>=</b>  work out the answer (or press Enter)"),
+        _("Multiplication and division are done before addition and subtraction, so 2 + 3 × 4 = 14."),
+        _("<b>Typing with the keyboard</b>\n"
+          "  <b>0–9</b>, <b>.</b>  numbers\n"
+          "  <b>+  -  *  /</b>  add, subtract, multiply, divide\n"
+          "  <b>%</b>  percent\n"
+          "  <b>Enter</b> or <b>=</b>  work out the answer\n"
+          "  <b>Backspace</b>  delete before the cursor;  <b>Delete</b>  delete after it\n"
+          "  <b>Escape</b>  clear\n"
+          "  <b>← →  Home  End</b>  move the cursor;  hold <b>Shift</b> to highlight"),
+        _("The other modes use these keys too; each mode's page lists what it adds or changes. For the Ctrl shortcuts, see the Keyboard page."),
+    )),
+    (N_("Scientific"), "Scientific", (
+        _("Everything in Basic, plus:"),
+        _("<b>Powers and roots</b>\n"
+          "  <b>x²</b>, <b>x³</b>, <b>xʸ</b>  powers;  <b>eˣ</b>, <b>10ˣ</b>  powers of e and 10\n"
+          "  <b>²√x</b>, <b>³√x</b>, <b>ʸ√x</b>  square, cube and y-th roots;  <b>1/x</b>  reciprocal\n"
+          "  <b>EE</b>  times ten to the power: 3 EE 5 = 300000"),
+        _("<b>Trigonometry</b>\n"
+          "  <b>sin</b>, <b>cos</b>, <b>tan</b> and the hyperbolic <b>sinh</b>, <b>cosh</b>, <b>tanh</b>\n"
+          "  <b>2nd</b>  switches these buttons to their inverses (sin⁻¹ and so on)\n"
+          "  <b>Rad</b> / <b>Deg</b>  switches between radians and degrees. Degrees are used until you switch."),
+        _("<b>Logarithms and constants</b>\n"
+          "  <b>ln</b>  natural logarithm;  <b>log₁₀</b>  base-10 logarithm\n"
+          "  <b>π</b>, <b>e</b>  the constants;  <b>Rand</b>  a random number between 0 and 1\n"
+          "  <b>x!</b>  factorial: 5! = 120"),
+        _("<b>More functions</b>\n"
+          "  <b>|x|</b>  absolute value: |−5| = 5\n"
+          "  <b>nCr</b>  combinations, when order doesn't matter: 5 nCr 2 = 10\n"
+          "  <b>nPr</b>  permutations, when order matters: 5 nPr 2 = 20\n"
+          "  <b>round</b>  to the nearest whole number: round(2.5) = 3\n"
+          "  <b>mod</b>  the remainder: 17 mod 5 = 2\n"
+          "  <b>f(x)</b>  a menu of more functions, each with a short explanation"),
+        _("<b>Memory</b>\n"
+          "  <b>M+</b> adds the display to the memory, <b>M−</b> subtracts it, <b>MR</b> recalls it and <b>MC</b> clears it."),
+        _("<b>Keyboard</b>\n"
+          "All of Basic's keys work here too, plus:\n"
+          "  <b>^</b>  power;  <b>( )</b>  parentheses;  <b>!</b>  factorial;  <b>e</b>  the constant e;  <b>p</b>  π"),
+    )),
+    (N_("Financial"), "Financial", (
+        _("The lines under the display always show the values stored so far."),
+        _("<b>Loans and savings (time value of money)</b>\n"
+          "The five keys <b>N</b>, <b>I/Y</b>, <b>PV</b>, <b>PMT</b> and <b>FV</b> are the number of payments, the yearly interest rate in percent, the present value, the payment and the future value.\n"
+          "  1. Type a number and press a key to store it. Press a key on its own to see what it holds.\n"
+          "  2. Store four of the five.\n"
+          "  3. Press <b>CPT</b>, then the fifth key, to work it out.\n"
+          "Money you receive is positive and money you pay out is negative. For a loan of 20,000, store PV = 20000, and the payment PMT comes out negative.\n"
+          "  <b>P/Y</b>  payments per year (12 to start); type a number and press P/Y to change it\n"
+          "  <b>BGN</b>  switches between payments at the end of each period (END) and the beginning (BGN)"),
+        _("<b>Cash flows</b>\n"
+          "  <b>CFj</b>  type an amount and press CFj; the first one is the starting amount, usually an investment entered as negative\n"
+          "  <b>Nj</b>  type a count and press Nj to repeat the last cash flow that many times\n"
+          "  <b>NPV</b>  type the discount rate in percent and press NPV for the net present value\n"
+          "  <b>IRR</b>  the internal rate of return"),
+        _("<b>Loan schedule (amortization)</b>\n"
+          "With the loan stored, type a payment number and press <b>P1</b>, then another and press <b>P2</b>.\n"
+          "  <b>BAL</b>  the balance left after payment P2\n"
+          "  <b>PRN</b>, <b>INT</b>  the principal and the interest paid from P1 to P2"),
+        _("<b>Depreciation</b>\n"
+          "Store the asset's life in years as N, its cost as PV and its salvage value as FV. Type a year and press <b>SL</b> (straight line), <b>SYD</b> (sum of the years' digits) or <b>DB</b> (declining balance; store the declining percent, such as 200, as I/Y)."),
+        _("<b>Interest rates</b>\n"
+          "  <b>EFF</b>  type a nominal yearly rate for the effective yearly rate, compounding P/Y times a year\n"
+          "  <b>NOM</b>  the reverse"),
+        _("<b>Business</b>\n"
+          "  <b>Mrgn</b>  profit margin: cost Mrgn price, then =. 60 Mrgn 100 = 40 (percent)\n"
+          "  <b>Δ%</b>  percent change: old Δ% new, then =. 80 Δ% 100 = 25 (percent)"),
+        _("<b>Clear All</b> erases every stored financial value."),
+        _("Financial answers are worked out to about 15 significant digits, whatever the decimal places setting: far more than money needs."),
+        _("<b>Keyboard</b>\n"
+          "All of Basic's keys work here too, plus <b>( )</b> for parentheses. The financial keys (N, PMT, CPT and so on) are on the buttons only."),
+    )),
+    (N_("Programmer"), "Programmer", (
+        _("Programmer mode works with whole numbers stored in a fixed number of bits, the way a computer does."),
+        _("<b>Number bases (HEX, DEC, OCT, BIN)</b>\n"
+          "Click a base to type and show numbers in it. The number on screen is converted when you switch. The lines under the display always show the current value in all four bases."),
+        _("<b>Word size (QWORD / DWORD / WORD / BYTE)</b>\n"
+          "The number of bits: 64, 32, 16 or 8. Numbers are signed: in BYTE the range is -128 to 127, and 127 + 1 wraps around to -128. In HEX, OCT and BIN you see the raw bits, so -1 in BYTE shows as FF."),
+        _("<b>Bitwise operators</b>\n"
+          "AND, OR and XOR compare two numbers bit by bit. NOT flips every bit of the next number. NAND and NOR are NOT AND and NOT OR. Example: in BIN, 1100 AND 1010 = 1000."),
+        _("<b>Shifts</b>\n"
+          "&lt;&lt; moves bits left (each step doubles the number); &gt;&gt; moves them right (each step halves it)."),
+        _("<b>Arithmetic</b>\n"
+          "+, −, × work as usual. ÷ drops the remainder and mod gives it: 17 ÷ 5 = 3 and 17 mod 5 = 2."),
+        _("<b>Order of operations (first to last)</b>\n"
+          "NOT and minus sign, then × ÷ mod, then + −, then &lt;&lt; &gt;&gt;, then AND, then XOR, then OR. Use parentheses when unsure."),
+        _("<b>Try it</b>\n"
+          "1. Click HEX, type FF, press =. The lines below show DEC 255.\n"
+          "2. Click BYTE (cycle the word size) and DEC 255 becomes -1.\n"
+          "3. Click BIN and try 1100 XOR 1010 =."),
+        _("<b>Keyboard</b>\n"
+          "All of Basic's keys work here too (except the decimal point: whole numbers only), plus:\n"
+          "  <b>a–f</b>  hex digits\n"
+          "  <b>&amp; | ^ ~</b>  AND, OR, XOR, NOT\n"
+          "  <b>&lt; &gt;</b>  shift left and right\n"
+          "  <b>( )</b>  parentheses\n"
+          "Two keys mean something different here: ^ is XOR (not power) and % is mod (not percent)."),
+        _("Hover over any button for a short explanation."),
+    )),
+    (N_("Unit Converter"), "Unit Converter", (
+        _("  1. Pick a category: Angle, Area, Density, Digital Storage, Energy, Length, Mass, Pressure, Speed, Temperature, Time or Volume.\n"
+          "  2. Pick a unit beside each box.\n"
+          "  3. Type a number in either box. The other box converts as you type; the box with the green outline is the one you are typing in."),
+        _("The line under the boxes shows the formula used. ≈ means the number in it is rounded."),
+        _("  <b>Capture</b> (or Enter)  saves the conversion to the history\n"
+          "  <b>±</b>  makes the number negative, for temperatures below zero"),
+        _("Click a captured line in the history to bring back that conversion: its category, both units and the number."),
+        _("Conversions use the official definitions (for example, 1 inch is exactly 2.54 cm) and are shown with the decimal places set in Preferences. The converter remembers your category and the units you chose in each."),
+        _("<b>Keyboard</b>\n"
+          "Basic's number, Backspace, Delete, Escape and cursor keys work here too. Two keys work differently:\n"
+          "  <b>-</b>  makes the number negative (like ±)\n"
+          "  <b>Enter</b> or <b>=</b>  Capture\n"
+          "The other operator keys (+ * / %) do nothing here, since the converter has no operators."),
+    )),
+    (N_("Preferences"), None, (
+        _("Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history."),
+        _("<b>General</b>\n"
+          "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to 50 (10 to start). Up to 50 places uses high-precision maths from the python3-mpmath package, which is installed with Xcalculator; without it the limit is 15. Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
+          "  <b>Show all decimal places</b>  pads answers with zeros, so with 2 places 19.5 shows as 19.50. Handy for money.\n"
+          "  <b>Thousands separators</b>  1234567 shows as 1,234,567 in answers, the history and the printout (not while typing, and not in Programmer mode). Copy still gives plain digits.\n"
+          "  <b>Angle units</b>  degrees or radians for sin, cos and tan. The Rad/Deg button in Scientific changes the same setting.\n"
+          "  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.\n"
+          "  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file."),
+        _("<b>Modes</b>\n"
+          "Switch off the modes you don't use, and they disappear from the Mode menu. At least one mode stays on."),
+    )),
+    (N_("Keyboard"), None, SHORTCUTS_PAGE),     # drawn with key caps, like Xed's shortcuts window
 )
 
 
@@ -987,49 +941,49 @@ _GAL = Fraction("0.003785411784")           # US gallon in m³, exact
 # category -> [(name, symbol, size in the category's base unit)], US units first.
 # Temperature has no single factor; its entries are converted by temperature_to_kelvin.
 CONVERTER_UNITS = {
-    "Angle": [("Degree", "°", 1), ("Radian", "rad", 180 / PI), ("Gradian", "grad", Fraction("0.9")),
-              ("Arcminute", "′", Fraction(1, 60)), ("Arcsecond", "″", Fraction(1, 3600)), ("Turn", "turn", 360)],
-    "Area": [("Square inch", "in²", _IN ** 2), ("Square foot", "ft²", (12 * _IN) ** 2),
-             ("Square yard", "yd²", (36 * _IN) ** 2), ("Acre", "ac", 43560 * (12 * _IN) ** 2),
-             ("Square mile", "mi²", (63360 * _IN) ** 2), ("Square centimeter", "cm²", Fraction(1, 10000)),
-             ("Square meter", "m²", 1), ("Hectare", "ha", 10000), ("Square kilometer", "km²", 1000000)],
-    "Density": [("Gram per cubic centimeter", "g/cm³", 1000), ("Kilogram per cubic meter", "kg/m³", 1),
-                ("Gram per milliliter", "g/mL", 1000), ("Kilogram per liter", "kg/L", 1000),
-                ("Pound per cubic foot", "lb/ft³", _LB / (12 * _IN) ** 3),
-                ("Pound per cubic inch", "lb/in³", _LB / _IN ** 3),
-                ("Pound per gallon", "lb/gal", _LB / _GAL)],
-    "Digital Storage": [("Bit", "bit", 1), ("Byte", "B", 8), ("Kilobyte", "kB", 8 * 10 ** 3),
-                        ("Megabyte", "MB", 8 * 10 ** 6), ("Gigabyte", "GB", 8 * 10 ** 9),
-                        ("Terabyte", "TB", 8 * 10 ** 12), ("Petabyte", "PB", 8 * 10 ** 15),
-                        ("Kibibyte", "KiB", 8 * 2 ** 10), ("Mebibyte", "MiB", 8 * 2 ** 20),
-                        ("Gibibyte", "GiB", 8 * 2 ** 30), ("Tebibyte", "TiB", 8 * 2 ** 40),
-                        ("Kilobit", "kbit", 10 ** 3), ("Megabit", "Mbit", 10 ** 6), ("Gigabit", "Gbit", 10 ** 9)],
-    "Energy": [("Joule", "J", 1), ("Kilojoule", "kJ", 1000), ("Calorie", "cal", Fraction("4.184")),
-               ("Food Calorie", "kcal", 4184), ("Watt-hour", "Wh", 3600), ("Kilowatt-hour", "kWh", 3600000),
-               ("British thermal unit", "BTU", Fraction("1055.05585262")),
-               ("Foot-pound", "ft·lbf", 12 * _IN * _LBF), ("Electronvolt", "eV", Fraction("1.602176634e-19"))],
-    "Length": [("Inch", "in", _IN), ("Foot", "ft", 12 * _IN), ("Yard", "yd", 36 * _IN),
-               ("Mile", "mi", 63360 * _IN), ("Nautical mile", "nmi", 1852), ("Millimeter", "mm", Fraction(1, 1000)),
-               ("Centimeter", "cm", Fraction(1, 100)), ("Meter", "m", 1), ("Kilometer", "km", 1000)],
-    "Mass": [("Ounce", "oz", _LB / 16), ("Pound", "lb", _LB), ("Stone", "st", 14 * _LB),
-             ("US ton", "ton", 2000 * _LB), ("Milligram", "mg", Fraction(1, 10 ** 6)),
-             ("Gram", "g", Fraction(1, 1000)), ("Kilogram", "kg", 1), ("Metric ton", "t", 1000)],
-    "Pressure": [("Pound per square inch", "psi", _LBF / _IN ** 2), ("Inch of mercury", "inHg", Fraction("3386.389")),
-                 ("Millimeter of mercury", "mmHg", Fraction("133.322387415")), ("Atmosphere", "atm", 101325),
-                 ("Bar", "bar", 100000), ("Pascal", "Pa", 1), ("Kilopascal", "kPa", 1000),
-                 ("Megapascal", "MPa", 10 ** 6)],
-    "Speed": [("Mile per hour", "mph", 63360 * _IN / 3600), ("Foot per second", "ft/s", 12 * _IN),
-              ("Knot", "kn", Fraction(1852, 3600)), ("Kilometer per hour", "km/h", Fraction(1000, 3600)),
-              ("Meter per second", "m/s", 1)],
-    "Temperature": [("Fahrenheit", "°F", None), ("Celsius", "°C", None), ("Kelvin", "K", None)],
-    "Time": [("Millisecond", "ms", Fraction(1, 1000)), ("Second", "s", 1), ("Minute", "min", 60),
-             ("Hour", "h", 3600), ("Day", "d", 86400), ("Week", "wk", 604800),
-             ("Month (average)", "mo", Fraction("2629746")), ("Year (average)", "yr", Fraction("31556952"))],
-    "Volume": [("Teaspoon", "tsp", _GAL / 768), ("Tablespoon", "tbsp", _GAL / 256), ("Fluid ounce", "fl oz", _GAL / 128),
-               ("Cup", "cup", _GAL / 16), ("Pint", "pt", _GAL / 8), ("Quart", "qt", _GAL / 4),
-               ("Gallon", "gal", _GAL), ("Milliliter", "mL", Fraction(1, 10 ** 6)), ("Liter", "L", Fraction(1, 1000)),
-               ("Cubic meter", "m³", 1), ("Cubic inch", "in³", _IN ** 3), ("Cubic foot", "ft³", (12 * _IN) ** 3),
-               ("Imperial gallon", "imp gal", Fraction("0.00454609"))],
+    N_("Angle"): [(N_("Degree"), "°", 1), (N_("Radian"), "rad", 180 / PI), (N_("Gradian"), "grad", Fraction("0.9")),
+              (N_("Arcminute"), "′", Fraction(1, 60)), (N_("Arcsecond"), "″", Fraction(1, 3600)), (N_("Turn"), "turn", 360)],
+    N_("Area"): [(N_("Square inch"), "in²", _IN ** 2), (N_("Square foot"), "ft²", (12 * _IN) ** 2),
+             (N_("Square yard"), "yd²", (36 * _IN) ** 2), (N_("Acre"), "ac", 43560 * (12 * _IN) ** 2),
+             (N_("Square mile"), "mi²", (63360 * _IN) ** 2), (N_("Square centimeter"), "cm²", Fraction(1, 10000)),
+             (N_("Square meter"), "m²", 1), (N_("Hectare"), "ha", 10000), (N_("Square kilometer"), "km²", 1000000)],
+    N_("Density"): [(N_("Gram per cubic centimeter"), "g/cm³", 1000), (N_("Kilogram per cubic meter"), "kg/m³", 1),
+                (N_("Gram per milliliter"), "g/mL", 1000), (N_("Kilogram per liter"), "kg/L", 1000),
+                (N_("Pound per cubic foot"), "lb/ft³", _LB / (12 * _IN) ** 3),
+                (N_("Pound per cubic inch"), "lb/in³", _LB / _IN ** 3),
+                (N_("Pound per gallon"), "lb/gal", _LB / _GAL)],
+    N_("Digital Storage"): [(N_("Bit"), "bit", 1), (N_("Byte"), "B", 8), (N_("Kilobyte"), "kB", 8 * 10 ** 3),
+                        (N_("Megabyte"), "MB", 8 * 10 ** 6), (N_("Gigabyte"), "GB", 8 * 10 ** 9),
+                        (N_("Terabyte"), "TB", 8 * 10 ** 12), (N_("Petabyte"), "PB", 8 * 10 ** 15),
+                        (N_("Kibibyte"), "KiB", 8 * 2 ** 10), (N_("Mebibyte"), "MiB", 8 * 2 ** 20),
+                        (N_("Gibibyte"), "GiB", 8 * 2 ** 30), (N_("Tebibyte"), "TiB", 8 * 2 ** 40),
+                        (N_("Kilobit"), "kbit", 10 ** 3), (N_("Megabit"), "Mbit", 10 ** 6), (N_("Gigabit"), "Gbit", 10 ** 9)],
+    N_("Energy"): [(N_("Joule"), "J", 1), (N_("Kilojoule"), "kJ", 1000), (N_("Calorie"), "cal", Fraction("4.184")),
+               (N_("Food Calorie"), "kcal", 4184), (N_("Watt-hour"), "Wh", 3600), (N_("Kilowatt-hour"), "kWh", 3600000),
+               (N_("British thermal unit"), "BTU", Fraction("1055.05585262")),
+               (N_("Foot-pound"), "ft·lbf", 12 * _IN * _LBF), (N_("Electronvolt"), "eV", Fraction("1.602176634e-19"))],
+    N_("Length"): [(N_("Inch"), "in", _IN), (N_("Foot"), "ft", 12 * _IN), (N_("Yard"), "yd", 36 * _IN),
+               (N_("Mile"), "mi", 63360 * _IN), (N_("Nautical mile"), "nmi", 1852), (N_("Millimeter"), "mm", Fraction(1, 1000)),
+               (N_("Centimeter"), "cm", Fraction(1, 100)), (N_("Meter"), "m", 1), (N_("Kilometer"), "km", 1000)],
+    N_("Mass"): [(N_("Ounce"), "oz", _LB / 16), (N_("Pound"), "lb", _LB), (N_("Stone"), "st", 14 * _LB),
+             (N_("US ton"), "ton", 2000 * _LB), (N_("Milligram"), "mg", Fraction(1, 10 ** 6)),
+             (N_("Gram"), "g", Fraction(1, 1000)), (N_("Kilogram"), "kg", 1), (N_("Metric ton"), "t", 1000)],
+    N_("Pressure"): [(N_("Pound per square inch"), "psi", _LBF / _IN ** 2), (N_("Inch of mercury"), "inHg", Fraction("3386.389")),
+                 (N_("Millimeter of mercury"), "mmHg", Fraction("133.322387415")), (N_("Atmosphere"), "atm", 101325),
+                 (N_("Bar"), "bar", 100000), (N_("Pascal"), "Pa", 1), (N_("Kilopascal"), "kPa", 1000),
+                 (N_("Megapascal"), "MPa", 10 ** 6)],
+    N_("Speed"): [(N_("Mile per hour"), "mph", 63360 * _IN / 3600), (N_("Foot per second"), "ft/s", 12 * _IN),
+              (N_("Knot"), "kn", Fraction(1852, 3600)), (N_("Kilometer per hour"), "km/h", Fraction(1000, 3600)),
+              (N_("Meter per second"), "m/s", 1)],
+    N_("Temperature"): [(N_("Fahrenheit"), "°F", None), (N_("Celsius"), "°C", None), (N_("Kelvin"), "K", None)],
+    N_("Time"): [(N_("Millisecond"), "ms", Fraction(1, 1000)), (N_("Second"), "s", 1), (N_("Minute"), "min", 60),
+             (N_("Hour"), "h", 3600), (N_("Day"), "d", 86400), (N_("Week"), "wk", 604800),
+             (N_("Month (average)"), "mo", Fraction("2629746")), (N_("Year (average)"), "yr", Fraction("31556952"))],
+    N_("Volume"): [(N_("Teaspoon"), "tsp", _GAL / 768), (N_("Tablespoon"), "tbsp", _GAL / 256), (N_("Fluid ounce"), "fl oz", _GAL / 128),
+               (N_("Cup"), "cup", _GAL / 16), (N_("Pint"), "pt", _GAL / 8), (N_("Quart"), "qt", _GAL / 4),
+               (N_("Gallon"), "gal", _GAL), (N_("Milliliter"), "mL", Fraction(1, 10 ** 6)), (N_("Liter"), "L", Fraction(1, 1000)),
+               (N_("Cubic meter"), "m³", 1), (N_("Cubic inch"), "in³", _IN ** 3), (N_("Cubic foot"), "ft³", (12 * _IN) ** 3),
+               (N_("Imperial gallon"), "imp gal", Fraction("0.00454609"))],
 }
 CONVERTER_CATEGORIES = tuple(CONVERTER_UNITS)
 # what each category starts with the first time: (top unit, bottom unit)
@@ -1048,7 +1002,7 @@ CONVERTER_MAX_INPUT = 40                    # characters in a box
 
 
 def converter_factor(category, symbol):
-    return next(Fraction(size) for _, sym, size in CONVERTER_UNITS[category] if sym == symbol)
+    return next(Fraction(size) for name, sym, size in CONVERTER_UNITS[category] if sym == symbol)
 
 
 def temperature_to_kelvin(value, symbol):
@@ -1100,9 +1054,9 @@ def group_thousands(text):
 def converter_formula(category, from_symbol, to_symbol):
     """The line under the boxes, e.g. 'cm = in × 2.54' or 'mi² = ft² ÷ 27,878,400'."""
     if from_symbol == to_symbol:
-        return "Same unit"
+        return _("Same unit")
     if category == "Temperature":
-        return "Formula:  " + TEMPERATURE_FORMULAS[(from_symbol, to_symbol)]
+        return _("Formula:  {formula}").format(formula=TEMPERATURE_FORMULAS[(from_symbol, to_symbol)])
     factor = converter_factor(category, from_symbol) / converter_factor(category, to_symbol)
     if is_terminating(factor) and (factor >= 1 or not is_terminating(1 / factor)):
         op, number = "×", factor
@@ -1111,7 +1065,8 @@ def converter_formula(category, from_symbol, to_symbol):
     else:                                   # neither is exact: show the one that is at least 1
         op, number = ("×", factor) if factor >= 1 else ("÷", 1 / factor)
     equals = "=" if is_terminating(number) else "≈"
-    return f"Formula:  {to_symbol} {equals} {from_symbol} {op} {group_thousands(format_exact(number))}"
+    formula = f"{to_symbol} {equals} {from_symbol} {op} {group_thousands(format_exact(number))}"
+    return _("Formula:  {formula}").format(formula=formula)
 
 
 # ---------------------------------------------------------------------------
@@ -1213,14 +1168,20 @@ def _tape_layout(new_layout, text, width, bold=False, size_scale=1.0, align=Pang
 
 
 def _tape_header_text(printed_at):
-    return f"Xcalculator  ·  {printed_at:%b %d, %Y  %I:%M %p}"
+    # Translators: the date and time printed at the top of the tape, in Python's strftime format
+    # (%b month, %d day, %Y year, %I hour, %M minute, %p AM/PM).
+    return _("Xcalculator  ·  {date}").format(date=printed_at.strftime(_("%b %d, %Y  %I:%M %p")))
+
+
+def _page_text(page, pages):
+    return _("Page {page} of {pages}").format(page=page, pages=pages)
 
 
 def paginate_tape(new_layout, entries, page_width, page_height, printed_at):
     """Split the history into pages: a list of lists of entry numbers."""
     column = min(TAPE_WIDTH, page_width)
     header = _tape_layout(new_layout, _tape_header_text(printed_at), column, size_scale=0.8).get_pixel_size()[1]
-    footer = _tape_layout(new_layout, "Page 1 of 1", column, size_scale=0.8).get_pixel_size()[1]
+    footer = _tape_layout(new_layout, _page_text(1, 1), column, size_scale=0.8).get_pixel_size()[1]
     room = page_height - header - footer - 4 * TAPE_GAP
     pages, current, used = [], [], 0
     for index, (formula, result) in enumerate(entries):
@@ -1267,7 +1228,7 @@ def draw_tape_page(cr, new_layout, entries, pages, page_number, page_width, page
         y = show(_tape_layout(new_layout, "= " + result, column, bold=True), y) + TAPE_GAP
     if page_number == len(pages) - 1:
         tear_line(y)
-    footer = _tape_layout(new_layout, f"Page {page_number + 1} of {len(pages)}", column, size_scale=0.8,
+    footer = _tape_layout(new_layout, _page_text(page_number + 1, len(pages)), column, size_scale=0.8,
                           align=Pango.Alignment.CENTER)
     show(footer, page_height - footer.get_pixel_size()[1], gray=0.35)
 
@@ -1277,7 +1238,7 @@ class PrintPreview(Gtk.Window):
     SCALE = 0.75                            # preview pixels per point
 
     def __init__(self, calculator, entries, page_setup):
-        super().__init__(title="Print Preview - Xcalculator", transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("Print Preview - Xcalculator"), transient_for=calculator, destroy_with_parent=True)
         self.calculator, self.entries, self.page_setup = calculator, entries, page_setup
         self.printed_at = datetime.now()
         self.paper_width = page_setup.get_paper_width(Gtk.Unit.POINTS)
@@ -1294,15 +1255,15 @@ class PrintPreview(Gtk.Window):
         bar = Gtk.Box(spacing=6)
         bar.set_margin_start(8); bar.set_margin_end(8); bar.set_margin_top(8); bar.set_margin_bottom(8)
         self.back = Gtk.Button.new_from_icon_name("go-previous-symbolic", Gtk.IconSize.BUTTON)
-        self.back.set_tooltip_text("Previous page")
+        self.back.set_tooltip_text(_("Previous page"))
         self.back.connect("clicked", lambda b: self.go(-1))
         self.forward = Gtk.Button.new_from_icon_name("go-next-symbolic", Gtk.IconSize.BUTTON)
-        self.forward.set_tooltip_text("Next page")
+        self.forward.set_tooltip_text(_("Next page"))
         self.forward.connect("clicked", lambda b: self.go(1))
         self.page_label = Gtk.Label()
-        print_button = Gtk.Button(label="Print…")
+        print_button = Gtk.Button(label=_("Print…"))
         print_button.connect("clicked", self.on_print)
-        close_button = Gtk.Button(label="Close")
+        close_button = Gtk.Button(label=_("Close"))
         close_button.connect("clicked", lambda b: self.destroy())
         for widget in (self.back, self.page_label, self.forward):
             bar.pack_start(widget, False, False, 0)
@@ -1325,7 +1286,7 @@ class PrintPreview(Gtk.Window):
 
     def go(self, step):
         self.page = max(0, min(len(self.pages) - 1, self.page + step))
-        self.page_label.set_text(f"Page {self.page + 1} of {len(self.pages)}")
+        self.page_label.set_text(_page_text(self.page + 1, len(self.pages)))
         self.back.set_sensitive(self.page > 0)
         self.forward.set_sensitive(self.page < len(self.pages) - 1)
         self.area.queue_draw()
@@ -1362,14 +1323,14 @@ class PrintPreview(Gtk.Window):
 
 
 MODE_DESCRIPTIONS = {
-    "Basic": "Everyday arithmetic",
-    "Scientific": "Powers, roots, trigonometry, logarithms and more",
-    "Financial": "Loans, savings, cash flows and depreciation",
-    "Programmer": "Hexadecimal, binary and bitwise operations",
-    "Unit Converter": "Lengths, weights, temperatures and more",
+    "Basic": _("Everyday arithmetic"),
+    "Scientific": _("Powers, roots, trigonometry, logarithms and more"),
+    "Financial": _("Loans, savings, cash flows and depreciation"),
+    "Programmer": _("Hexadecimal, binary and bitwise operations"),
+    "Unit Converter": _("Lengths, weights, temperatures and more"),
 }
-PREF_BASES = (("Hexadecimal (HEX)", 16), ("Decimal (DEC)", 10), ("Octal (OCT)", 8), ("Binary (BIN)", 2))
-PREF_WORDS = (("64-bit (QWORD)", 64), ("32-bit (DWORD)", 32), ("16-bit (WORD)", 16), ("8-bit (BYTE)", 8))
+PREF_BASES = ((_("Hexadecimal (HEX)"), 16), (_("Decimal (DEC)"), 10), (_("Octal (OCT)"), 8), (_("Binary (BIN)"), 2))
+PREF_WORDS = ((_("64-bit (QWORD)"), 64), (_("32-bit (DWORD)"), 32), (_("16-bit (WORD)"), 16), (_("8-bit (BYTE)"), 8))
 
 
 class PreferencesWindow(Gtk.Window):
@@ -1377,15 +1338,15 @@ class PreferencesWindow(Gtk.Window):
     Every change takes effect at once."""
 
     def __init__(self, calculator):
-        super().__init__(title="Xcalculator Preferences", transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("Xcalculator Preferences"), transient_for=calculator, destroy_with_parent=True)
         self.calculator = calculator
         self.syncing = False
         self.set_default_size(620, 640)
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
         self.stack = Gtk.Stack()
-        self.stack.add_titled(self.build_general_page(), "General", "General")
-        self.stack.add_titled(self.build_modes_page(), "Modes", "Modes")
+        self.stack.add_titled(self.build_general_page(), "General", _("General"))
+        self.stack.add_titled(self.build_modes_page(), "Modes", _("Modes"))
         sidebar = Gtk.StackSidebar()
         sidebar.set_stack(self.stack)
         pages = Gtk.Box()
@@ -1395,13 +1356,13 @@ class PreferencesWindow(Gtk.Window):
         frame = Gtk.Frame()
         frame.add(pages)
 
-        documentation = Gtk.Button(label="Documentation")
+        documentation = Gtk.Button(label=_("Documentation"))
         documentation.connect("clicked", lambda b: calculator.show_help_contents(page="Preferences"))
-        reset = Gtk.Button(label="Reset to Defaults")
-        reset.set_tooltip_text("Put every preference back the way it was the first time. "
-                               "The saved history is kept.")
+        reset = Gtk.Button(label=_("Reset to Defaults"))
+        reset.set_tooltip_text(_("Put every preference back the way it was the first time. "
+                                 "The saved history is kept."))
         reset.connect("clicked", lambda b: calculator.reset_preferences())
-        close = Gtk.Button(label="Close")
+        close = Gtk.Button(label=_("Close"))
         close.connect("clicked", lambda b: self.destroy())
         buttons = Gtk.Box(spacing=6)
         buttons.pack_start(documentation, False, False, 0)
@@ -1460,7 +1421,7 @@ class PreferencesWindow(Gtk.Window):
     @staticmethod
     def combo(choices, changed):
         combo = Gtk.ComboBoxText()
-        for label, _ in choices:
+        for label, value in choices:
             combo.append_text(label)
         combo.connect("changed", changed)
         return combo
@@ -1468,54 +1429,54 @@ class PreferencesWindow(Gtk.Window):
     def build_general_page(self):
         scroller, box = self.page()
         c = self.calculator
-        self.heading(box, "Numbers")
+        self.heading(box, _("Numbers"))
         self.decimals = Gtk.SpinButton.new_with_range(0, MAX_DECIMALS, 1)
         self.decimals.connect("value-changed", lambda s: self.changed(lambda: c.set_number_format(decimals=s.get_value_as_int())))
-        self.row(box, "Decimal places", self.decimals,
-                 "Up to 50 places, using high-precision maths (mpmath)." if mpmath
-                 else "Up to 15 places. Install python3-mpmath for up to 50.")
+        self.row(box, _("Decimal places"), self.decimals,
+                 _("Up to 50 places, using high-precision maths (mpmath).") if mpmath
+                 else _("Up to 15 places. Install python3-mpmath for up to 50."))
         self.show_all_switch = Gtk.Switch()
         self.show_all_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_number_format(show_all=s.get_active())))
-        self.show_all_hint = self.row(box, "Show all decimal places", self.show_all_switch, "")
+        self.show_all_hint = self.row(box, _("Show all decimal places"), self.show_all_switch, "")
         self.thousands_switch = Gtk.Switch()
         self.thousands_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_number_format(thousands=s.get_active())))
-        self.row(box, "Thousands separators", self.thousands_switch, "1234567 shows as 1,234,567")
+        self.row(box, _("Thousands separators"), self.thousands_switch, _("1234567 shows as 1,234,567"))
 
-        self.heading(box, "Scientific")
-        self.angle = self.combo((("Degrees", False), ("Radians", True)),
+        self.heading(box, _("Scientific"))
+        self.angle = self.combo(((_("Degrees"), False), (_("Radians"), True)),
                                 lambda w: self.changed(lambda: c.set_angle_mode(w.get_active() == 1)))
-        self.row(box, "Angle units", self.angle, "Also changed by the Rad/Deg button")
+        self.row(box, _("Angle units"), self.angle, _("Also changed by the Rad/Deg button"))
 
-        self.heading(box, "Programmer")
+        self.heading(box, _("Programmer"))
         self.word = self.combo(PREF_WORDS, lambda w: self.changed(
             lambda: c.set_programmer_format(c.prog_base, PREF_WORDS[w.get_active()][1])))
-        self.row(box, "Word size", self.word, "Also changed by the QWORD/DWORD/WORD/BYTE button")
+        self.row(box, _("Word size"), self.word, _("Also changed by the QWORD/DWORD/WORD/BYTE button"))
         self.base = self.combo(PREF_BASES, lambda w: self.changed(
             lambda: c.set_programmer_format(PREF_BASES[w.get_active()][1], c.prog_bits)))
-        self.row(box, "Starting number base", self.base, "Also changed by the HEX, DEC, OCT and BIN buttons")
+        self.row(box, _("Starting number base"), self.base, _("Also changed by the HEX, DEC, OCT and BIN buttons"))
 
-        self.heading(box, "History")
+        self.heading(box, _("History"))
         self.keep_switch = Gtk.Switch()
         self.keep_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_keep_history(s.get_active())))
-        self.row(box, "Keep history after closing", self.keep_switch,
-                 "Show the saved history when Xcalculator opens. It is always saved, "
-                 "in ~/.config/xcalculator/history.json")
-        delete = Gtk.Button(label="Delete Saved History…")
+        self.row(box, _("Keep history after closing"), self.keep_switch,
+                 _("Show the saved history when Xcalculator opens. It is always saved, "
+                   "in ~/.config/xcalculator/history.json"))
+        delete = Gtk.Button(label=_("Delete Saved History…"))
         delete.connect("clicked", self.on_delete_history)
-        self.row(box, "Saved history", delete, "Clear the history and delete the saved file")
+        self.row(box, _("Saved history"), delete, _("Clear the history and delete the saved file"))
         return scroller
 
     def build_modes_page(self):
         scroller, box = self.page()
-        self.heading(box, "Show in the Mode menu")
+        self.heading(box, _("Show in the Mode menu"))
         self.mode_switches = {}
         for mode in VALID_MODES:
             switch = Gtk.Switch()
             switch.connect("notify::active", lambda s, p, m=mode: self.changed(
                 lambda: self.calculator.set_mode_enabled(m, s.get_active())))
-            self.row(box, mode, switch, MODE_DESCRIPTIONS[mode])
+            self.row(box, _(mode), switch, MODE_DESCRIPTIONS[mode])
             self.mode_switches[mode] = switch
-        note = Gtk.Label(label="At least one mode stays on.", xalign=0)
+        note = Gtk.Label(label=_("At least one mode stays on."), xalign=0)
         note.get_style_context().add_class("dim-label")
         note.set_margin_top(10)
         box.pack_start(note, False, False, 0)
@@ -1534,12 +1495,12 @@ class PreferencesWindow(Gtk.Window):
         decimals = NUMBER_FORMAT["decimals"]
         self.decimals.set_value(decimals)
         self.show_all_switch.set_active(NUMBER_FORMAT["show_all"])
-        self.show_all_hint.set_text(f"2.5 shows as 2.5{'0' * (decimals - 1)}" if decimals > 1
-                                    else "Pads answers with zeros to every decimal place")
+        self.show_all_hint.set_text(_("2.5 shows as {example}").format(example="2.5" + "0" * (decimals - 1))
+                                    if decimals > 1 else _("Pads answers with zeros to every decimal place"))
         self.thousands_switch.set_active(c.thousands)
         self.angle.set_active(1 if c.use_radians else 0)
-        self.word.set_active([bits for _, bits in PREF_WORDS].index(c.prog_bits))
-        self.base.set_active([base for _, base in PREF_BASES].index(c.prog_base))
+        self.word.set_active([bits for name, bits in PREF_WORDS].index(c.prog_bits))
+        self.base.set_active([base for name, base in PREF_BASES].index(c.prog_base))
         self.keep_switch.set_active(c.keep_history)
         for mode, switch in self.mode_switches.items():
             on = mode in c.enabled_modes
@@ -1549,10 +1510,10 @@ class PreferencesWindow(Gtk.Window):
 
     def on_delete_history(self, button):
         dialog = Gtk.MessageDialog(transient_for=self, modal=True, message_type=Gtk.MessageType.WARNING,
-                                   buttons=Gtk.ButtonsType.NONE, text="Delete the saved history?")
-        dialog.format_secondary_text("This clears the history and deletes the saved file. It can't be undone.")
-        dialog.add_button("Cancel", Gtk.ResponseType.CANCEL)
-        dialog.add_button("Delete", Gtk.ResponseType.OK).get_style_context().add_class("destructive-action")
+                                   buttons=Gtk.ButtonsType.NONE, text=_("Delete the saved history?"))
+        dialog.format_secondary_text(_("This clears the history and deletes the saved file. It can't be undone."))
+        dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("Delete"), Gtk.ResponseType.OK).get_style_context().add_class("destructive-action")
         if dialog.run() == Gtk.ResponseType.OK:
             self.calculator.delete_saved_history()
         dialog.destroy()
@@ -1568,19 +1529,18 @@ class HelpWindow(Gtk.Window):
     """Help → Documentation: one page per topic, picked from a list on the left."""
 
     def __init__(self, calculator):
-        super().__init__(title="Help - Xcalculator", transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("Help - Xcalculator"), transient_for=calculator, destroy_with_parent=True)
         self.set_default_size(860, 700)
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.page_for_mode = {}
-        for title, mode, markup in HELP_PAGES:
-            if markup == SHORTCUTS_PAGE:
-                self.stack.add_titled(self.build_shortcuts_page(), title, title)
+        for name, mode, paragraphs in HELP_PAGES:
+            title = _(name)
+            if paragraphs == SHORTCUTS_PAGE:
+                self.stack.add_titled(self.build_shortcuts_page(), name, title)
                 continue
-            if markup is None:              # the Programmer page is the Programmer guide
-                markup = "<big><b>Programmer</b></big>\n\n" + prog_guide_markup()
             label = Gtk.Label()
-            label.set_markup(markup)
+            label.set_markup(f"<big><b>{GLib.markup_escape_text(title)}</b></big>\n\n" + "\n\n".join(paragraphs))
             label.set_line_wrap(True)
             label.set_xalign(0)
             label.set_yalign(0)
@@ -1590,9 +1550,9 @@ class HelpWindow(Gtk.Window):
             scroller = Gtk.ScrolledWindow()
             scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
             scroller.add(label)
-            self.stack.add_titled(scroller, title, title)
+            self.stack.add_titled(scroller, name, title)
             if mode:
-                self.page_for_mode[mode] = title
+                self.page_for_mode[mode] = name
         sidebar = Gtk.StackSidebar()
         sidebar.set_stack(self.stack)
         box = Gtk.Box()
@@ -1607,7 +1567,7 @@ class HelpWindow(Gtk.Window):
     def build_shortcuts_page():
         """Shortcut keys drawn as key caps (Ctrl + N), in groups and two columns, like Xed."""
         title = Gtk.Label(xalign=0)
-        title.set_markup("<big><b>Keyboard Shortcuts</b></big>")
+        title.set_markup(f"<big><b>{GLib.markup_escape_text(_('Keyboard Shortcuts'))}</b></big>")
         columns = Gtk.Box(spacing=36, homogeneous=True)
         for groups in SHORTCUT_COLUMNS:
             grid = Gtk.Grid(column_spacing=18, row_spacing=6)   # one grid: descriptions share an edge
@@ -1704,23 +1664,23 @@ class XCalculator(Gtk.Window):
     }
     # Scientific's f(x) menu: (button label, what it does)
     MORE_FUNCTIONS = (
-        ('floor', "round down to a whole number:  floor(2.7) = 2"),
-        ('ceil', "round up to a whole number:  ceil(2.1) = 3"),
-        ('int', "the whole-number part:  int(−2.7) = −2"),
-        ('frac', "the part after the decimal point:  frac(2.75) = 0.75"),
-        ('sgn', "the sign:  −1, 0 or 1"),
-        ('log₂', "logarithm base 2:  log₂(8) = 3"),
-        ('sec', "secant, 1 ÷ cos"),
-        ('csc', "cosecant, 1 ÷ sin"),
-        ('cot', "cotangent, cos ÷ sin"),
+        ('floor', _("round down to a whole number:  floor(2.7) = 2")),
+        ('ceil', _("round up to a whole number:  ceil(2.1) = 3")),
+        ('int', _("the whole-number part:  int(−2.7) = −2")),
+        ('frac', _("the part after the decimal point:  frac(2.75) = 0.75")),
+        ('sgn', _("the sign:  −1, 0 or 1")),
+        ('log₂', _("logarithm base 2:  log₂(8) = 3")),
+        ('sec', _("secant, 1 ÷ cos")),
+        ('csc', _("cosecant, 1 ÷ sin")),
+        ('cot', _("cotangent, cos ÷ sin")),
     )
     SCIENTIFIC_TOOLTIPS = {
-        '|x|': "Absolute value: the number without its sign.  |−5| = 5",
-        'nCr': "Combinations: ways to choose r items from n when order doesn't matter.\n5 nCr 2 = 10",
-        'nPr': "Permutations: ways to arrange r items from n when order matters.\n5 nPr 2 = 20",
-        'round': "Round to the nearest whole number.  round(2.5) = 3",
-        'f(x)': "More functions",
-        'mod': "Remainder after division.  17 mod 5 = 2",
+        '|x|': _("Absolute value: the number without its sign.  |−5| = 5"),
+        'nCr': _("Combinations: ways to choose r items from n when order doesn't matter.\n5 nCr 2 = 10"),
+        'nPr': _("Permutations: ways to arrange r items from n when order matters.\n5 nPr 2 = 20"),
+        'round': _("Round to the nearest whole number.  round(2.5) = 3"),
+        'f(x)': _("More functions"),
+        'mod': _("Remainder after division.  17 mod 5 = 2"),
     }
     SECOND_FUNCTIONS = {
         'sin': 'sin⁻¹', 'cos': 'cos⁻¹', 'tan': 'tan⁻¹',
@@ -1731,6 +1691,8 @@ class XCalculator(Gtk.Window):
         '×': '*', '÷': '/', '−': '-', 'Δ%': 'Δ%', 'Mrgn': 'Mrgn', 'nCr': 'nCr', 'nPr': 'nPr',
     }
     WORD_OPS = ('mod', 'Δ%', 'Mrgn', 'nCr', 'nPr')
+    # buttons whose label is a word: translated on screen, still known by the English name
+    WORD_BUTTONS = (N_("Clear"), N_("Clear All"), N_("Capture"))
     FIN_TVM_KEYS = ('N', 'I/Y', 'PV', 'PMT', 'FV')
     FIN_ACTIONS = ('CPT', 'P/Y', 'BGN', 'CFj', 'Nj', 'NPV', 'IRR', 'P1', 'P2',
                    'BAL', 'PRN', 'INT', 'SL', 'SYD', 'DB', 'EFF', 'NOM', 'Clear All')
@@ -1839,86 +1801,86 @@ class XCalculator(Gtk.Window):
         main_vbox.pack_start(menubar, False, False, 0)
 
         file_menu = Gtk.Menu()
-        file_item = Gtk.MenuItem(label="File")
+        file_item = Gtk.MenuItem(label=_("File"))
         file_item.set_submenu(file_menu)
         menubar.append(file_item)
 
-        new_window_item = Gtk.MenuItem(label="New Window")
+        new_window_item = Gtk.MenuItem(label=_("New Window"))
         new_window_item.add_accelerator("activate", accel_group, Gdk.KEY_n, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         new_window_item.connect("activate", self.open_new_window)
         file_menu.append(new_window_item)
 
         file_menu.append(Gtk.SeparatorMenuItem())
 
-        self.print_preview_item = Gtk.MenuItem(label="Print Preview")
+        self.print_preview_item = Gtk.MenuItem(label=_("Print Preview"))
         self.print_preview_item.add_accelerator("activate", accel_group, Gdk.KEY_p,
                                                 Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK, Gtk.AccelFlags.VISIBLE)
         self.print_preview_item.connect("activate", self.show_print_preview)
         file_menu.append(self.print_preview_item)
 
-        self.print_item = Gtk.MenuItem(label="Print…")
+        self.print_item = Gtk.MenuItem(label=_("Print…"))
         self.print_item.add_accelerator("activate", accel_group, Gdk.KEY_p, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         self.print_item.connect("activate", self.print_history)
         file_menu.append(self.print_item)
 
         file_menu.append(Gtk.SeparatorMenuItem())
 
-        close_item = Gtk.MenuItem(label="Close")
+        close_item = Gtk.MenuItem(label=_("Close"))
         close_item.add_accelerator("activate", accel_group, Gdk.KEY_w, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         close_item.connect("activate", lambda w: self.close())
         file_menu.append(close_item)
 
-        quit_item = Gtk.MenuItem(label="Quit")
+        quit_item = Gtk.MenuItem(label=_("Quit"))
         quit_item.add_accelerator("activate", accel_group, Gdk.KEY_q, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         quit_item.connect("activate", self.quit_calculator)
         file_menu.append(quit_item)
 
         edit_menu = Gtk.Menu()
-        edit_item = Gtk.MenuItem(label="Edit")
+        edit_item = Gtk.MenuItem(label=_("Edit"))
         edit_item.set_submenu(edit_menu)
         menubar.append(edit_item)
 
-        copy_item = Gtk.MenuItem(label="Copy")
+        copy_item = Gtk.MenuItem(label=_("Copy"))
         copy_item.add_accelerator("activate", accel_group, Gdk.KEY_c, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         copy_item.connect("activate", self.copy_to_clipboard)
         edit_menu.append(copy_item)
 
-        paste_item = Gtk.MenuItem(label="Paste")
+        paste_item = Gtk.MenuItem(label=_("Paste"))
         paste_item.add_accelerator("activate", accel_group, Gdk.KEY_v, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         paste_item.connect("activate", self.paste_from_clipboard)
         edit_menu.append(paste_item)
 
         edit_menu.append(Gtk.SeparatorMenuItem())
 
-        preferences_item = Gtk.MenuItem(label="Preferences")
+        preferences_item = Gtk.MenuItem(label=_("Preferences"))
         preferences_item.connect("activate", self.show_preferences)
         edit_menu.append(preferences_item)
 
         mode_menu = Gtk.Menu()
-        mode_item = Gtk.MenuItem(label="Mode")
+        mode_item = Gtk.MenuItem(label=_("Mode"))
         mode_item.set_submenu(mode_menu)
 
-        basic_radio = Gtk.RadioMenuItem(label="Basic")
+        basic_radio = Gtk.RadioMenuItem(label=_("Basic"))
         basic_radio.set_active(self.current_mode == "Basic")
         basic_radio.connect("activate", self.on_menu_mode_changed, "Basic")
         mode_menu.append(basic_radio)
 
-        sci_radio = Gtk.RadioMenuItem(group=basic_radio, label="Scientific")
+        sci_radio = Gtk.RadioMenuItem(group=basic_radio, label=_("Scientific"))
         sci_radio.set_active(self.current_mode == "Scientific")
         sci_radio.connect("activate", self.on_menu_mode_changed, "Scientific")
         mode_menu.append(sci_radio)
 
-        financial_radio = Gtk.RadioMenuItem(group=basic_radio, label="Financial")
+        financial_radio = Gtk.RadioMenuItem(group=basic_radio, label=_("Financial"))
         financial_radio.set_active(self.current_mode == "Financial")
         financial_radio.connect("activate", self.on_menu_mode_changed, "Financial")
         mode_menu.append(financial_radio)
 
-        programmer_radio = Gtk.RadioMenuItem(group=basic_radio, label="Programmer")
+        programmer_radio = Gtk.RadioMenuItem(group=basic_radio, label=_("Programmer"))
         programmer_radio.set_active(self.current_mode == "Programmer")
         programmer_radio.connect("activate", self.on_menu_mode_changed, "Programmer")
         mode_menu.append(programmer_radio)
 
-        converter_radio = Gtk.RadioMenuItem(group=basic_radio, label="Unit Converter")
+        converter_radio = Gtk.RadioMenuItem(group=basic_radio, label=_("Unit Converter"))
         converter_radio.set_active(self.current_mode == "Unit Converter")
         converter_radio.connect("activate", self.on_menu_mode_changed, "Unit Converter")
         mode_menu.append(converter_radio)
@@ -1930,29 +1892,29 @@ class XCalculator(Gtk.Window):
                                  Gtk.AccelFlags.VISIBLE)
 
         view_menu = Gtk.Menu()
-        view_item = Gtk.MenuItem(label="View")
+        view_item = Gtk.MenuItem(label=_("View"))
         view_item.set_submenu(view_menu)
         menubar.append(view_item)
         menubar.append(mode_item)           # File Edit View Mode Help
 
-        clear_history_item = Gtk.MenuItem(label="Clear History")
+        clear_history_item = Gtk.MenuItem(label=_("Clear History"))
         clear_history_item.connect("activate", self.clear_history)
         view_menu.append(clear_history_item)
 
         divider2 = Gtk.SeparatorMenuItem()
         view_menu.append(divider2)
 
-        larger_font_item = Gtk.MenuItem(label="Larger Font")
+        larger_font_item = Gtk.MenuItem(label=_("Larger Font"))
         larger_font_item.add_accelerator("activate", accel_group, Gdk.KEY_equal, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         larger_font_item.connect("activate", self.change_font_zoom, 1)
         view_menu.append(larger_font_item)
 
-        smaller_font_item = Gtk.MenuItem(label="Smaller Font")
+        smaller_font_item = Gtk.MenuItem(label=_("Smaller Font"))
         smaller_font_item.add_accelerator("activate", accel_group, Gdk.KEY_minus, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         smaller_font_item.connect("activate", self.change_font_zoom, -1)
         view_menu.append(smaller_font_item)
 
-        reset_font_item = Gtk.MenuItem(label="Reset Font Size")
+        reset_font_item = Gtk.MenuItem(label=_("Reset Font Size"))
         reset_font_item.add_accelerator("activate", accel_group, Gdk.KEY_0, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         reset_font_item.connect("activate", self.reset_font_size)
         view_menu.append(reset_font_item)
@@ -1960,28 +1922,28 @@ class XCalculator(Gtk.Window):
         divider3 = Gtk.SeparatorMenuItem()
         view_menu.append(divider3)
 
-        reset_view_item = Gtk.MenuItem(label="Reset View")
+        reset_view_item = Gtk.MenuItem(label=_("Reset View"))
         reset_view_item.connect("activate", self.reset_view)
         view_menu.append(reset_view_item)
 
         help_menu = Gtk.Menu()
-        help_item = Gtk.MenuItem(label="Help")
+        help_item = Gtk.MenuItem(label=_("Help"))
         help_item.set_submenu(help_menu)
         menubar.append(help_item)
 
-        contents_item = Gtk.MenuItem(label="Documentation")
+        contents_item = Gtk.MenuItem(label=_("Documentation"))
         contents_item.add_accelerator("activate", accel_group, Gdk.KEY_F1, 0, Gtk.AccelFlags.VISIBLE)
         contents_item.connect("activate", self.show_help_contents)
         help_menu.append(contents_item)
 
-        shortcuts_item = Gtk.MenuItem(label="Keyboard Shortcuts")
+        shortcuts_item = Gtk.MenuItem(label=_("Keyboard Shortcuts"))
         shortcuts_item.add_accelerator("activate", accel_group, Gdk.KEY_F1, Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
         shortcuts_item.connect("activate", lambda w: self.show_help_contents(page="Keyboard"))
         help_menu.append(shortcuts_item)
 
         help_menu.append(Gtk.SeparatorMenuItem())
 
-        about_item = Gtk.MenuItem(label="About")
+        about_item = Gtk.MenuItem(label=_("About"))
         about_item.connect("activate", self.show_about)
         help_menu.append(about_item)
 
@@ -2154,7 +2116,10 @@ class XCalculator(Gtk.Window):
                 if label == 'f(x)':
                     button = self.make_more_functions_button()
                 else:
-                    button = Gtk.ToggleButton(label=label) if selectable else Gtk.Button(label=label)
+                    shown = _(label) if label in self.WORD_BUTTONS or label in CONVERTER_UNITS else label
+                    button = Gtk.ToggleButton(label=shown) if selectable else Gtk.Button(label=shown)
+                    if shown != label:
+                        button.key = label      # what on_button_clicked goes by
                     button.connect("clicked", self.on_button_clicked)
                 button.set_focus_on_click(False)    # keep the cursor in the display
                 context = button.get_style_context()
@@ -2170,10 +2135,10 @@ class XCalculator(Gtk.Window):
                 if (converter and label in CONVERTER_UNITS) or label == 'Clear All':
                     context.add_class("compact")    # long labels: narrower padding keeps the width
                 if label == 'Capture':
-                    button.set_tooltip_text("Add this conversion to the history")
+                    button.set_tooltip_text(_("Add this conversion to the history"))
                 if label == 'Clear All':
-                    button.set_tooltip_text("Clear all stored financial values: N, I/Y, PV, PMT, FV, "
-                                            "cash flows, P1/P2, and the P/Y and BGN settings")
+                    button.set_tooltip_text(_("Clear all stored financial values: N, I/Y, PV, PMT, FV, "
+                                              "cash flows, P1/P2, and the P/Y and BGN settings"))
                 if self.current_mode == "Scientific" and label in self.SCIENTIFIC_TOOLTIPS:
                     button.set_tooltip_text(self.SCIENTIFIC_TOOLTIPS[label])
 
@@ -2200,7 +2165,8 @@ class XCalculator(Gtk.Window):
         if self.display_bottom.is_focus() or converter:
             self.display_top.grab_focus_without_selecting()
         self.update_status()
-        self.set_title(f"{self.current_mode} - Xcalculator")
+        # Translators: the window title, e.g. "Basic - Xcalculator"
+        self.set_title(_("{mode} - Xcalculator").format(mode=_(self.current_mode)))
         self.apply_mode_size()
 
     def make_more_functions_button(self):
@@ -2525,16 +2491,16 @@ class XCalculator(Gtk.Window):
         if isinstance(error, (FinanceError, ProgrammerError)):
             message = str(error)
         elif isinstance(error, SyntaxError):
-            message = "Malformed Expression"
+            message = _("Malformed Expression")
         elif isinstance(error, ZeroDivisionError):
-            message = "Cannot divide by zero"
+            message = _("Cannot divide by zero")
         elif isinstance(error, OverflowError):
-            message = "Result too large"
+            message = _("Result too large")
         elif isinstance(error, ValueError):
-            message = "Invalid input"
+            message = _("Invalid input")
         else:
             traceback.print_exception(error)
-            message = "Calculation Error"
+            message = _("Calculation Error")
         self.error_label.set_text(message)
         self.is_result_active = False
 
@@ -2877,10 +2843,10 @@ class XCalculator(Gtk.Window):
         else:
             self.paste_labels(text, "0123456789.+-*/^()%!×÷−e")
 
-    def paste_labels(self, text, allowed, message="Can't paste that"):
+    def paste_labels(self, text, allowed, message=None):
         """Paste by pressing the matching buttons, so the usual typing rules apply."""
         if len(text) > 200 or any(ch not in allowed for ch in text):
-            self.error_label.set_text(message)
+            self.error_label.set_text(message or _("Can't paste that"))
             return
         for ch in text:
             self.execute_action_by_label(ch)
@@ -2892,13 +2858,13 @@ class XCalculator(Gtk.Window):
             try:
                 value = int(digits, {'x': 16, 'b': 2, 'o': 8}[kind.lower()])
             except ValueError:
-                self.error_label.set_text("Can't paste that")
+                self.error_label.set_text(_("Can't paste that"))
                 return
             self.edit_at_cursor(lambda: self.prog_insert_decimal(str(-value if sign else value)))
             return
         digits = "0123456789ABCDEF"[:self.prog_base]
         self.paste_labels(text.upper(), digits + "+-*/()×÷−",
-                          f"Can't paste that in {self.prog_base_name()}")
+                          _("Can't paste that in {base}").format(base=self.prog_base_name()))
 
     def execute_action_by_label(self, label):
         class MockWidget:
@@ -2934,20 +2900,20 @@ class XCalculator(Gtk.Window):
             expr_box.add(expr_label)
             if restore:
                 expr_box.connect("button-press-event", self.on_history_conversion_clicked, restore, None)
-                expr_box.set_tooltip_text("Click to bring back this conversion")
+                expr_box.set_tooltip_text(_("Click to bring back this conversion"))
             elif formula_clickable:     # financial entries are labels, not formulas
                 expr_box.connect("button-press-event", self.on_history_expr_clicked, formula)
-                expr_box.set_tooltip_text("Click to use this calculation again")
+                expr_box.set_tooltip_text(_("Click to use this calculation again"))
 
             res_box = Gtk.EventBox()
             res_box.set_visible_window(False)
             res_box.add(FitLabel(result, "<b>{}</b>", show=lambda s, g=grouping: self.history_result_look(s, g)))
             if restore:
                 res_box.connect("button-press-event", self.on_history_conversion_clicked, restore, click_text)
-                res_box.set_tooltip_text("Click to bring back this conversion")
+                res_box.set_tooltip_text(_("Click to bring back this conversion"))
             else:
                 res_box.connect("button-press-event", self.on_history_res_clicked, click_text or result)
-                res_box.set_tooltip_text("Click to use this number")
+                res_box.set_tooltip_text(_("Click to use this number"))
 
             hbox = HistoryRow(expr_box, res_box)
             hbox.set_margin_end(2)
@@ -3014,7 +2980,7 @@ class XCalculator(Gtk.Window):
     def on_button_clicked(self, widget):
         if self.syncing_widgets:
             return                          # a toggle button changed by the code, not a click
-        label = widget.get_label()
+        label = getattr(widget, "key", None) or widget.get_label()
 
         if label != '=':
             self.error_label.set_text("")
@@ -3209,7 +3175,7 @@ class XCalculator(Gtk.Window):
         if abs(i) < 1e-12:
             return n
         if 1 + i <= 0:
-            raise FinanceError("Rate out of range")
+            raise FinanceError(_("Rate out of range"))
         return ((1 + i) ** n - 1) / i
 
     @staticmethod
@@ -3232,14 +3198,14 @@ class XCalculator(Gtk.Window):
             # coarser steps once past 100% so the scan stays fast
             x += step if x < 1.0 else step * 100
         if not brackets:
-            raise FinanceError("No solution")
+            raise FinanceError(_("No solution"))
         roots = []
         for a, b in brackets:
             if a == b:
                 roots.append(a)
                 continue
             fa = f(a)
-            for _ in range(200):
+            for step in range(200):
                 m = (a + b) / 2
                 fm = f(m)
                 if fa * fm <= 0:
@@ -3251,7 +3217,7 @@ class XCalculator(Gtk.Window):
 
     def periodic_rate(self):
         if self.periods_per_year <= 0:
-            raise FinanceError("P/Y must be positive")
+            raise FinanceError(_("P/Y must be positive"))
         return self.tvm['I/Y'] / (100 * self.periods_per_year)
 
     def compute_tvm(self, key):
@@ -3259,11 +3225,11 @@ class XCalculator(Gtk.Window):
         b = 1 if self.begin_mode else 0
         py = self.periods_per_year
         if py <= 0:
-            raise FinanceError("P/Y must be positive")
+            raise FinanceError(_("P/Y must be positive"))
 
         if key == 'I/Y':
             if n <= 0:
-                raise FinanceError("N must be positive")
+                raise FinanceError(_("N must be positive"))
 
             def equation(i):
                 growth = (1 + i) ** n
@@ -3272,7 +3238,7 @@ class XCalculator(Gtk.Window):
 
         i = self.periodic_rate()
         if 1 + i <= 0:
-            raise FinanceError("Rate out of range")
+            raise FinanceError(_("Rate out of range"))
         growth = (1 + i) ** n
         annuity = (1 + i * b) * self._annuity_factor(i, n)
 
@@ -3282,51 +3248,51 @@ class XCalculator(Gtk.Window):
             return -(fv + pmt * annuity) / growth
         if key == 'PMT':
             if annuity == 0:
-                raise FinanceError("N must not be 0")
+                raise FinanceError(_("N must not be 0"))
             return -(pv * growth + fv) / annuity
         if key == 'N':
             if abs(i) < 1e-12:
                 if pmt == 0:
-                    raise FinanceError("PMT must not be 0")
+                    raise FinanceError(_("PMT must not be 0"))
                 return -(pv + fv) / pmt
             a = pmt * (1 + i * b) / i
             numerator, denominator = a - fv, a + pv
             if denominator == 0 or numerator / denominator <= 0:
-                raise FinanceError("No solution")
+                raise FinanceError(_("No solution"))
             return math.log(numerator / denominator) / math.log(1 + i)
-        raise FinanceError("Unknown key")
+        raise FinanceError(_("Unknown key"))
 
     def expanded_cash_flows(self):
         flows = []
         for amount, count in self.cash_flows:
             if len(flows) + int(count) > MAX_PERIODS:    # check before building the list
-                raise FinanceError("Too many cash flows")
+                raise FinanceError(_("Too many cash flows"))
             flows.extend([amount] * int(count))
         return flows
 
     def compute_npv(self, rate_percent):
         flows = self.expanded_cash_flows()
         if not flows:
-            raise FinanceError("Enter cash flows with CFj")
+            raise FinanceError(_("Enter cash flows with CFj"))
         r = float(rate_percent) / 100      # Financial works in ordinary floats (15 digits)
         if 1 + r <= 0:
-            raise FinanceError("Rate out of range")
+            raise FinanceError(_("Rate out of range"))
         return sum(cf / (1 + r) ** t for t, cf in enumerate(flows))
 
     def compute_irr(self):
         flows = self.expanded_cash_flows()
         if len(flows) < 2 or not (any(c > 0 for c in flows) and any(c < 0 for c in flows)):
-            raise FinanceError("IRR needs inflows and outflows")
+            raise FinanceError(_("IRR needs inflows and outflows"))
         return self._find_root(lambda r: sum(c / (1 + r) ** t for t, c in enumerate(flows))) * 100
 
     def compute_amortization(self):
         if self.amort_p1 is None or self.amort_p2 is None:
-            raise FinanceError("Set P1 and P2 first")
+            raise FinanceError(_("Set P1 and P2 first"))
         p1, p2 = self.amort_p1, self.amort_p2
         if p1 < 1 or p2 < p1:
-            raise FinanceError("P2 must be at least P1")
+            raise FinanceError(_("P2 must be at least P1"))
         if p2 > MAX_PERIODS:
-            raise FinanceError("Too many periods")
+            raise FinanceError(_("Too many periods"))
         i = self.periodic_rate()
         pmt = self.tvm['PMT']
         balance = self.tvm['PV']
@@ -3344,25 +3310,25 @@ class XCalculator(Gtk.Window):
     def compute_depreciation(self, method, year):
         cost, salvage, life = self.tvm['PV'], self.tvm['FV'], self.tvm['N']
         if life <= 0:
-            raise FinanceError("Set N to the asset life")
+            raise FinanceError(_("Set N to the asset life"))
         if year < 1 or year > math.ceil(life):
-            raise FinanceError("Year must be within the asset life")
+            raise FinanceError(_("Year must be within the asset life"))
         if method == 'SL':
             return (cost - salvage) / life
         if method == 'SYD':
             n = int(life)
             if n != life:
-                raise FinanceError("SYD needs a whole-number life")
+                raise FinanceError(_("SYD needs a whole-number life"))
             return (cost - salvage) * (n - year + 1) / (n * (n + 1) / 2)
         # declining balance: I/Y holds the declining percent (200 = double declining)
         factor = self.tvm['I/Y'] / 100
         if factor <= 0:
-            raise FinanceError("Set I/Y to the declining % (e.g. 200)")
+            raise FinanceError(_("Set I/Y to the declining % (e.g. 200)"))
         if year > MAX_PERIODS:
-            raise FinanceError("Too many periods")
+            raise FinanceError(_("Too many periods"))
         book = cost
         depreciation = 0.0
-        for _ in range(int(year)):
+        for year_number in range(int(year)):
             depreciation = min(book * factor / life, max(book - salvage, 0.0))
             book -= depreciation
         return depreciation
@@ -3382,7 +3348,7 @@ class XCalculator(Gtk.Window):
     def entered_count(self, minimum=1):
         value = self.typed_value()
         if value is None or value != int(value) or value < minimum:
-            raise FinanceError(f"Enter a whole number >= {minimum}")
+            raise FinanceError(_("Enter a whole number >= {minimum}").format(minimum=minimum))
         return int(value)
 
     def show_result(self, value, record=None, echo=False):
@@ -3430,7 +3396,7 @@ class XCalculator(Gtk.Window):
                 self.show_result(self.periods_per_year, echo=True)
                 return
             if value <= 0:
-                raise FinanceError("P/Y must be positive")
+                raise FinanceError(_("P/Y must be positive"))
             self.periods_per_year = float(value)
             self.show_result(value, echo=True)
         elif label == 'BGN':
@@ -3448,21 +3414,21 @@ class XCalculator(Gtk.Window):
         elif label == 'CFj':
             value = self.typed_value()
             if value is None:
-                raise FinanceError("Enter a cash flow first")
+                raise FinanceError(_("Enter a cash flow first"))
             self.cash_flows.append([float(value), 1])
             self.show_result(value, echo=True)
         elif label == 'Nj':
             if not self.cash_flows:
-                raise FinanceError("Enter a cash flow with CFj first")
+                raise FinanceError(_("Enter a cash flow with CFj first"))
             count = self.entered_count()
             if count > MAX_PERIODS:
-                raise FinanceError(f"Nj can be at most {MAX_PERIODS}")
+                raise FinanceError(_("Nj can be at most {count}").format(count=MAX_PERIODS))
             self.cash_flows[-1][1] = count
             self.show_result(count, echo=True)
         elif label == 'NPV':
             rate = self.typed_value()
             if rate is None:
-                raise FinanceError("Enter the discount rate % first")
+                raise FinanceError(_("Enter the discount rate % first"))
             self.show_result(self.compute_npv(rate), record="NPV")
         elif label == 'IRR':
             self.show_result(self.compute_irr(), record="IRR")
@@ -3479,22 +3445,24 @@ class XCalculator(Gtk.Window):
             self.show_result(result, record=label)
         elif label in ('SL', 'SYD', 'DB'):
             year = self.entered_count()
-            self.show_result(self.compute_depreciation(label, year), record=f"{label} yr {year}")
+            # Translators: a history line for depreciation, e.g. "SL yr 3" (year 3)
+            record = _("{method} yr {year}").format(method=label, year=year)
+            self.show_result(self.compute_depreciation(label, year), record=record)
         elif label in ('EFF', 'NOM'):
             rate = self.entered_value()
             rate = None if rate is None else float(rate)
             m = self.periods_per_year
             if rate is None:
-                raise FinanceError("Enter a rate % first")
+                raise FinanceError(_("Enter a rate % first"))
             if m <= 0:
-                raise FinanceError("P/Y must be positive")
+                raise FinanceError(_("P/Y must be positive"))
             if label == 'EFF':
                 if 1 + rate / 100 / m <= 0:
-                    raise FinanceError("Rate out of range")
+                    raise FinanceError(_("Rate out of range"))
                 result = ((1 + rate / 100 / m) ** m - 1) * 100
             else:
                 if 1 + rate / 100 <= 0:
-                    raise FinanceError("Rate out of range")
+                    raise FinanceError(_("Rate out of range"))
                 result = m * ((1 + rate / 100) ** (1 / m) - 1) * 100
             self.show_result(result, record=label)
 
@@ -3564,7 +3532,9 @@ class XCalculator(Gtk.Window):
                 pass                            # half-typed expression: keep the last value
         value, bits = self.prog_preview, self.prog_bits
         return "\n".join([
-            f"{self.prog_word_name()} ({bits}-bit, signed)  ·  typing in {self.prog_base_name()}",
+            # Translators: under the Programmer display, e.g. "QWORD (64-bit, signed)  ·  typing in DEC"
+            _("{word} ({bits}-bit, signed)  ·  typing in {base}").format(
+                word=self.prog_word_name(), bits=bits, base=self.prog_base_name()),
             f"HEX  {prog_format(value, 16, bits)}",
             f"DEC  {value}",
             f"OCT  {prog_format(value, 8, bits)}",
@@ -3608,7 +3578,7 @@ class XCalculator(Gtk.Window):
         if label in PROG_BASES:
             self.prog_change_format(PROG_BASES[label], self.prog_bits)
         elif label in dict(PROG_WORDS):
-            names = [name for name, _ in PROG_WORDS]
+            names = [name for name, bits in PROG_WORDS]
             next_name = names[(names.index(self.prog_word_name()) + 1) % len(names)]
             self.prog_change_format(self.prog_base, dict(PROG_WORDS)[next_name])
         elif label in ('Clear', 'Clr'):
@@ -3747,9 +3717,9 @@ class XCalculator(Gtk.Window):
         try:
             number = Decimal(text)
             if not number.is_finite() or number != number.to_integral_value():
-                raise ProgrammerError("Not a whole number")
+                raise ProgrammerError(_("Not a whole number"))
         except ArithmeticError:
-            self.show_error(ProgrammerError("Not a whole number"))
+            self.show_error(ProgrammerError(_("Not a whole number")))
             return
         except ProgrammerError as error:
             self.show_error(error)
@@ -3814,8 +3784,8 @@ class XCalculator(Gtk.Window):
                 button.set_active(name == category)
         for index, combo in enumerate(self.conv_combos):
             combo.remove_all()
-            for name, symbol, _ in units:
-                combo.append(symbol, f"{name} ({symbol})")
+            for name, symbol, size in units:
+                combo.append(symbol, f"{_(name)} ({symbol})")
             combo.set_active_id(self.conv_units[category][index])
         self.syncing_widgets = False
         self.conv_refresh()
@@ -3906,7 +3876,7 @@ class XCalculator(Gtk.Window):
     def conv_paste_number(self, text):
         """Paste (or a clicked history result): a plain number, inserted at the cursor."""
         if not re.fullmatch(r'-?(\d+(?:\.\d*)?|\.\d+)', text) or len(text) > CONVERTER_MAX_INPUT:
-            self.error_label.set_text("Can't paste that")
+            self.error_label.set_text(_("Can't paste that"))
             return
         if text.startswith('-'):
             if not self.expression.startswith('-'):
@@ -4090,7 +4060,7 @@ class XCalculator(Gtk.Window):
         entries, printed_at = self.tape_entries(), datetime.now()
         pages = []
         operation = Gtk.PrintOperation()
-        operation.set_job_name("Xcalculator tape")
+        operation.set_job_name(_("Xcalculator tape"))
         operation.set_unit(Gtk.Unit.POINTS)
         operation.set_default_page_setup(self.page_setup)
         if self.print_settings:
@@ -4110,7 +4080,7 @@ class XCalculator(Gtk.Window):
         try:
             result = operation.run(Gtk.PrintOperationAction.PRINT_DIALOG, parent or self)
         except GLib.Error as error:
-            self.show_message("Printing failed", error.message)
+            self.show_message(_("Printing failed"), error.message)
             return
         if result == Gtk.PrintOperationResult.APPLY:
             self.print_settings = operation.get_print_settings()
@@ -4144,9 +4114,11 @@ class XCalculator(Gtk.Window):
         dialog = Gtk.AboutDialog(transient_for=self, modal=True)
         dialog.set_program_name("Xcalculator")
         dialog.set_version(APP_VERSION)
-        dialog.set_comments("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
-                            "Scientific, Financial, Programmer and Unit Converter modes.")
+        dialog.set_comments(_("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
+                              "Scientific, Financial, Programmer and Unit Converter modes."))
         dialog.set_logo_icon_name("accessories-calculator")
+        # Translators: your name (and email), one translator per line; shown in About → Credits
+        dialog.set_translator_credits(_("translator-credits"))
         dialog.set_website(APP_WEBSITE)
         dialog.set_authors(APP_AUTHORS)
         dialog.set_copyright(f"{APP_COPYRIGHT}\n{APP_CREDIT}")    # the credit sits right below the author

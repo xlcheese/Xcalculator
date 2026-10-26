@@ -6,3 +6,6 @@ debian/files
 debian/*.substvars
 debian/*.log
 debian/debhelper-build-stamp
+# built by make
+usr/share/locale/
+usr/share/applications/
