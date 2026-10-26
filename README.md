@@ -52,11 +52,35 @@ python3 usr/lib/xcalculator/xcalculator.py
 ## Build the package
 
 ```
-sudo apt install debhelper
+sudo apt install debhelper gettext
 dpkg-buildpackage -us -uc -b
 ```
 
-The package is written to the folder above this one.
+The package is written to the folder above this one. `debian/rules` uses the
+Makefile, which can also be used on its own:
+
+- `make` compiles the translations and writes the menu entry
+- `make install` installs everything under `/usr` (or `PREFIX`, into `DESTDIR`)
+- `make pot` updates `po/xcalculator.pot` after any text in the program changes
+
+## Translate
+
+Xcalculator uses gettext. To start a new language, for example French:
+
+```
+msginit -i po/xcalculator.pot -l fr -o po/fr.po
+```
+
+Translate the `msgstr` lines in `po/fr.po` (with Poedit, or any text editor),
+add `fr` to `po/LINGUAS`, and run `make`. To try it from the source folder:
+
+```
+LANGUAGE=fr python3 usr/lib/xcalculator/xcalculator.py
+```
+
+Calculator notation stays as it is: sin, HEX, NPV, MR and the like are the same
+in every language. Text in braces, such as `{mode}`, and markup such as
+`<b>…</b>` must be kept exactly.
 
 ## License
 

@@ -21,7 +21,7 @@
       It works to up to 50 decimal places, and can print its history like an adding-machine tape.
     </p>
   </description>
-  <launchable type="desktop-id">xcalculator.desktop</launchable>
+  <launchable type="desktop-id">io.github.xlcheese.Xcalculator.desktop</launchable>
   <developer id="io.github.xlcheese">
     <name>Wesley Hayslip</name>
   </developer>
