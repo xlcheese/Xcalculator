@@ -49,6 +49,31 @@ python3 usr/lib/xcalculator/xcalculator.py
 `python3-gi-cairo` is needed for printing, and `python3-mpmath` for more than
 15 decimal places. Xcalculator still runs without them.
 
+## The code
+
+The program is in `usr/lib/xcalculator/`, one file for each part:
+
+| File | What it holds |
+|---|---|
+| `xcalculator.py` | starts the program (one `Gtk.Application`, any number of windows) |
+| `window.py` | the calculator window: menus, display, keypad layouts, keyboard and clipboard |
+| `basic.py` | typing a calculation and working it out, shared by Basic, Scientific and Financial |
+| `scientific.py` | Scientific's functions, the 2nd key, angle units and the f(x) menu |
+| `financial.py` | loans and savings, cash flows, amortization and depreciation |
+| `programmer.py` | bases, word sizes and bitwise operators |
+| `converter.py` | the Unit Converter and its exact conversion factors |
+| `engine.py` | the arithmetic behind every mode, and how answers are written |
+| `history.py` | the history above the display, and the saved history file |
+| `printing.py` | printing the history as a calculator tape, and Print Preview |
+| `preferences.py` | the Preferences window, and the settings it changes |
+| `documentation.py` | the Documentation pages and the keyboard shortcuts |
+| `config.py` | where settings are kept, and facts about the program |
+| `i18n.py` | translations |
+| `easter_egg.py` | try 5318008 = |
+
+Each mode's keys live in a small class in its own file (`BasicMode`,
+`ProgrammerMode` and so on); the window combines them.
+
 ## Build the package
 
 ```
