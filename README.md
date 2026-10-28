@@ -33,7 +33,7 @@ Download the `.deb` from the [latest release](https://github.com/xlcheese/Xcalcu
 and open it, or install it from a terminal:
 
 ```
-sudo apt install ./xcalculator_0.9_all.deb
+sudo apt install ./xcalculator_0.9.1_all.deb
 ```
 
 Xcalculator then appears in the menu under **Accessories**.
