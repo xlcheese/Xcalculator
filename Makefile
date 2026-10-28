@@ -10,7 +10,8 @@ DOMAIN  = xcalculator
 VERSION = $(shell sed -n '1s/.*(\(.*\)).*/\1/p' debian/changelog)
 PREFIX ?= /usr
 
-SOURCE  = usr/lib/xcalculator/xcalculator.py
+PROGRAM = usr/lib/xcalculator
+SOURCES = $(sort $(wildcard $(PROGRAM)/*.py))
 DESKTOP = usr/share/applications/$(APP_ID).desktop
 LOCALE  = usr/share/locale
 LANGUAGES = $(shell grep -v "^\s*#" po/LINGUAS)
@@ -33,7 +34,7 @@ POT_HEADER = --package-name=Xcalculator --package-version=$(VERSION) --copyright
 
 pot:
 	xgettext --language=Python --from-code=UTF-8 --keyword=_ --keyword=N_ --add-comments=Translators \
-		$(POT_HEADER) --output=po/$(DOMAIN).pot $(SOURCE)
+		$(POT_HEADER) --output=po/$(DOMAIN).pot $(SOURCES)
 	xgettext --language=Desktop $(DESKTOP_KEYWORDS) --add-comments=Translators --join-existing \
 		$(POT_HEADER) --output=po/$(DOMAIN).pot data/$(APP_ID).desktop.in
 	for po in $(wildcard po/*.po); do msgmerge --quiet --update --backup=none $$po po/$(DOMAIN).pot; done
@@ -42,7 +43,9 @@ install: all
 	install -d $(DESTDIR)$(PREFIX)/bin
 	sed 's|/usr/lib/xcalculator/|$(PREFIX)/lib/xcalculator/|' usr/bin/xcalculator > $(DESTDIR)$(PREFIX)/bin/xcalculator
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/xcalculator
-	install -Dm755 $(SOURCE) $(DESTDIR)$(PREFIX)/lib/xcalculator/xcalculator.py
+	install -d $(DESTDIR)$(PREFIX)/lib/xcalculator
+	install -m644 $(SOURCES) $(DESTDIR)$(PREFIX)/lib/xcalculator/
+	chmod 755 $(DESTDIR)$(PREFIX)/lib/xcalculator/xcalculator.py
 	install -Dm644 $(DESKTOP) $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
 	install -Dm644 usr/share/metainfo/$(APP_ID).metainfo.xml $(DESTDIR)$(PREFIX)/share/metainfo/$(APP_ID).metainfo.xml
 	install -Dm644 usr/share/man/man1/xcalculator.1 $(DESTDIR)$(PREFIX)/share/man/man1/xcalculator.1

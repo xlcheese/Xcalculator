@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-26 18:29+0000\n"
+"POT-Creation-Date: 2026-10-28 16:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,253 +17,646 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/xcalculator/xcalculator.py:73
+#: usr/lib/xcalculator/basic.py:100
+msgid "Malformed Expression"
+msgstr ""
+
+#: usr/lib/xcalculator/basic.py:102
+msgid "Cannot divide by zero"
+msgstr ""
+
+#: usr/lib/xcalculator/basic.py:104
+msgid "Result too large"
+msgstr ""
+
+#: usr/lib/xcalculator/basic.py:106
+msgid "Invalid input"
+msgstr ""
+
+#: usr/lib/xcalculator/basic.py:109
+msgid "Calculation Error"
+msgstr ""
+
+#: usr/lib/xcalculator/config.py:44
 msgid "Developed with the help of Claude, an AI assistant by Anthropic"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:81 usr/lib/xcalculator/xcalculator.py:796
-#: usr/lib/xcalculator/xcalculator.py:1863
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:73
+#: usr/lib/xcalculator/window.py:201
 msgid "Basic"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:81 usr/lib/xcalculator/xcalculator.py:764
-#: usr/lib/xcalculator/xcalculator.py:814
-#: usr/lib/xcalculator/xcalculator.py:1445
-#: usr/lib/xcalculator/xcalculator.py:1868
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:40
+#: usr/lib/xcalculator/documentation.py:91
+#: usr/lib/xcalculator/preferences.py:143 usr/lib/xcalculator/window.py:206
 msgid "Scientific"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:81 usr/lib/xcalculator/xcalculator.py:841
-#: usr/lib/xcalculator/xcalculator.py:1873
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:118
+#: usr/lib/xcalculator/window.py:211
 msgid "Financial"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:81 usr/lib/xcalculator/xcalculator.py:766
-#: usr/lib/xcalculator/xcalculator.py:873
-#: usr/lib/xcalculator/xcalculator.py:1450
-#: usr/lib/xcalculator/xcalculator.py:1878
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:42
+#: usr/lib/xcalculator/documentation.py:150
+#: usr/lib/xcalculator/preferences.py:148 usr/lib/xcalculator/window.py:216
 msgid "Programmer"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:81 usr/lib/xcalculator/xcalculator.py:900
-#: usr/lib/xcalculator/xcalculator.py:1883
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:177
+#: usr/lib/xcalculator/window.py:221
 msgid "Unit Converter"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:633
-msgid "Shift amount must not be negative"
+#: usr/lib/xcalculator/converter.py:35
+msgid "Angle"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:723
-msgid "Hexadecimal (base 16): digits 0-9 and A-F. FF = 255"
+#: usr/lib/xcalculator/converter.py:35
+msgid "Degree"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:724
-msgid "Decimal (base 10): ordinary numbers, shown with a sign"
+#: usr/lib/xcalculator/converter.py:35
+msgid "Radian"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:725
-msgid "Octal (base 8): digits 0-7. 17 = 15"
+#: usr/lib/xcalculator/converter.py:35
+msgid "Gradian"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:726
-msgid "Binary (base 2): digits 0 and 1. 1010 = 10"
+#: usr/lib/xcalculator/converter.py:36
+msgid "Arcminute"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:727
-msgid ""
-"Word size: click to cycle 64 → 32 → 16 → 8 bits.\n"
-"Results wrap around like a real register."
+#: usr/lib/xcalculator/converter.py:36
+msgid "Arcsecond"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:729
-msgid ""
-"Shift left: move the bits left, filling with 0.\n"
-"1 << 4 = 16 (multiplies by 2 each step)"
+#: usr/lib/xcalculator/converter.py:36
+msgid "Turn"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:730
-msgid ""
-"Shift right: move the bits right, keeping the sign.\n"
-"16 >> 2 = 4 (divides by 2 each step)"
+#: usr/lib/xcalculator/converter.py:37
+msgid "Area"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:731
-msgid ""
-"Bitwise AND: 1 only where both bits are 1.\n"
-"1100 AND 1010 = 1000"
+#: usr/lib/xcalculator/converter.py:37
+msgid "Square inch"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:732
-msgid ""
-"Bitwise OR: 1 where either bit is 1.\n"
-"1100 OR 1010 = 1110"
+#: usr/lib/xcalculator/converter.py:37
+msgid "Square foot"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:733
-msgid ""
-"Bitwise XOR: 1 where the bits differ.\n"
-"1100 XOR 1010 = 0110"
+#: usr/lib/xcalculator/converter.py:38
+msgid "Square yard"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:734
-msgid ""
-"Bitwise NOT: flip every bit of the next number.\n"
-"NOT 0 = -1 (all bits set)"
+#: usr/lib/xcalculator/converter.py:38
+msgid "Acre"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:735
-msgid "NOT (a AND b)"
+#: usr/lib/xcalculator/converter.py:39
+msgid "Square mile"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:736
-msgid "NOT (a OR b)"
+#: usr/lib/xcalculator/converter.py:39
+msgid "Square centimeter"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:737
-msgid "Remainder after whole-number division. 17 mod 5 = 2"
+#: usr/lib/xcalculator/converter.py:40
+msgid "Square meter"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:738
-msgid "Whole-number division; the remainder is dropped. 17 ÷ 5 = 3"
+#: usr/lib/xcalculator/converter.py:40
+msgid "Hectare"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:739
-msgid "Change the sign (two's complement negate)"
+#: usr/lib/xcalculator/converter.py:40
+msgid "Square kilometer"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:745
+#: usr/lib/xcalculator/converter.py:41
+msgid "Density"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:41
+msgid "Gram per cubic centimeter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:41
+msgid "Kilogram per cubic meter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:42
+msgid "Gram per milliliter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:42
+msgid "Kilogram per liter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:43
+msgid "Pound per cubic foot"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:44
+msgid "Pound per cubic inch"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:45
+msgid "Pound per gallon"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:46
+msgid "Digital Storage"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:46
+msgid "Bit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:46
+msgid "Byte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:46
+msgid "Kilobyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:47
+msgid "Megabyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:47
+msgid "Gigabyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:48
+msgid "Terabyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:48
+msgid "Petabyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:49
+msgid "Kibibyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:49
+msgid "Mebibyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:50
+msgid "Gibibyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:50
+msgid "Tebibyte"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:51
+msgid "Kilobit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:51
+msgid "Megabit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:51
+msgid "Gigabit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:52
+msgid "Energy"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:52
+msgid "Joule"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:52
+msgid "Kilojoule"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:52
+msgid "Calorie"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:53
+msgid "Food Calorie"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:53
+msgid "Watt-hour"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:53
+msgid "Kilowatt-hour"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:54
+msgid "British thermal unit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:55
+msgid "Foot-pound"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:55
+msgid "Electronvolt"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:56
+msgid "Length"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:56
+msgid "Inch"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:56
+msgid "Foot"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:56
+msgid "Yard"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:57
+msgid "Mile"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:57
+msgid "Nautical mile"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:57
+msgid "Millimeter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:58
+msgid "Centimeter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:58
+msgid "Meter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:58
+msgid "Kilometer"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:59
+msgid "Mass"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:59
+msgid "Ounce"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:59
+msgid "Pound"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:59
+msgid "Stone"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:60
+msgid "US ton"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:60
+msgid "Milligram"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:61
+msgid "Gram"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:61
+msgid "Kilogram"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:61
+msgid "Metric ton"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:62
+msgid "Pressure"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:62
+msgid "Pound per square inch"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:62
+msgid "Inch of mercury"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:63
+msgid "Millimeter of mercury"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:63
+msgid "Atmosphere"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:64
+msgid "Bar"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:64
+msgid "Pascal"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:64
+msgid "Kilopascal"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:65
+msgid "Megapascal"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:66
+msgid "Speed"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:66
+msgid "Mile per hour"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:66
+msgid "Foot per second"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:67
+msgid "Knot"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:67
+msgid "Kilometer per hour"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:68
+msgid "Meter per second"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:69
+msgid "Temperature"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:69
+msgid "Fahrenheit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:69
+msgid "Celsius"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:69
+msgid "Kelvin"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:70
+msgid "Time"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:70
+msgid "Millisecond"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:70
+msgid "Second"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:70
+msgid "Minute"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:71
+msgid "Hour"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:71
+msgid "Day"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:71
+msgid "Week"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:72
+msgid "Month (average)"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:72
+msgid "Year (average)"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:73
+msgid "Volume"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:73
+msgid "Teaspoon"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:73
+msgid "Tablespoon"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:73
+msgid "Fluid ounce"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:74
+msgid "Cup"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:74
+msgid "Pint"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:74
+msgid "Quart"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:75
+msgid "Gallon"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:75
+msgid "Milliliter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:75
+msgid "Liter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:76
+msgid "Cubic meter"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:76
+msgid "Cubic inch"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:76
+msgid "Cubic foot"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:77
+msgid "Imperial gallon"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:156
+msgid "Same unit"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:158 usr/lib/xcalculator/converter.py:168
+#, python-brace-format
+msgid "Formula:  {formula}"
+msgstr ""
+
+#: usr/lib/xcalculator/converter.py:282 usr/lib/xcalculator/programmer.py:221
+#: usr/lib/xcalculator/window.py:981
+msgid "Can't paste that"
+msgstr ""
+
+#: usr/lib/xcalculator/documentation.py:21
 msgid "Windows"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:745
+#: usr/lib/xcalculator/documentation.py:21
 msgid "Open a new window"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:746
+#: usr/lib/xcalculator/documentation.py:22
 msgid "Close the window"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:747
+#: usr/lib/xcalculator/documentation.py:23
 msgid "Quit Xcalculator"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:748
-#: usr/lib/xcalculator/xcalculator.py:1349
+#: usr/lib/xcalculator/documentation.py:24
+#: usr/lib/xcalculator/preferences.py:47
 msgid "Modes"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:748
+#: usr/lib/xcalculator/documentation.py:24
 msgid "Switch to Basic"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:749
+#: usr/lib/xcalculator/documentation.py:25
 msgid "Switch to Scientific"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:750
+#: usr/lib/xcalculator/documentation.py:26
 msgid "Switch to Financial"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:751
+#: usr/lib/xcalculator/documentation.py:27
 msgid "Switch to Programmer"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:752
+#: usr/lib/xcalculator/documentation.py:28
 msgid "Switch to Unit Converter"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:753
-#: usr/lib/xcalculator/xcalculator.py:1930
+#: usr/lib/xcalculator/documentation.py:29 usr/lib/xcalculator/window.py:268
 msgid "Help"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:753
+#: usr/lib/xcalculator/documentation.py:29
 msgid "Open the documentation"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:754
+#: usr/lib/xcalculator/documentation.py:30
 msgid "Show the keyboard shortcuts"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:755
+#: usr/lib/xcalculator/documentation.py:31
 msgid "Printing"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:755
+#: usr/lib/xcalculator/documentation.py:31
 msgid "Print the history"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:756
+#: usr/lib/xcalculator/documentation.py:32
 msgid "Preview the printout"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:757
+#: usr/lib/xcalculator/documentation.py:33
 msgid "Copy and Paste"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:757
+#: usr/lib/xcalculator/documentation.py:33
 msgid "Copy the display, or the highlighted part"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:758
+#: usr/lib/xcalculator/documentation.py:34
 msgid "Cut the highlighted part"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:759
+#: usr/lib/xcalculator/documentation.py:35
 msgid "Paste a number or calculation"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:760
+#: usr/lib/xcalculator/documentation.py:36
 msgid "Highlight everything in the display"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:761
+#: usr/lib/xcalculator/documentation.py:37
 msgid "Text Size"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:761
+#: usr/lib/xcalculator/documentation.py:37
 msgid "Larger text"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:762
+#: usr/lib/xcalculator/documentation.py:38
 msgid "Smaller text"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:763
+#: usr/lib/xcalculator/documentation.py:39
 msgid "Normal text size"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:764
+#: usr/lib/xcalculator/documentation.py:40
 msgid "Square root (²√x)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:765
+#: usr/lib/xcalculator/documentation.py:41
 msgid "Reciprocal (1/x)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:766
+#: usr/lib/xcalculator/documentation.py:42
 msgid "Switch to HEX"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:767
+#: usr/lib/xcalculator/documentation.py:43
 msgid "Switch to DEC"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:768
+#: usr/lib/xcalculator/documentation.py:44
 msgid "Switch to OCT"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:769
+#: usr/lib/xcalculator/documentation.py:45
 msgid "Switch to BIN"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:775
+#: usr/lib/xcalculator/documentation.py:52
 msgid "Getting Started"
 msgstr ""
 
 #. Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
-#: usr/lib/xcalculator/xcalculator.py:777
+#: usr/lib/xcalculator/documentation.py:54
 msgid ""
 "Xcalculator has five modes. Pick one from the <b>Mode</b> menu:\n"
 "  • <b>Basic</b> for everyday sums\n"
@@ -273,7 +666,7 @@ msgid ""
 "  • <b>Unit Converter</b> for lengths, weights, temperatures and more"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:783
+#: usr/lib/xcalculator/documentation.py:60
 msgid ""
 "<b>Typing</b>\n"
 "Click the buttons or use the keyboard. Click in the display, or use the "
@@ -281,7 +674,7 @@ msgid ""
 "cursor. Highlighted text is replaced by what you type."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:785
+#: usr/lib/xcalculator/documentation.py:62
 msgid ""
 "<b>The history</b>\n"
 "Every answer is added to the history above the display. Click an answer to "
@@ -291,7 +684,7 @@ msgid ""
 "to show it again the next time Xcalculator opens."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:787
+#: usr/lib/xcalculator/documentation.py:64
 msgid ""
 "<b>Long numbers</b>\n"
 "An answer too wide for the window is shown in scientific notation, like "
@@ -299,14 +692,14 @@ msgid ""
 "keep the full number."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:789
+#: usr/lib/xcalculator/documentation.py:66
 msgid ""
 "<b>Copy and paste</b>\n"
 "<b>Edit → Copy</b> copies the display. <b>Edit → Paste</b> pastes a number "
 "or a simple calculation."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:791
+#: usr/lib/xcalculator/documentation.py:68
 msgid ""
 "<b>Window size and text size</b>\n"
 "Stretch the history taller and every mode keeps that height. Each mode "
@@ -315,18 +708,18 @@ msgid ""
 "returns to the original window size."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:793
+#: usr/lib/xcalculator/documentation.py:70
 msgid ""
 "<b>Preferences</b>\n"
 "<b>Edit → Preferences</b> sets decimal places, thousands separators, angle "
 "units and more, and which modes appear in the Mode menu."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:797
+#: usr/lib/xcalculator/documentation.py:74
 msgid "The everyday keypad. Every other mode builds on it."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:798
+#: usr/lib/xcalculator/documentation.py:75
 msgid ""
 "  <b>⌫</b>  delete the character before the cursor\n"
 "  <b>Clear</b>  start again\n"
@@ -335,13 +728,13 @@ msgid ""
 "  <b>=</b>  work out the answer (or press Enter)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:803
+#: usr/lib/xcalculator/documentation.py:80
 msgid ""
 "Multiplication and division are done before addition and subtraction, so 2 + "
 "3 × 4 = 14."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:804
+#: usr/lib/xcalculator/documentation.py:81
 msgid ""
 "<b>Typing with the keyboard</b>\n"
 "  <b>0–9</b>, <b>.</b>  numbers\n"
@@ -354,17 +747,17 @@ msgid ""
 "  <b>← →  Home  End</b>  move the cursor;  hold <b>Shift</b> to highlight"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:812
+#: usr/lib/xcalculator/documentation.py:89
 msgid ""
 "The other modes use these keys too; each mode's page lists what it adds or "
 "changes. For the Ctrl shortcuts, see the Keyboard page."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:815
+#: usr/lib/xcalculator/documentation.py:92
 msgid "Everything in Basic, plus:"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:816
+#: usr/lib/xcalculator/documentation.py:93
 msgid ""
 "<b>Powers and roots</b>\n"
 "  <b>x²</b>, <b>x³</b>, <b>xʸ</b>  powers;  <b>eˣ</b>, <b>10ˣ</b>  powers of "
@@ -374,7 +767,7 @@ msgid ""
 "  <b>EE</b>  times ten to the power: 3 EE 5 = 300000"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:820
+#: usr/lib/xcalculator/documentation.py:97
 msgid ""
 "<b>Trigonometry</b>\n"
 "  <b>sin</b>, <b>cos</b>, <b>tan</b> and the hyperbolic <b>sinh</b>, "
@@ -384,7 +777,7 @@ msgid ""
 "used until you switch."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:824
+#: usr/lib/xcalculator/documentation.py:101
 msgid ""
 "<b>Logarithms and constants</b>\n"
 "  <b>ln</b>  natural logarithm;  <b>log₁₀</b>  base-10 logarithm\n"
@@ -393,7 +786,7 @@ msgid ""
 "  <b>x!</b>  factorial: 5! = 120"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:828
+#: usr/lib/xcalculator/documentation.py:105
 msgid ""
 "<b>More functions</b>\n"
 "  <b>|x|</b>  absolute value: |−5| = 5\n"
@@ -404,14 +797,14 @@ msgid ""
 "  <b>f(x)</b>  a menu of more functions, each with a short explanation"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:835
+#: usr/lib/xcalculator/documentation.py:112
 msgid ""
 "<b>Memory</b>\n"
 "  <b>M+</b> adds the display to the memory, <b>M−</b> subtracts it, <b>MR</"
 "b> recalls it and <b>MC</b> clears it."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:837
+#: usr/lib/xcalculator/documentation.py:114
 msgid ""
 "<b>Keyboard</b>\n"
 "All of Basic's keys work here too, plus:\n"
@@ -419,11 +812,11 @@ msgid ""
 "b>  the constant e;  <b>p</b>  π"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:842
+#: usr/lib/xcalculator/documentation.py:119
 msgid "The lines under the display always show the values stored so far."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:843
+#: usr/lib/xcalculator/documentation.py:120
 msgid ""
 "<b>Loans and savings (time value of money)</b>\n"
 "The five keys <b>N</b>, <b>I/Y</b>, <b>PV</b>, <b>PMT</b> and <b>FV</b> are "
@@ -441,7 +834,7 @@ msgid ""
 "the beginning (BGN)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:851
+#: usr/lib/xcalculator/documentation.py:128
 msgid ""
 "<b>Cash flows</b>\n"
 "  <b>CFj</b>  type an amount and press CFj; the first one is the starting "
@@ -453,7 +846,7 @@ msgid ""
 "  <b>IRR</b>  the internal rate of return"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:856
+#: usr/lib/xcalculator/documentation.py:133
 msgid ""
 "<b>Loan schedule (amortization)</b>\n"
 "With the loan stored, type a payment number and press <b>P1</b>, then "
@@ -462,7 +855,7 @@ msgid ""
 "  <b>PRN</b>, <b>INT</b>  the principal and the interest paid from P1 to P2"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:860
+#: usr/lib/xcalculator/documentation.py:137
 msgid ""
 "<b>Depreciation</b>\n"
 "Store the asset's life in years as N, its cost as PV and its salvage value "
@@ -471,7 +864,7 @@ msgid ""
 "percent, such as 200, as I/Y)."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:862
+#: usr/lib/xcalculator/documentation.py:139
 msgid ""
 "<b>Interest rates</b>\n"
 "  <b>EFF</b>  type a nominal yearly rate for the effective yearly rate, "
@@ -479,7 +872,7 @@ msgid ""
 "  <b>NOM</b>  the reverse"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:865
+#: usr/lib/xcalculator/documentation.py:142
 msgid ""
 "<b>Business</b>\n"
 "  <b>Mrgn</b>  profit margin: cost Mrgn price, then =. 60 Mrgn 100 = 40 "
@@ -487,30 +880,30 @@ msgid ""
 "  <b>Δ%</b>  percent change: old Δ% new, then =. 80 Δ% 100 = 25 (percent)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:868
+#: usr/lib/xcalculator/documentation.py:145
 msgid "<b>Clear All</b> erases every stored financial value."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:869
+#: usr/lib/xcalculator/documentation.py:146
 msgid ""
 "Financial answers are worked out to about 15 significant digits, whatever "
 "the decimal places setting: far more than money needs."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:870
+#: usr/lib/xcalculator/documentation.py:147
 msgid ""
 "<b>Keyboard</b>\n"
 "All of Basic's keys work here too, plus <b>( )</b> for parentheses. The "
 "financial keys (N, PMT, CPT and so on) are on the buttons only."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:874
+#: usr/lib/xcalculator/documentation.py:151
 msgid ""
 "Programmer mode works with whole numbers stored in a fixed number of bits, "
 "the way a computer does."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:875
+#: usr/lib/xcalculator/documentation.py:152
 msgid ""
 "<b>Number bases (HEX, DEC, OCT, BIN)</b>\n"
 "Click a base to type and show numbers in it. The number on screen is "
@@ -518,7 +911,7 @@ msgid ""
 "current value in all four bases."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:877
+#: usr/lib/xcalculator/documentation.py:154
 msgid ""
 "<b>Word size (QWORD / DWORD / WORD / BYTE)</b>\n"
 "The number of bits: 64, 32, 16 or 8. Numbers are signed: in BYTE the range "
@@ -526,7 +919,7 @@ msgid ""
 "see the raw bits, so -1 in BYTE shows as FF."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:879
+#: usr/lib/xcalculator/documentation.py:156
 msgid ""
 "<b>Bitwise operators</b>\n"
 "AND, OR and XOR compare two numbers bit by bit. NOT flips every bit of the "
@@ -534,28 +927,28 @@ msgid ""
 "1010 = 1000."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:881
+#: usr/lib/xcalculator/documentation.py:158
 msgid ""
 "<b>Shifts</b>\n"
 "&lt;&lt; moves bits left (each step doubles the number); &gt;&gt; moves them "
 "right (each step halves it)."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:883
+#: usr/lib/xcalculator/documentation.py:160
 msgid ""
 "<b>Arithmetic</b>\n"
 "+, −, × work as usual. ÷ drops the remainder and mod gives it: 17 ÷ 5 = 3 "
 "and 17 mod 5 = 2."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:885
+#: usr/lib/xcalculator/documentation.py:162
 msgid ""
 "<b>Order of operations (first to last)</b>\n"
 "NOT and minus sign, then × ÷ mod, then + −, then &lt;&lt; &gt;&gt;, then "
 "AND, then XOR, then OR. Use parentheses when unsure."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:887
+#: usr/lib/xcalculator/documentation.py:164
 msgid ""
 "<b>Try it</b>\n"
 "1. Click HEX, type FF, press =. The lines below show DEC 255.\n"
@@ -563,7 +956,7 @@ msgid ""
 "3. Click BIN and try 1100 XOR 1010 =."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:891
+#: usr/lib/xcalculator/documentation.py:168
 #, python-format
 msgid ""
 "<b>Keyboard</b>\n"
@@ -577,11 +970,11 @@ msgid ""
 "(not percent)."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:898
+#: usr/lib/xcalculator/documentation.py:175
 msgid "Hover over any button for a short explanation."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:901
+#: usr/lib/xcalculator/documentation.py:178
 msgid ""
 "  1. Pick a category: Angle, Area, Density, Digital Storage, Energy, Length, "
 "Mass, Pressure, Speed, Temperature, Time or Volume.\n"
@@ -590,32 +983,32 @@ msgid ""
 "box with the green outline is the one you are typing in."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:904
+#: usr/lib/xcalculator/documentation.py:181
 msgid ""
 "The line under the boxes shows the formula used. ≈ means the number in it is "
 "rounded."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:905
+#: usr/lib/xcalculator/documentation.py:182
 msgid ""
 "  <b>Capture</b> (or Enter)  saves the conversion to the history\n"
 "  <b>±</b>  makes the number negative, for temperatures below zero"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:907
+#: usr/lib/xcalculator/documentation.py:184
 msgid ""
 "Click a captured line in the history to bring back that conversion: its "
 "category, both units and the number."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:908
+#: usr/lib/xcalculator/documentation.py:185
 msgid ""
 "Conversions use the official definitions (for example, 1 inch is exactly "
 "2.54 cm) and are shown with the decimal places set in Preferences. The "
 "converter remembers your category and the units you chose in each."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:909
+#: usr/lib/xcalculator/documentation.py:186
 msgid ""
 "<b>Keyboard</b>\n"
 "Basic's number, Backspace, Delete, Escape and cursor keys work here too. Two "
@@ -626,19 +1019,18 @@ msgid ""
 "no operators."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:915
-#: usr/lib/xcalculator/xcalculator.py:1855
+#: usr/lib/xcalculator/documentation.py:192 usr/lib/xcalculator/window.py:193
 msgid "Preferences"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:916
+#: usr/lib/xcalculator/documentation.py:193
 msgid ""
 "Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to "
 "Defaults</b> puts every preference back the way it was the first time; it "
 "doesn't touch the saved history."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:917
+#: usr/lib/xcalculator/documentation.py:194
 msgid ""
 "<b>General</b>\n"
 "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to "
@@ -663,1046 +1055,637 @@ msgid ""
 "deletes the file."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:924
+#: usr/lib/xcalculator/documentation.py:201
 msgid ""
 "<b>Modes</b>\n"
 "Switch off the modes you don't use, and they disappear from the Mode menu. "
 "At least one mode stays on."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:927
+#: usr/lib/xcalculator/documentation.py:204
 msgid "Keyboard"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:944
-msgid "Angle"
+#: usr/lib/xcalculator/documentation.py:212
+msgid "Help - Xcalculator"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:944
-msgid "Degree"
+#: usr/lib/xcalculator/financial.py:36 usr/lib/xcalculator/financial.py:99
+#: usr/lib/xcalculator/financial.py:137 usr/lib/xcalculator/financial.py:319
+#: usr/lib/xcalculator/financial.py:323
+msgid "Rate out of range"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:944
-msgid "Radian"
+#: usr/lib/xcalculator/financial.py:59 usr/lib/xcalculator/financial.py:119
+msgid "No solution"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:944
-msgid "Gradian"
+#: usr/lib/xcalculator/financial.py:78 usr/lib/xcalculator/financial.py:86
+#: usr/lib/xcalculator/financial.py:257 usr/lib/xcalculator/financial.py:316
+msgid "P/Y must be positive"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:945
-msgid "Arcminute"
+#: usr/lib/xcalculator/financial.py:90
+msgid "N must be positive"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:945
-msgid "Arcsecond"
+#: usr/lib/xcalculator/financial.py:109
+msgid "N must not be 0"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:945
-msgid "Turn"
+#: usr/lib/xcalculator/financial.py:114
+msgid "PMT must not be 0"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:946
-msgid "Area"
+#: usr/lib/xcalculator/financial.py:121
+msgid "Unknown key"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:946
-msgid "Square inch"
+#: usr/lib/xcalculator/financial.py:127
+msgid "Too many cash flows"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:946
-msgid "Square foot"
+#: usr/lib/xcalculator/financial.py:134
+msgid "Enter cash flows with CFj"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:947
-msgid "Square yard"
+#: usr/lib/xcalculator/financial.py:143
+msgid "IRR needs inflows and outflows"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:947
-msgid "Acre"
+#: usr/lib/xcalculator/financial.py:148
+msgid "Set P1 and P2 first"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:948
-msgid "Square mile"
+#: usr/lib/xcalculator/financial.py:151
+msgid "P2 must be at least P1"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:948
-msgid "Square centimeter"
+#: usr/lib/xcalculator/financial.py:153 usr/lib/xcalculator/financial.py:186
+msgid "Too many periods"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:949
-msgid "Square meter"
+#: usr/lib/xcalculator/financial.py:171
+msgid "Set N to the asset life"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:949
-msgid "Hectare"
+#: usr/lib/xcalculator/financial.py:173
+msgid "Year must be within the asset life"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:949
-msgid "Square kilometer"
+#: usr/lib/xcalculator/financial.py:179
+msgid "SYD needs a whole-number life"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:950
-msgid "Density"
+#: usr/lib/xcalculator/financial.py:184
+msgid "Set I/Y to the declining % (e.g. 200)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:950
-msgid "Gram per cubic centimeter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:950
-msgid "Kilogram per cubic meter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:951
-msgid "Gram per milliliter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:951
-msgid "Kilogram per liter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:952
-msgid "Pound per cubic foot"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:953
-msgid "Pound per cubic inch"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:954
-msgid "Pound per gallon"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:955
-msgid "Digital Storage"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:955
-msgid "Bit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:955
-msgid "Byte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:955
-msgid "Kilobyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:956
-msgid "Megabyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:956
-msgid "Gigabyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:957
-msgid "Terabyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:957
-msgid "Petabyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:958
-msgid "Kibibyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:958
-msgid "Mebibyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:959
-msgid "Gibibyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:959
-msgid "Tebibyte"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:960
-msgid "Kilobit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:960
-msgid "Megabit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:960
-msgid "Gigabit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:961
-msgid "Energy"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:961
-msgid "Joule"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:961
-msgid "Kilojoule"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:961
-msgid "Calorie"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:962
-msgid "Food Calorie"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:962
-msgid "Watt-hour"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:962
-msgid "Kilowatt-hour"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:963
-msgid "British thermal unit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:964
-msgid "Foot-pound"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:964
-msgid "Electronvolt"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:965
-msgid "Length"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:965
-msgid "Inch"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:965
-msgid "Foot"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:965
-msgid "Yard"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:966
-msgid "Mile"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:966
-msgid "Nautical mile"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:966
-msgid "Millimeter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:967
-msgid "Centimeter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:967
-msgid "Meter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:967
-msgid "Kilometer"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:968
-msgid "Mass"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:968
-msgid "Ounce"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:968
-msgid "Pound"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:968
-msgid "Stone"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:969
-msgid "US ton"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:969
-msgid "Milligram"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:970
-msgid "Gram"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:970
-msgid "Kilogram"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:970
-msgid "Metric ton"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:971
-msgid "Pressure"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:971
-msgid "Pound per square inch"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:971
-msgid "Inch of mercury"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:972
-msgid "Millimeter of mercury"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:972
-msgid "Atmosphere"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:973
-msgid "Bar"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:973
-msgid "Pascal"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:973
-msgid "Kilopascal"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:974
-msgid "Megapascal"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:975
-msgid "Speed"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:975
-msgid "Mile per hour"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:975
-msgid "Foot per second"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:976
-msgid "Knot"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:976
-msgid "Kilometer per hour"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:977
-msgid "Meter per second"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:978
-msgid "Temperature"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:978
-msgid "Fahrenheit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:978
-msgid "Celsius"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:978
-msgid "Kelvin"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:979
-msgid "Time"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:979
-msgid "Millisecond"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:979
-msgid "Second"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:979
-msgid "Minute"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:980
-msgid "Hour"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:980
-msgid "Day"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:980
-msgid "Week"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:981
-msgid "Month (average)"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:981
-msgid "Year (average)"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:982
-msgid "Volume"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:982
-msgid "Teaspoon"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:982
-msgid "Tablespoon"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:982
-msgid "Fluid ounce"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:983
-msgid "Cup"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:983
-msgid "Pint"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:983
-msgid "Quart"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:984
-msgid "Gallon"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:984
-msgid "Milliliter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:984
-msgid "Liter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:985
-msgid "Cubic meter"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:985
-msgid "Cubic inch"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:985
-msgid "Cubic foot"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:986
-msgid "Imperial gallon"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:1057
-msgid "Same unit"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:1059
-#: usr/lib/xcalculator/xcalculator.py:1069
+#: usr/lib/xcalculator/financial.py:209
 #, python-brace-format
-msgid "Formula:  {formula}"
+msgid "Enter a whole number >= {minimum}"
 msgstr ""
 
-#. Translators: the date and time printed at the top of the tape, in Python's strftime format
-#. (%b month, %d day, %Y year, %I hour, %M minute, %p AM/PM).
-#: usr/lib/xcalculator/xcalculator.py:1173
+#: usr/lib/xcalculator/financial.py:275
+msgid "Enter a cash flow first"
+msgstr ""
+
+#: usr/lib/xcalculator/financial.py:280
+msgid "Enter a cash flow with CFj first"
+msgstr ""
+
+#: usr/lib/xcalculator/financial.py:283
 #, python-brace-format
-msgid "Xcalculator  ·  {date}"
+msgid "Nj can be at most {count}"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1173
-msgid "%b %d, %Y  %I:%M %p"
+#: usr/lib/xcalculator/financial.py:289
+#, python-format
+msgid "Enter the discount rate % first"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1177
+#. Translators: a history line for depreciation, e.g. "SL yr 3" (year 3)
+#: usr/lib/xcalculator/financial.py:307
 #, python-brace-format
-msgid "Page {page} of {pages}"
+msgid "{method} yr {year}"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1241
-msgid "Print Preview - Xcalculator"
+#: usr/lib/xcalculator/financial.py:314
+#, python-format
+msgid "Enter a rate % first"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1258
-msgid "Previous page"
+#: usr/lib/xcalculator/history.py:161 usr/lib/xcalculator/history.py:171
+msgid "Click to bring back this conversion"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1261
-msgid "Next page"
+#: usr/lib/xcalculator/history.py:164
+msgid "Click to use this calculation again"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1264
-#: usr/lib/xcalculator/xcalculator.py:1821
-msgid "Print…"
+#: usr/lib/xcalculator/history.py:174
+msgid "Click to use this number"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1266
-#: usr/lib/xcalculator/xcalculator.py:1365
-#: usr/lib/xcalculator/xcalculator.py:1828
-msgid "Close"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:1326
+#: usr/lib/xcalculator/preferences.py:20
 msgid "Everyday arithmetic"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1327
+#: usr/lib/xcalculator/preferences.py:21
 msgid "Powers, roots, trigonometry, logarithms and more"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1328
+#: usr/lib/xcalculator/preferences.py:22
 msgid "Loans, savings, cash flows and depreciation"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1329
+#: usr/lib/xcalculator/preferences.py:23
 msgid "Hexadecimal, binary and bitwise operations"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1330
+#: usr/lib/xcalculator/preferences.py:24
 msgid "Lengths, weights, temperatures and more"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1332
+#: usr/lib/xcalculator/preferences.py:28
 msgid "Hexadecimal (HEX)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1332
+#: usr/lib/xcalculator/preferences.py:28
 msgid "Decimal (DEC)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1332
+#: usr/lib/xcalculator/preferences.py:28
 msgid "Octal (OCT)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1332
+#: usr/lib/xcalculator/preferences.py:28
 msgid "Binary (BIN)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1333
+#: usr/lib/xcalculator/preferences.py:31
 msgid "64-bit (QWORD)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1333
+#: usr/lib/xcalculator/preferences.py:31
 msgid "32-bit (DWORD)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1333
+#: usr/lib/xcalculator/preferences.py:31
 msgid "16-bit (WORD)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1333
+#: usr/lib/xcalculator/preferences.py:31
 msgid "8-bit (BYTE)"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1341
+#: usr/lib/xcalculator/preferences.py:39
 msgid "Xcalculator Preferences"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1348
+#: usr/lib/xcalculator/preferences.py:46
 msgid "General"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1359
-#: usr/lib/xcalculator/xcalculator.py:1934
+#: usr/lib/xcalculator/preferences.py:57 usr/lib/xcalculator/window.py:272
 msgid "Documentation"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1361
+#: usr/lib/xcalculator/preferences.py:59
 msgid "Reset to Defaults"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1362
+#: usr/lib/xcalculator/preferences.py:60
 msgid ""
 "Put every preference back the way it was the first time. The saved history "
 "is kept."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1432
+#: usr/lib/xcalculator/preferences.py:63 usr/lib/xcalculator/printing.py:146
+#: usr/lib/xcalculator/window.py:166
+msgid "Close"
+msgstr ""
+
+#: usr/lib/xcalculator/preferences.py:130
 msgid "Numbers"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1435
+#: usr/lib/xcalculator/preferences.py:133
 msgid "Decimal places"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1436
+#: usr/lib/xcalculator/preferences.py:134
 msgid "Up to 50 places, using high-precision maths (mpmath)."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1437
+#: usr/lib/xcalculator/preferences.py:135
 msgid "Up to 15 places. Install python3-mpmath for up to 50."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1440
+#: usr/lib/xcalculator/preferences.py:138
 msgid "Show all decimal places"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1443
+#: usr/lib/xcalculator/preferences.py:141
 msgid "Thousands separators"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1443
+#: usr/lib/xcalculator/preferences.py:141
 msgid "1234567 shows as 1,234,567"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1446
+#: usr/lib/xcalculator/preferences.py:144
 msgid "Degrees"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1446
+#: usr/lib/xcalculator/preferences.py:144
 msgid "Radians"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1448
+#: usr/lib/xcalculator/preferences.py:146
 msgid "Angle units"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1448
+#: usr/lib/xcalculator/preferences.py:146
 msgid "Also changed by the Rad/Deg button"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1453
+#: usr/lib/xcalculator/preferences.py:151
 msgid "Word size"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1453
+#: usr/lib/xcalculator/preferences.py:151
 msgid "Also changed by the QWORD/DWORD/WORD/BYTE button"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1456
+#: usr/lib/xcalculator/preferences.py:154
 msgid "Starting number base"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1456
+#: usr/lib/xcalculator/preferences.py:154
 msgid "Also changed by the HEX, DEC, OCT and BIN buttons"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1458
+#: usr/lib/xcalculator/preferences.py:156
 msgid "History"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1461
+#: usr/lib/xcalculator/preferences.py:159
 msgid "Keep history after closing"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1462
+#: usr/lib/xcalculator/preferences.py:160
 msgid ""
 "Show the saved history when Xcalculator opens. It is always saved, in ~/."
 "config/xcalculator/history.json"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1464
+#: usr/lib/xcalculator/preferences.py:162
 msgid "Delete Saved History…"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1466
+#: usr/lib/xcalculator/preferences.py:164
 msgid "Saved history"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1466
+#: usr/lib/xcalculator/preferences.py:164
 msgid "Clear the history and delete the saved file"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1471
+#: usr/lib/xcalculator/preferences.py:169
 msgid "Show in the Mode menu"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1479
+#: usr/lib/xcalculator/preferences.py:177
 msgid "At least one mode stays on."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1498
+#: usr/lib/xcalculator/preferences.py:196
 #, python-brace-format
 msgid "2.5 shows as {example}"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1499
+#: usr/lib/xcalculator/preferences.py:197
 msgid "Pads answers with zeros to every decimal place"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1513
+#: usr/lib/xcalculator/preferences.py:211
 msgid "Delete the saved history?"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1514
+#: usr/lib/xcalculator/preferences.py:212
 msgid "This clears the history and deletes the saved file. It can't be undone."
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1515
+#: usr/lib/xcalculator/preferences.py:213
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1516
+#: usr/lib/xcalculator/preferences.py:214
 msgid "Delete"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1532
-msgid "Help - Xcalculator"
+#. Translators: the date and time printed at the top of the tape, in Python's strftime format
+#. (%b month, %d day, %Y year, %I hour, %M minute, %p AM/PM).
+#: usr/lib/xcalculator/printing.py:53
+#, python-brace-format
+msgid "Xcalculator  ·  {date}"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1667
+#: usr/lib/xcalculator/printing.py:53
+msgid "%b %d, %Y  %I:%M %p"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:57
+#, python-brace-format
+msgid "Page {page} of {pages}"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:121
+msgid "Print Preview - Xcalculator"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:138
+msgid "Previous page"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:141
+msgid "Next page"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:144 usr/lib/xcalculator/window.py:159
+msgid "Print…"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:233
+msgid "Xcalculator tape"
+msgstr ""
+
+#: usr/lib/xcalculator/printing.py:253
+msgid "Printing failed"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:99
+msgid "Shift amount must not be negative"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:189
+msgid "Hexadecimal (base 16): digits 0-9 and A-F. FF = 255"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:190
+msgid "Decimal (base 10): ordinary numbers, shown with a sign"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:191
+msgid "Octal (base 8): digits 0-7. 17 = 15"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:192
+msgid "Binary (base 2): digits 0 and 1. 1010 = 10"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:193
+msgid ""
+"Word size: click to cycle 64 → 32 → 16 → 8 bits.\n"
+"Results wrap around like a real register."
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:195
+msgid ""
+"Shift left: move the bits left, filling with 0.\n"
+"1 << 4 = 16 (multiplies by 2 each step)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:196
+msgid ""
+"Shift right: move the bits right, keeping the sign.\n"
+"16 >> 2 = 4 (divides by 2 each step)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:197
+msgid ""
+"Bitwise AND: 1 only where both bits are 1.\n"
+"1100 AND 1010 = 1000"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:198
+msgid ""
+"Bitwise OR: 1 where either bit is 1.\n"
+"1100 OR 1010 = 1110"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:199
+msgid ""
+"Bitwise XOR: 1 where the bits differ.\n"
+"1100 XOR 1010 = 0110"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:200
+msgid ""
+"Bitwise NOT: flip every bit of the next number.\n"
+"NOT 0 = -1 (all bits set)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:201
+msgid "NOT (a AND b)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:202
+msgid "NOT (a OR b)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:203
+msgid "Remainder after whole-number division. 17 mod 5 = 2"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:204
+msgid "Whole-number division; the remainder is dropped. 17 ÷ 5 = 3"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:205
+msgid "Change the sign (two's complement negate)"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:227
+#, python-brace-format
+msgid "Can't paste that in {base}"
+msgstr ""
+
+#. Translators: under the Programmer display, e.g. "QWORD (64-bit, signed)  ·  typing in DEC"
+#: usr/lib/xcalculator/programmer.py:252
+#, python-brace-format
+msgid "{word} ({bits}-bit, signed)  ·  typing in {base}"
+msgstr ""
+
+#: usr/lib/xcalculator/programmer.py:435 usr/lib/xcalculator/programmer.py:437
+msgid "Not a whole number"
+msgstr ""
+
+#: usr/lib/xcalculator/scientific.py:37
 msgid "round down to a whole number:  floor(2.7) = 2"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1668
+#: usr/lib/xcalculator/scientific.py:38
 msgid "round up to a whole number:  ceil(2.1) = 3"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1669
+#: usr/lib/xcalculator/scientific.py:39
 msgid "the whole-number part:  int(−2.7) = −2"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1670
+#: usr/lib/xcalculator/scientific.py:40
 msgid "the part after the decimal point:  frac(2.75) = 0.75"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1671
+#: usr/lib/xcalculator/scientific.py:41
 msgid "the sign:  −1, 0 or 1"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1672
+#: usr/lib/xcalculator/scientific.py:42
 msgid "logarithm base 2:  log₂(8) = 3"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1673
+#: usr/lib/xcalculator/scientific.py:43
 msgid "secant, 1 ÷ cos"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1674
+#: usr/lib/xcalculator/scientific.py:44
 msgid "cosecant, 1 ÷ sin"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1675
+#: usr/lib/xcalculator/scientific.py:45
 msgid "cotangent, cos ÷ sin"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1678
+#: usr/lib/xcalculator/scientific.py:49
 msgid "Absolute value: the number without its sign.  |−5| = 5"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1679
+#: usr/lib/xcalculator/scientific.py:50
 msgid ""
 "Combinations: ways to choose r items from n when order doesn't matter.\n"
 "5 nCr 2 = 10"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1680
+#: usr/lib/xcalculator/scientific.py:51
 msgid ""
 "Permutations: ways to arrange r items from n when order matters.\n"
 "5 nPr 2 = 20"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1681
+#: usr/lib/xcalculator/scientific.py:52
 msgid "Round to the nearest whole number.  round(2.5) = 3"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1682
+#: usr/lib/xcalculator/scientific.py:53
 msgid "More functions"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1683
+#: usr/lib/xcalculator/scientific.py:54
 msgid "Remainder after division.  17 mod 5 = 2"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1695
+#: usr/lib/xcalculator/window.py:44
 msgid "Clear"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1695
+#: usr/lib/xcalculator/window.py:44
 msgid "Clear All"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1695
+#: usr/lib/xcalculator/window.py:44
 msgid "Capture"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1804
+#: usr/lib/xcalculator/window.py:142
 msgid "File"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1808
+#: usr/lib/xcalculator/window.py:146
 msgid "New Window"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1815
+#: usr/lib/xcalculator/window.py:153
 msgid "Print Preview"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1833
+#: usr/lib/xcalculator/window.py:171
 msgid "Quit"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1839
+#: usr/lib/xcalculator/window.py:177
 msgid "Edit"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1843
+#: usr/lib/xcalculator/window.py:181
 msgid "Copy"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1848
+#: usr/lib/xcalculator/window.py:186
 msgid "Paste"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1860
+#: usr/lib/xcalculator/window.py:198
 msgid "Mode"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1895
+#: usr/lib/xcalculator/window.py:233
 msgid "View"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1900
+#: usr/lib/xcalculator/window.py:238
 msgid "Clear History"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1907
+#: usr/lib/xcalculator/window.py:245
 msgid "Larger Font"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1912
+#: usr/lib/xcalculator/window.py:250
 msgid "Smaller Font"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1917
+#: usr/lib/xcalculator/window.py:255
 msgid "Reset Font Size"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1925
+#: usr/lib/xcalculator/window.py:263
 msgid "Reset View"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1939
+#: usr/lib/xcalculator/window.py:277
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:1946
+#: usr/lib/xcalculator/window.py:284
 msgid "About"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:2138
+#: usr/lib/xcalculator/window.py:472
 msgid "Add this conversion to the history"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:2140
+#: usr/lib/xcalculator/window.py:474
 msgid ""
 "Clear all stored financial values: N, I/Y, PV, PMT, FV, cash flows, P1/P2, "
 "and the P/Y and BGN settings"
 msgstr ""
 
 #. Translators: the window title, e.g. "Basic - Xcalculator"
-#: usr/lib/xcalculator/xcalculator.py:2169
+#: usr/lib/xcalculator/window.py:503
 #, python-brace-format
 msgid "{mode} - Xcalculator"
 msgstr ""
 
-#: usr/lib/xcalculator/xcalculator.py:2494
-msgid "Malformed Expression"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2496
-msgid "Cannot divide by zero"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2498
-msgid "Result too large"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2500
-msgid "Invalid input"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2503
-msgid "Calculation Error"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2849
-#: usr/lib/xcalculator/xcalculator.py:2861
-#: usr/lib/xcalculator/xcalculator.py:3879
-msgid "Can't paste that"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2867
-#, python-brace-format
-msgid "Can't paste that in {base}"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2903
-#: usr/lib/xcalculator/xcalculator.py:2913
-msgid "Click to bring back this conversion"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2906
-msgid "Click to use this calculation again"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:2916
-msgid "Click to use this number"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3178
-#: usr/lib/xcalculator/xcalculator.py:3241
-#: usr/lib/xcalculator/xcalculator.py:3279
-#: usr/lib/xcalculator/xcalculator.py:3461
-#: usr/lib/xcalculator/xcalculator.py:3465
-msgid "Rate out of range"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3201
-#: usr/lib/xcalculator/xcalculator.py:3261
-msgid "No solution"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3220
-#: usr/lib/xcalculator/xcalculator.py:3228
-#: usr/lib/xcalculator/xcalculator.py:3399
-#: usr/lib/xcalculator/xcalculator.py:3458
-msgid "P/Y must be positive"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3232
-msgid "N must be positive"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3251
-msgid "N must not be 0"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3256
-msgid "PMT must not be 0"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3263
-msgid "Unknown key"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3269
-msgid "Too many cash flows"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3276
-msgid "Enter cash flows with CFj"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3285
-msgid "IRR needs inflows and outflows"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3290
-msgid "Set P1 and P2 first"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3293
-msgid "P2 must be at least P1"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3295
-#: usr/lib/xcalculator/xcalculator.py:3328
-msgid "Too many periods"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3313
-msgid "Set N to the asset life"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3315
-msgid "Year must be within the asset life"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3321
-msgid "SYD needs a whole-number life"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3326
-msgid "Set I/Y to the declining % (e.g. 200)"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3351
-#, python-brace-format
-msgid "Enter a whole number >= {minimum}"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3417
-msgid "Enter a cash flow first"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3422
-msgid "Enter a cash flow with CFj first"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3425
-#, python-brace-format
-msgid "Nj can be at most {count}"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3431
-#, python-format
-msgid "Enter the discount rate % first"
-msgstr ""
-
-#. Translators: a history line for depreciation, e.g. "SL yr 3" (year 3)
-#: usr/lib/xcalculator/xcalculator.py:3449
-#, python-brace-format
-msgid "{method} yr {year}"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3456
-#, python-format
-msgid "Enter a rate % first"
-msgstr ""
-
-#. Translators: under the Programmer display, e.g. "QWORD (64-bit, signed)  ·  typing in DEC"
-#: usr/lib/xcalculator/xcalculator.py:3536
-#, python-brace-format
-msgid "{word} ({bits}-bit, signed)  ·  typing in {base}"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:3720
-#: usr/lib/xcalculator/xcalculator.py:3722
-msgid "Not a whole number"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:4063
-msgid "Xcalculator tape"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:4083
-msgid "Printing failed"
-msgstr ""
-
-#: usr/lib/xcalculator/xcalculator.py:4117
+#: usr/lib/xcalculator/window.py:1116
 msgid ""
 "A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
 "Scientific, Financial, Programmer and Unit Converter modes."
 msgstr ""
 
 #. Translators: your name (and email), one translator per line; shown in About → Credits
-#: usr/lib/xcalculator/xcalculator.py:4121
+#: usr/lib/xcalculator/window.py:1120
 msgid "translator-credits"
 msgstr ""
 

@@ -1,4 +1,9 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --with python3
+
+# the program's modules are in their own folder: compile them on install, remove the
+# compiled copies again on uninstall
+override_dh_python3:
+	dh_python3 /usr/lib/xcalculator
