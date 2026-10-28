@@ -1,3 +1,17 @@
+xcalculator (0.9.1) unstable; urgency=medium
+
+  * Opening Xcalculator again, or File → New Window, opens another window in
+    the same program. The windows share the Preferences settings and the
+    saved history.
+  * Settings and history are now kept in ~/.config/xcalculator/.
+  * Every word on screen can be translated (gettext); translators start from
+    po/xcalculator.pot.
+  * The program is split into modules, one per mode.
+  * Built with a small Makefile; the menu entry is now
+    io.github.xlcheese.Xcalculator.desktop.
+
+ -- Wesley Hayslip <xl_cheese@hotmail.com>  Wed, 28 Oct 2026 12:00:00 +0000
+
 xcalculator (0.9) unstable; urgency=medium
 
   * First release.
