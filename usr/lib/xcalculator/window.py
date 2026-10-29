@@ -296,7 +296,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         about_item.connect("activate", self.show_about)
         help_menu.append(about_item)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)   # 6 px between the history and the display
         vbox.set_margin_start(12)
         vbox.set_margin_end(12)
         vbox.set_margin_top(8)
@@ -310,6 +310,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.scrolled_window.connect("size-allocate", self.on_history_allocated)
         self.scrolled_window.set_vexpand(True)
         self.scrolled_window.set_overlay_scrolling(False)
+        self.scrolled_window.set_shadow_type(Gtk.ShadowType.IN)     # a box like the display (see apply_custom_styles)
+        self.scrolled_window.get_style_context().add_class("calc-history-frame")
 
         self.history_listbox = Gtk.ListBox()
         self.history_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
@@ -321,7 +323,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         vbox.pack_start(self.scrolled_window, True, True, 0)
 
         self.display_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
-        vbox.pack_start(self.display_vbox, False, True, 4)
+        vbox.pack_start(self.display_vbox, False, True, 0)
+        self.display_vbox.set_margin_bottom(6)  # and 12 px, as before, above the keypad
 
         # The display is editable only so it shows a cursor you can place with the
         # mouse or arrow keys. All changes go through set_display(); typing straight
@@ -606,10 +609,25 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             return None
         return rgba.to_string()
 
+    @staticmethod
+    def theme_entry_look():
+        """The theme's input field as CSS: (border color, corner radius, background color)."""
+        probe = Gtk.Entry()
+        context = probe.get_style_context()
+        border = context.get_property("border-top-color", Gtk.StateFlags.NORMAL)
+        radius = context.get_property("border-radius", Gtk.StateFlags.NORMAL)
+        background = context.get_property("background-color", Gtk.StateFlags.NORMAL)
+        probe.destroy()
+        return (border.to_string() if border is not None and border.alpha > 0 else "@borders",
+                radius if isinstance(radius, int) else 3,
+                background.to_string() if background is not None and background.alpha >= 0.5 else "@theme_base_color")
+
     def apply_custom_styles(self):
         display_font = self.base_font_size + 5
         error_font = max(10, self.base_font_size - 2)
         error_color = self.theme_destructive_color() or "@error_color"
+        # the history is a box drawn like the display: the same border, corners and background
+        entry_border, entry_radius, entry_background = self.theme_entry_look()
 
         style_css = f"""
             .calc-display {{
@@ -628,7 +646,13 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 color: gray;
                 padding-left: 6px;
             }}
-            .calc-history {{ font-size: {self.base_font_size}px; }}
+            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent; padding: 2px 4px; }}
+            scrolledwindow.calc-history-frame {{
+                border: 1px solid {entry_border};
+                border-radius: {entry_radius}px;
+                background-color: {entry_background};
+            }}
+            scrolledwindow.calc-history-frame viewport {{ background-color: transparent; }}
             .history-row {{ padding: 2px; border-radius: 3px; }}
             .history-row:hover {{ background-color: rgba(200, 200, 200, 0.2); }}
             .calc-mono {{ font-family: monospace; }}
