@@ -1,0 +1,14 @@
+# Once a day (and a few minutes after logging in), check whether Xcalculator's exchange
+# rates are older than the number of days chosen in Preferences, and refresh them if so.
+[Unit]
+Description=Check Xcalculator's exchange rates once a day
+Documentation=https://github.com/xlcheese/Xcalculator
+
+[Timer]
+OnStartupSec=5min
+OnCalendar=daily
+RandomizedDelaySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

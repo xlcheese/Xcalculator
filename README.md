@@ -15,6 +15,7 @@ Choose a mode from the **Mode** menu (or Ctrl+Alt and the mode's first letter).
 - **Financial**: loans and savings (N, I/Y, PV, PMT, FV), cash flows (NPV, IRR) and depreciation
 - **Programmer**: HEX, DEC, OCT and BIN, word sizes from 8 to 64 bits, and bitwise operators
 - **Unit Converter**: twelve categories, converted as you type
+- **Currency Converter**: about 30 currencies, with exchange rates from the European Central Bank
 
 Every answer goes into a history you can click to reuse. The history can be
 printed like an adding-machine tape. With `python3-mpmath` installed, answers

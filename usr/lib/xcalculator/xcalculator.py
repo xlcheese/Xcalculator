@@ -11,8 +11,14 @@
 
 Start it with "python3 xcalculator.py", or "xcalculator" once it is installed. The other
 files in this folder hold the modes, the history, printing, Preferences and the documentation."""
-import gi
 import sys
+
+if __name__ == "__main__" and sys.argv[1:] == ["--refresh-rates"]:
+    # the daily background check (xcalculator-rates.timer): no window, so no GTK
+    from currency import refresh_from_command_line
+    sys.exit(refresh_from_command_line())
+
+import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
 from config import APP_ID

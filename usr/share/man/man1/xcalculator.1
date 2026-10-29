@@ -3,13 +3,22 @@
 xcalculator \- a calculator for Linux Mint and the Cinnamon desktop
 .SH SYNOPSIS
 .B xcalculator
+[\-\-refresh\-rates]
 .SH DESCRIPTION
 .B Xcalculator
-is a graphical calculator with Basic, Scientific, Financial, Programmer and
-Unit Converter modes, chosen from its Mode menu.
+is a graphical calculator with Basic, Scientific, Financial, Programmer,
+Unit Converter and Currency Converter modes, chosen from its Mode menu.
 .PP
 The documentation is in the program itself: press F1, or choose Help \(-> Documentation.
 Help \(-> Keyboard Shortcuts (Ctrl+F1) lists the shortcut keys.
+.SH OPTIONS
+.TP
+.B \-\-refresh\-rates
+Refresh the Currency Converter's exchange rates without opening a window, if they are
+older than the number of days set in Preferences. It does nothing unless both
+"Refresh rates automatically" and "Also when Xcalculator is closed" are switched on.
+The xcalculator-rates.timer systemd user timer runs it once a day; Xcalculator switches
+the timer on and off with those two settings.
 .SH FILES
 .TP
 .I ~/.config/xcalculator/settings.json
@@ -17,6 +26,9 @@ Preferences, window sizes and the last mode used.
 .TP
 .I ~/.config/xcalculator/history.json
 The saved history.
+.TP
+.I ~/.cache/xcalculator/rates.json
+The exchange rates downloaded last, from the European Central Bank.
 .SH AUTHOR
 Wesley Hayslip.
 .SH SEE ALSO

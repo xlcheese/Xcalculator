@@ -11,7 +11,8 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
 from i18n import _
-from config import VALID_MODES
+from config import CONVERTER_MODES, VALID_MODES
+from currency import DEFAULT_INTERVAL, MAX_INTERVAL, Rates, background_refresh_available, set_background_refresh
 from engine import DEFAULT_DECIMALS, MAX_DECIMALS, NUMBER_FORMAT, format_number, mpmath
 from history import SavedHistory
 
@@ -22,6 +23,7 @@ MODE_DESCRIPTIONS = {
     "Financial": _("Loans, savings, cash flows and depreciation"),
     "Programmer": _("Hexadecimal, binary and bitwise operations"),
     "Unit Converter": _("Lengths, weights, temperatures and more"),
+    "Currency Converter": _("Exchange rates from the European Central Bank"),
 }
 
 
@@ -39,7 +41,7 @@ class PreferencesWindow(Gtk.Window):
         super().__init__(title=_("Xcalculator Preferences"), transient_for=calculator, destroy_with_parent=True)
         self.calculator = calculator
         self.syncing = False
-        self.set_default_size(620, 640)
+        self.set_default_size(620, self.screen_height(820))    # every General setting, if the screen allows
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
 
         self.stack = Gtk.Stack()
@@ -87,6 +89,13 @@ class PreferencesWindow(Gtk.Window):
         scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scroller.add(box)
         return scroller, box
+
+    @staticmethod
+    def screen_height(wanted):
+        """wanted, or less on a short screen, leaving room for the panel and the title bar."""
+        display = Gdk.Display.get_default()
+        monitor = display.get_primary_monitor() or display.get_monitor(0)
+        return min(wanted, monitor.get_workarea().height - 80) if monitor else wanted
 
     @staticmethod
     def heading(box, text):
@@ -138,30 +147,44 @@ class PreferencesWindow(Gtk.Window):
         self.show_all_hint = self.row(box, _("Show all decimal places"), self.show_all_switch, "")
         self.thousands_switch = Gtk.Switch()
         self.thousands_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_number_format(thousands=s.get_active())))
-        self.row(box, _("Thousands separators"), self.thousands_switch, _("1234567 shows as 1,234,567"))
+        self.row(box, _("Thousands separators"), self.thousands_switch, _("1234567 shows as 1,234,567."))
 
         self.heading(box, _("Scientific"))
         self.angle = self.combo(((_("Degrees"), False), (_("Radians"), True)),
                                 lambda w: self.changed(lambda: c.set_angle_mode(w.get_active() == 1)))
-        self.row(box, _("Angle units"), self.angle, _("Also changed by the Rad/Deg button"))
+        self.row(box, _("Angle units"), self.angle, _("Also changed by the Rad/Deg button."))
 
         self.heading(box, _("Programmer"))
         self.word = self.combo(PREF_WORDS, lambda w: self.changed(
             lambda: c.set_programmer_format(c.prog_base, PREF_WORDS[w.get_active()][1])))
-        self.row(box, _("Word size"), self.word, _("Also changed by the QWORD/DWORD/WORD/BYTE button"))
+        self.row(box, _("Word size"), self.word, _("Also changed by the QWORD/DWORD/WORD/BYTE button."))
         self.base = self.combo(PREF_BASES, lambda w: self.changed(
             lambda: c.set_programmer_format(PREF_BASES[w.get_active()][1], c.prog_bits)))
-        self.row(box, _("Starting number base"), self.base, _("Also changed by the HEX, DEC, OCT and BIN buttons"))
+        self.row(box, _("Starting number base"), self.base, _("Also changed by the HEX, DEC, OCT and BIN buttons."))
+
+        self.heading(box, _("Currency Converter"))
+        self.currency_auto_switch = Gtk.Switch()
+        self.currency_auto_switch.connect("notify::active", lambda s, p: self.changed(
+            lambda: c.set_currency_auto(s.get_active())))
+        self.currency_auto_hint = self.row(box, _("Refresh rates automatically"), self.currency_auto_switch, "")
+        self.currency_days = Gtk.SpinButton.new_with_range(1, MAX_INTERVAL, 1)
+        self.currency_days.connect("value-changed", lambda s: self.changed(
+            lambda: c.set_currency_interval(s.get_value_as_int())))
+        self.row(box, _("Refresh interval in days"), self.currency_days, _("Number of days between refreshes."))
+        self.currency_closed_switch = Gtk.Switch()
+        self.currency_closed_switch.connect("notify::active", lambda s, p: self.changed(
+            lambda: c.set_currency_background(s.get_active())))
+        self.currency_closed_hint = self.row(box, _("Also when Xcalculator is closed"), self.currency_closed_switch, "")
 
         self.heading(box, _("History"))
         self.keep_switch = Gtk.Switch()
         self.keep_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_keep_history(s.get_active())))
         self.row(box, _("Keep history after closing"), self.keep_switch,
                  _("Show the saved history when Xcalculator opens. It is always saved, "
-                   "in ~/.config/xcalculator/history.json"))
+                   "in ~/.config/xcalculator/history.json."))
         delete = Gtk.Button(label=_("Delete Saved History…"))
         delete.connect("clicked", self.on_delete_history)
-        self.row(box, _("Saved history"), delete, _("Clear the history and delete the saved file"))
+        self.row(box, _("Saved history"), delete, _("Clear the history and delete the saved file."))
         return scroller
 
     def build_modes_page(self):
@@ -193,13 +216,28 @@ class PreferencesWindow(Gtk.Window):
         decimals = NUMBER_FORMAT["decimals"]
         self.decimals.set_value(decimals)
         self.show_all_switch.set_active(NUMBER_FORMAT["show_all"])
-        self.show_all_hint.set_text(_("2.5 shows as {example}").format(example="2.5" + "0" * (decimals - 1))
-                                    if decimals > 1 else _("Pads answers with zeros to every decimal place"))
+        self.show_all_hint.set_text(_("2.5 shows as {example}.").format(example="2.5" + "0" * (decimals - 1))
+                                    if decimals > 1 else _("Pads answers with zeros to every decimal place."))
         self.thousands_switch.set_active(c.thousands)
         self.angle.set_active(1 if c.use_radians else 0)
         self.word.set_active([bits for name, bits in PREF_WORDS].index(c.prog_bits))
         self.base.set_active([base for name, base in PREF_BASES].index(c.prog_base))
         self.keep_switch.set_active(c.keep_history)
+        have_rates = Rates.get() is not None
+        self.currency_auto_switch.set_active(c.currency_auto)
+        self.currency_auto_switch.set_sensitive(have_rates)     # like the Auto Refresh button
+        self.currency_auto_hint.set_text(
+            _("The same as the Auto Refresh button. Rates come from the European Central Bank.") if have_rates
+            else _("Click Download Rates in the Currency Converter first."))
+        self.currency_days.set_value(c.currency_interval)
+        self.currency_days.set_sensitive(c.currency_auto)
+        available = background_refresh_available()
+        self.currency_closed_switch.set_active(c.currency_background)
+        self.currency_closed_switch.set_sensitive(c.currency_auto and available)
+        self.currency_closed_hint.set_text(
+            _("Needs Xcalculator installed from its package.") if not available
+            else _("Rates will refresh in the background even when closed.") if c.currency_background
+            else _("Rates will only refresh while Xcalculator is open."))
         for mode, switch in self.mode_switches.items():
             on = mode in c.enabled_modes
             switch.set_active(on)
@@ -246,7 +284,7 @@ class PreferencesActions:
         if thousands is not None:
             self.thousands = thousands
         # re-show the answer on screen with the new settings; the history keeps its digits
-        if self.current_mode == "Unit Converter":
+        if self.current_mode in CONVERTER_MODES:
             self.conv_refresh()
         elif self.is_result_active and self.result_value is not None and self.current_mode != "Programmer":
             try:
@@ -300,6 +338,32 @@ class PreferencesActions:
                 window.set_keep_history(keep, everywhere=False)
                 window.sync_preferences()
 
+    def set_currency_auto(self, on, everywhere=True):
+        """Preferences → Refresh rates automatically, and the Auto Refresh button."""
+        self.currency_auto = on
+        self.currency_settings_changed(everywhere, lambda window: window.set_currency_auto(on, everywhere=False))
+        if on and self.current_mode == "Currency Converter":
+            self.currency_entered()             # rates already due: refresh now
+
+    def set_currency_interval(self, days, everywhere=True):
+        self.currency_interval = days
+        self.currency_settings_changed(everywhere, lambda window: window.set_currency_interval(days, everywhere=False))
+
+    def set_currency_background(self, on, everywhere=True):
+        self.currency_background = on
+        self.currency_settings_changed(everywhere, lambda window: window.set_currency_background(on, everywhere=False))
+
+    def currency_settings_changed(self, everywhere, same_in):
+        self.save_window_settings()
+        if self.current_mode == "Currency Converter":
+            self.currency_refresh_buttons()
+        if everywhere:
+            for window in self.other_calculators():
+                same_in(window)
+                window.sync_preferences()
+            # the daily background check runs only while both switches are on
+            set_background_refresh(self.currency_auto and self.currency_background)
+
     def delete_saved_history(self):
         """Preferences → Delete Saved History: empties the history in every window, and its saved file."""
         SavedHistory.delete()
@@ -314,4 +378,7 @@ class PreferencesActions:
             self.set_mode_enabled(mode, True)
         self.set_keep_history(False)        # the saved file itself is left alone
         self.set_number_format(DEFAULT_DECIMALS, False, False)
+        self.set_currency_background(False)
+        self.set_currency_interval(DEFAULT_INTERVAL)
+        self.set_currency_auto(False)
         self.sync_preferences()

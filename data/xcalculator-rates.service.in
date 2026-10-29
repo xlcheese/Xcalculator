@@ -1,0 +1,11 @@
+# Refreshes the Currency Converter's exchange rates while Xcalculator is closed.
+# Started once a day by xcalculator-rates.timer, which Xcalculator switches on only when
+# both "Refresh rates automatically" and "Also when Xcalculator is closed" are on.
+[Unit]
+Description=Refresh Xcalculator's exchange rates
+Documentation=https://github.com/xlcheese/Xcalculator
+
+[Service]
+Type=oneshot
+ExecStart=@BINDIR@/xcalculator --refresh-rates
+Nice=10

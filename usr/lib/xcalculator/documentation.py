@@ -25,7 +25,8 @@ SHORTCUT_COLUMNS = (
                    ("<Control><Alt>s", _("Switch to Scientific")),
                    ("<Control><Alt>f", _("Switch to Financial")),
                    ("<Control><Alt>p", _("Switch to Programmer")),
-                   ("<Control><Alt>u", _("Switch to Unit Converter")))),
+                   ("<Control><Alt>u", _("Switch to Unit Converter")),
+                   ("<Control><Alt>c", _("Switch to Currency Converter")))),
      (_("Help"), (("F1", _("Open the documentation")),
                   ("<Control>F1", _("Show the keyboard shortcuts")))),
      (_("Printing"), (("<Control>p", _("Print the history")),
@@ -51,12 +52,13 @@ SHORTCUT_COLUMNS = (
 HELP_PAGES = (
     (N_("Getting Started"), None, (
         # Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
-        _("Xcalculator has five modes. Pick one from the <b>Mode</b> menu:\n"
+        _("Xcalculator has six modes. Pick one from the <b>Mode</b> menu:\n"
           "  • <b>Basic</b> for everyday sums\n"
           "  • <b>Scientific</b> for powers, roots, trigonometry, logarithms and more\n"
           "  • <b>Financial</b> for loans, savings, cash flows and depreciation\n"
           "  • <b>Programmer</b> for hexadecimal, binary and bitwise work\n"
-          "  • <b>Unit Converter</b> for lengths, weights, temperatures and more"),
+          "  • <b>Unit Converter</b> for lengths, weights, temperatures and more\n"
+          "  • <b>Currency Converter</b> for exchange rates from the European Central Bank"),
         _("<b>Typing</b>\n"
           "Click the buttons or use the keyboard. Click in the display, or use the arrow keys, to move the cursor; typing, Backspace and Delete work at the cursor. Highlighted text is replaced by what you type."),
         _("<b>The history</b>\n"
@@ -189,6 +191,25 @@ HELP_PAGES = (
           "  <b>Enter</b> or <b>=</b>  Capture\n"
           "The other operator keys (+ * / %) do nothing here, since the converter has no operators."),
     )),
+
+    (N_("Currency Converter"), "Currency Converter", (
+        _("Converts between the euro and about 30 other currencies, using the European Central Bank's reference rates. The bank publishes new rates once a day on working days."),
+        _("<b>Getting the rates</b>\n"
+          "Xcalculator doesn't go online until you ask it to. The first time, click <b>Download Rates</b>. After that the button reads <b>Refresh Rates</b>: click it whenever you want the latest rates. The rates are kept in ~/.cache/xcalculator, so the converter also works offline, with the last rates it downloaded. The line under the boxes always says how old they are."),
+        _("<b>Converting</b>\n"
+          "  1. Pick a currency beside each box. The first time it's US Dollar and Euro; after that, the pair you used last.\n"
+          "  2. Type an amount in either box. The other box converts as you type.\n"
+          "Each currency is shown with its own decimal places: two for dollars and euros, none for yen. The line under the boxes gives the rate both ways."),
+        _("  <b>⇅ Swap</b>  exchanges the two currencies; the amount in the top box stays\n"
+          "  <b>Capture</b> (or Enter)  saves the conversion to the history; click the line later to bring it back\n"
+          "  <b>±</b>  makes the amount negative"),
+        _("<b>Auto Refresh</b>\n"
+          "Click <b>Auto Refresh</b> (or switch on <b>Refresh rates automatically</b> in Preferences) to refresh the rates by themselves: every 3 days to start, and you can choose 1 to 30 days in Preferences. It can be switched on once you have downloaded rates."),
+        _("Normally rates refresh only while Xcalculator is open. With <b>Also when Xcalculator is closed</b> switched on in Preferences, a small scheduled job checks once a day, even when Xcalculator isn't running, and refreshes rates that are older than your number of days. If the computer was off, it checks a few minutes after you next log in; with no internet connection it tries again the next day. Switching either setting off stops it."),
+        _("These are reference rates, the middle of the market. A bank or a card usually charges a little more."),
+        _("<b>Keyboard</b>\n"
+          "The same keys as the Unit Converter: numbers, Backspace, Delete, Escape and the cursor keys; <b>-</b> makes the amount negative and <b>Enter</b> or <b>=</b> captures."),
+    )),
     (N_("Preferences"), None, (
         _("Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history."),
         _("<b>General</b>\n"
@@ -198,6 +219,10 @@ HELP_PAGES = (
           "  <b>Angle units</b>  degrees or radians for sin, cos and tan. The Rad/Deg button in Scientific changes the same setting.\n"
           "  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.\n"
           "  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file."),
+        _("<b>Currency Converter</b>\n"
+          "  <b>Refresh rates automatically</b>  the same setting as the Auto Refresh button. It can be switched on once rates have been downloaded.\n"
+          "  <b>Refresh interval in days</b>  how old the rates may get before they are refreshed: 1 to 30 days, 3 to start.\n"
+          "  <b>Also when Xcalculator is closed</b>  refresh in the background too, once a day, even when Xcalculator isn't running. Off to start."),
         _("<b>Modes</b>\n"
           "Switch off the modes you don't use, and they disappear from the Mode menu. At least one mode stays on."),
     )),

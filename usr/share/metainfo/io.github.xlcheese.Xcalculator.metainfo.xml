@@ -16,6 +16,7 @@
       <li>Financial: loans, savings, cash flows and depreciation</li>
       <li>Programmer: hexadecimal, decimal, octal and binary, with bitwise operators</li>
       <li>Unit Converter: twelve categories, converted as you type</li>
+      <li>Currency Converter: about 30 currencies, with exchange rates from the European Central Bank</li>
     </ul>
     <p>
       It works to up to 50 decimal places, and can print its history like an adding-machine tape.
