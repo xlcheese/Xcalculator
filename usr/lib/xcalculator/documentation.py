@@ -53,14 +53,14 @@ HELP_PAGES = (
     (N_("Getting Started"), None, (
         # Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
         _("Xcalculator has six modes. Pick one from the <b>Mode</b> menu:\n"
-          "  • <b>Basic</b> for everyday sums\n"
-          "  • <b>Scientific</b> for powers, roots, trigonometry, logarithms and more\n"
-          "  • <b>Financial</b> for loans, savings, cash flows and depreciation\n"
-          "  • <b>Programmer</b> for hexadecimal, binary and bitwise work\n"
-          "  • <b>Unit Converter</b> for lengths, weights, temperatures and more\n"
-          "  • <b>Currency Converter</b> for exchange rates from the European Central Bank"),
+          "  • <b>Basic</b> for everyday sums.\n"
+          "  • <b>Scientific</b> for powers, roots, trigonometry, logarithms, and more.\n"
+          "  • <b>Financial</b> for loans, savings, cash flows, and depreciation.\n"
+          "  • <b>Programmer</b> for hexadecimal, binary, and bitwise work.\n"
+          "  • <b>Unit Converter</b> for lengths, weights, temperatures, and more.\n"
+          "  • <b>Currency Converter</b> for exchange rates from the European Central Bank."),
         _("<b>Typing</b>\n"
-          "Click the buttons or use the keyboard. Click in the display, or use the arrow keys, to move the cursor; typing, Backspace and Delete work at the cursor. Highlighted text is replaced by what you type."),
+          "Click the buttons or use the keyboard. Click in the display, or use the arrow keys to move the cursor. Typed text, Backspace, and Delete all work at the cursor position. Highlighted text is replaced by what you type."),
         _("<b>The history</b>\n"
           "Every answer is added to the history above the display. Click an answer to use it in your next calculation, or click a calculation to bring it back. <b>View → Clear History</b> empties it, and <b>File → Print</b> prints it like an adding-machine tape. The history is saved as you go; see Preferences to show it again the next time Xcalculator opens."),
         _("<b>Long numbers</b>\n"
@@ -70,7 +70,7 @@ HELP_PAGES = (
         _("<b>Window size and text size</b>\n"
           "Stretch the history taller and every mode keeps that height. Each mode remembers its own width. <b>View → Larger Font</b>, <b>Smaller Font</b> and <b>Reset Font Size</b> change the text size, and <b>View → Reset View</b> returns to the original window size."),
         _("<b>Preferences</b>\n"
-          "<b>Edit → Preferences</b> sets decimal places, thousands separators, angle units and more, and which modes appear in the Mode menu."),
+          "<b>Edit → Preferences</b> sets decimal places, thousands separators, angle units, and more. Also choose which modes appear in the Mode menu."),
     )),
     (N_("Basic"), "Basic", (
         _("The everyday keypad. Every other mode builds on it."),
