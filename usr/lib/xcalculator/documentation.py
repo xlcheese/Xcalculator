@@ -213,12 +213,12 @@ HELP_PAGES = (
     (N_("Preferences"), None, (
         _("Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history."),
         _("<b>General</b>\n"
-          "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to 50 (10 to start). Up to 50 places uses high-precision maths from the python3-mpmath package, which is installed with Xcalculator; without it the limit is 15. Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
+          "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to 50 (10 to start). Up to 50 places uses high-precision math from the python3-mpmath package, which is installed with Xcalculator; without it the limit is 15. Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
           "  <b>Show all decimal places</b>  pads answers with zeros, so with 2 places 19.5 shows as 19.50. Handy for money.\n"
           "  <b>Thousands separators</b>  1234567 shows as 1,234,567 in answers, the history and the printout (not while typing, and not in Programmer mode). Copy still gives plain digits.\n"
           "  <b>Angle units</b>  degrees or radians for sin, cos and tan. The Rad/Deg button in Scientific changes the same setting.\n"
           "  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.\n"
-          "  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved, in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file."),
+          "  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file."),
         _("<b>Currency Converter</b>\n"
           "  <b>Refresh rates automatically</b>  the same setting as the Auto Refresh button. It can be switched on once rates have been downloaded.\n"
           "  <b>Refresh interval in days</b>  how old the rates may get before they are refreshed: 1 to 30 days, 3 to start.\n"

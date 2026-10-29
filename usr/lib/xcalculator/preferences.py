@@ -140,7 +140,7 @@ class PreferencesWindow(Gtk.Window):
         self.decimals = Gtk.SpinButton.new_with_range(0, MAX_DECIMALS, 1)
         self.decimals.connect("value-changed", lambda s: self.changed(lambda: c.set_number_format(decimals=s.get_value_as_int())))
         self.row(box, _("Decimal places"), self.decimals,
-                 _("Up to 50 places, using high-precision maths (mpmath).") if mpmath
+                 _("Up to 50 places, using high-precision math (mpmath).") if mpmath
                  else _("Up to 15 places. Install python3-mpmath for up to 50."))
         self.show_all_switch = Gtk.Switch()
         self.show_all_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_number_format(show_all=s.get_active())))
@@ -170,7 +170,7 @@ class PreferencesWindow(Gtk.Window):
         self.currency_days = Gtk.SpinButton.new_with_range(1, MAX_INTERVAL, 1)
         self.currency_days.connect("value-changed", lambda s: self.changed(
             lambda: c.set_currency_interval(s.get_value_as_int())))
-        self.row(box, _("Refresh interval in days"), self.currency_days, _("Number of days between refreshes."))
+        self.row(box, _("Refresh interval in days"), self.currency_days, _("Number of days between automatic refreshes."))
         self.currency_closed_switch = Gtk.Switch()
         self.currency_closed_switch.connect("notify::active", lambda s, p: self.changed(
             lambda: c.set_currency_background(s.get_active())))
@@ -180,7 +180,7 @@ class PreferencesWindow(Gtk.Window):
         self.keep_switch = Gtk.Switch()
         self.keep_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_keep_history(s.get_active())))
         self.row(box, _("Keep history after closing"), self.keep_switch,
-                 _("Show the saved history when Xcalculator opens. It is always saved, "
+                 _("Show the saved history when Xcalculator opens. It is always saved "
                    "in ~/.config/xcalculator/history.json."))
         delete = Gtk.Button(label=_("Delete Saved History…"))
         delete.connect("clicked", self.on_delete_history)

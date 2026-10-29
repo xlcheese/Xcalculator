@@ -15,7 +15,7 @@ import re
 from decimal import Decimal, ROUND_HALF_EVEN, ROUND_HALF_UP, localcontext
 
 
-# High-precision maths (package python3-mpmath): up to 50 decimal places instead of 15.
+# High-precision math (package python3-mpmath): up to 50 decimal places instead of 15.
 # Without it the calculator uses ordinary floating-point numbers.
 try:
     import mpmath
@@ -75,7 +75,7 @@ class FloatMath:
 
 
 def _real_only(function):
-    """An mpmath function that, like ordinary maths, refuses complex or infinite answers."""
+    """An mpmath function that, like ordinary math, refuses complex or infinite answers."""
     def f(*args):
         result = function(*args)
         if isinstance(result, mpmath.mpc):

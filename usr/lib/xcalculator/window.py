@@ -13,7 +13,7 @@ import os
 import random
 import re
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, Gdk, GLib, Pango
 from i18n import N_, _
 from config import (
     APP_AUTHORS, APP_COPYRIGHT, APP_CREDIT, APP_VERSION, APP_WEBSITE, CONFIG_FILE,
@@ -1093,6 +1093,12 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             self.status_label.set_text(show_minus(self.programmer_status_text()))
             return
         context.remove_class("calc-mono")
+        # the Currency Converter's two lines never wrap, so its boxes don't move when the
+        # message changes; a line too long for the window ends in "…" (the tooltip has it all)
+        currency = self.current_mode == "Currency Converter"
+        self.status_label.set_line_wrap(not currency)
+        self.status_label.set_ellipsize(Pango.EllipsizeMode.END if currency else Pango.EllipsizeMode.NONE)
+        self.status_label.set_tooltip_text(self.conv_formula.strip() if currency else None)
         if self.current_mode in CONVERTER_MODES:
             self.status_label.set_text(self.conv_formula)
             return

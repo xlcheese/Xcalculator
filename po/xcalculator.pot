@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9.1\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-29 00:52+0000\n"
+"POT-Creation-Date: 2026-10-29 03:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -707,30 +707,32 @@ msgid_plural "Auto refresh on, every {days} days while Xcalculator is open."
 msgstr[0] ""
 msgstr[1] ""
 
-#: usr/lib/xcalculator/currency.py:338
+#: usr/lib/xcalculator/currency.py:343
 msgid "Downloading exchange rates from the European Central Bank…"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:341
-msgid ""
-"Couldn't reach the European Central Bank. Check the internet connection, "
-"then click Download Rates again."
+#: usr/lib/xcalculator/currency.py:346
+msgid "Couldn't reach the European Central Bank."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:343
+#: usr/lib/xcalculator/currency.py:347
+msgid "Check the internet connection, then click Download Rates again."
+msgstr ""
+
+#: usr/lib/xcalculator/currency.py:348
 msgid "Exchange rates come from the European Central Bank, once a day."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:344
+#: usr/lib/xcalculator/currency.py:349
 msgid "Click Download Rates to get today's rates."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:351
+#: usr/lib/xcalculator/currency.py:356
 #, python-brace-format
-msgid "Couldn't reach the European Central Bank. Using the rates from {date}."
+msgid "Couldn't download new rates. Using the rates from {date}."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:353
+#: usr/lib/xcalculator/currency.py:358
 #, python-brace-format
 msgid "European Central Bank rates, {date}"
 msgstr ""
@@ -1318,7 +1320,7 @@ msgstr ""
 msgid ""
 "<b>General</b>\n"
 "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to "
-"50 (10 to start). Up to 50 places uses high-precision maths from the python3-"
+"50 (10 to start). Up to 50 places uses high-precision math from the python3-"
 "mpmath package, which is installed with Xcalculator; without it the limit is "
 "15. Very small answers keep their digits instead of rounding to 0, and "
 "switch to scientific notation if they don't fit. Changing it re-shows the "
@@ -1333,7 +1335,7 @@ msgid ""
 "  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its "
 "buttons change the same settings.\n"
 "  <b>Keep history after closing</b>  shows the saved history when "
-"Xcalculator opens. The history is always saved, in ~/.config/xcalculator/"
+"Xcalculator opens. The history is always saved in ~/.config/xcalculator/"
 "history.json (the newest 500 lines). <b>View → Clear History</b> only "
 "empties the window. <b>Delete Saved History</b> clears the history and "
 "deletes the file."
@@ -1574,7 +1576,7 @@ msgid "Decimal places"
 msgstr ""
 
 #: usr/lib/xcalculator/preferences.py:143
-msgid "Up to 50 places, using high-precision maths (mpmath)."
+msgid "Up to 50 places, using high-precision math (mpmath)."
 msgstr ""
 
 #: usr/lib/xcalculator/preferences.py:144
@@ -1634,7 +1636,7 @@ msgid "Refresh interval in days"
 msgstr ""
 
 #: usr/lib/xcalculator/preferences.py:173
-msgid "Number of days between refreshes."
+msgid "Number of days between automatic refreshes."
 msgstr ""
 
 #: usr/lib/xcalculator/preferences.py:177
@@ -1651,7 +1653,7 @@ msgstr ""
 
 #: usr/lib/xcalculator/preferences.py:183
 msgid ""
-"Show the saved history when Xcalculator opens. It is always saved, in ~/."
+"Show the saved history when Xcalculator opens. It is always saved in ~/."
 "config/xcalculator/history.json."
 msgstr ""
 
@@ -2023,7 +2025,7 @@ msgstr ""
 msgid "{mode} - Xcalculator"
 msgstr ""
 
-#: usr/lib/xcalculator/window.py:1156
+#: usr/lib/xcalculator/window.py:1162
 msgid ""
 "A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
 "Scientific, Financial, Programmer, Unit Converter and Currency Converter "
@@ -2031,7 +2033,7 @@ msgid ""
 msgstr ""
 
 #. Translators: your name (and email), one translator per line; shown in About → Credits
-#: usr/lib/xcalculator/window.py:1160
+#: usr/lib/xcalculator/window.py:1166
 msgid "translator-credits"
 msgstr ""
 

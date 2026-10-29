@@ -327,9 +327,14 @@ class CurrencyMode:
         data = Rates.get()
         top, bottom = self.conv_units[CURRENCY]     # the rate line always reads top to bottom
         if data is None or from_code not in data["rates"] or to_code not in data["rates"]:
-            return "", self.currency_status(None, top, bottom)
+            return "", self.two_lines(self.currency_status(None, top, bottom))
         amount = "" if value is None else format_money(convert_currency(value, data["rates"], from_code, to_code), to_code)
-        return amount, self.currency_status(data, top, bottom)
+        return amount, self.two_lines(self.currency_status(data, top, bottom))
+
+    @staticmethod
+    def two_lines(text):
+        """Every message under the boxes takes two lines, so the boxes never jump up and down."""
+        return text if "\n" in text else text + "\n"
 
     def currency_status(self, data, from_code, to_code):
         if self.currency_message:
@@ -338,8 +343,8 @@ class CurrencyMode:
             return _("Downloading exchange rates from the European Central Bank…")
         if data is None:
             if Rates.failed:
-                return _("Couldn't reach the European Central Bank. Check the internet connection, "
-                         "then click Download Rates again.")
+                return (_("Couldn't reach the European Central Bank.") + "\n"
+                        + _("Check the internet connection, then click Download Rates again."))
             return (_("Exchange rates come from the European Central Bank, once a day.") + "\n"
                     + _("Click Download Rates to get today's rates."))
         rates = data["rates"]
@@ -348,7 +353,7 @@ class CurrencyMode:
             rate=format_rate(convert_currency(Fraction(1), rates, from_code, to_code)),
             back=format_rate(convert_currency(Fraction(1), rates, to_code, from_code)))
         if Rates.failed:
-            return line + "\n" + _("Couldn't reach the European Central Bank. Using the rates from {date}.").format(
+            return line + "\n" + _("Couldn't download new rates. Using the rates from {date}.").format(
                 date=rates_date_text(data))
         return line + "\n" + _("European Central Bank rates, {date}").format(date=rates_date_text(data))
 
