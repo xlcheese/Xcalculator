@@ -296,7 +296,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         about_item.connect("activate", self.show_about)
         help_menu.append(about_item)
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)   # 6 px between the history and the display
         vbox.set_margin_start(12)
         vbox.set_margin_end(12)
         vbox.set_margin_top(8)
@@ -308,8 +308,11 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.scrolled_window.set_propagate_natural_height(True)
         self.scrolled_window.set_min_content_height(HISTORY_MIN_HEIGHT)
         self.scrolled_window.connect("size-allocate", self.on_history_allocated)
+        self.scrolled_window.get_vadjustment().connect("changed", self.on_history_height_changed)
         self.scrolled_window.set_vexpand(True)
-        self.scrolled_window.set_overlay_scrolling(False)
+        self.scrolled_window.set_overlay_scrolling(True)    # the scrollbar shows only when needed, as in Xed
+        self.scrolled_window.set_shadow_type(Gtk.ShadowType.IN)     # a box like the display (see apply_custom_styles)
+        self.scrolled_window.get_style_context().add_class("calc-history-frame")
 
         self.history_listbox = Gtk.ListBox()
         self.history_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
@@ -321,7 +324,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         vbox.pack_start(self.scrolled_window, True, True, 0)
 
         self.display_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
-        vbox.pack_start(self.display_vbox, False, True, 4)
+        vbox.pack_start(self.display_vbox, False, True, 0)
+        self.display_vbox.set_margin_bottom(6)  # and 12 px, as before, above the keypad
 
         # The display is editable only so it shows a cursor you can place with the
         # mouse or arrow keys. All changes go through set_display(); typing straight
@@ -352,12 +356,15 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.conv_bottom_row.pack_start(self.display_bottom, True, True, 0)
         self.conv_bottom_row.pack_start(self.conv_combos[1], False, False, 0)
         self.conv_bottom_row.set_no_show_all(True)
-        self.display_vbox.pack_start(self.conv_bottom_row, False, True, 4)
+        self.display_vbox.pack_start(self.conv_bottom_row, False, True, 0)
+        self.conv_bottom_row.set_margin_top(4)  # 6 px between the boxes; nothing extra below
 
         self.error_label = Gtk.Label(label="")
         self.error_label.set_xalign(1.0)
         self.error_label.get_style_context().add_class("calc-error-label")
-        self.display_vbox.pack_start(self.error_label, False, True, 2)
+        self.display_vbox.pack_start(self.error_label, False, True, 0)
+        self.error_label.set_margin_top(1)      # error text 6 px under the display, like the history above it
+        self.error_label.set_margin_bottom(2)
 
         self.status_label = Gtk.Label(label="")
         self.status_label.set_xalign(0.0)
@@ -580,7 +587,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 self.expression = ""
                 self.is_result_active = False
                 self.token_stack = []
-                self.error_label.set_text("")
+            self.error_label.set_text("")           # an error belongs to the mode it happened in
             self.current_mode = mode_name
             self.update_view_mode_layout()
             self.update_display()
@@ -606,10 +613,37 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             return None
         return rgba.to_string()
 
+    @staticmethod
+    def theme_entry_look():
+        """The theme's input field as CSS: (border color, corner radius, background color,
+        text color, a faint tint of the text color for pointing at a history line)."""
+        probe = Gtk.Entry()
+        context = probe.get_style_context()
+        border = context.get_property("border-top-color", Gtk.StateFlags.NORMAL)
+        radius = context.get_property("border-radius", Gtk.StateFlags.NORMAL)
+        background = context.get_property("background-color", Gtk.StateFlags.NORMAL)
+        text = context.get_color(Gtk.StateFlags.NORMAL)
+        probe.destroy()
+        tint = f"rgba({round(text.red * 255)}, {round(text.green * 255)}, {round(text.blue * 255)}, 0.08)"
+        return (border.to_string() if border is not None and border.alpha > 0 else "@borders",
+                radius if isinstance(radius, int) else 3,
+                background.to_string() if background is not None and background.alpha >= 0.5 else "@theme_base_color",
+                text.to_string(), tint)
+
+    @staticmethod
+    def theme_button_text_color():
+        """The color the theme writes button labels in, as CSS."""
+        probe = Gtk.Button()
+        color = probe.get_style_context().get_color(Gtk.StateFlags.NORMAL)
+        probe.destroy()
+        return color.to_string()
+
     def apply_custom_styles(self):
         display_font = self.base_font_size + 5
         error_font = max(10, self.base_font_size - 2)
         error_color = self.theme_destructive_color() or "@error_color"
+        # the history is a box drawn like the display: the same border, corners and background
+        entry_border, entry_radius, entry_background, entry_text, entry_tint = self.theme_entry_look()
 
         style_css = f"""
             .calc-display {{
@@ -625,12 +659,19 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             }}
             .calc-status-label {{
                 font-size: {max(9, self.base_font_size - 4)}px;
-                color: gray;
+                color: {self.theme_button_text_color()};    /* like the buttons: easy to read on the window's grey */
                 padding-left: 6px;
             }}
-            .calc-history {{ font-size: {self.base_font_size}px; }}
+            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent; color: {entry_text};
+                             padding: 2px 12px 2px 4px; }}  /* room on the right for the scrollbar when it shows */
+            scrolledwindow.calc-history-frame {{
+                border: 1px solid {entry_border};
+                border-radius: {entry_radius}px;
+                background-color: {entry_background};
+            }}
+            scrolledwindow.calc-history-frame viewport {{ background-color: transparent; }}
             .history-row {{ padding: 2px; border-radius: 3px; }}
-            .history-row:hover {{ background-color: rgba(200, 200, 200, 0.2); }}
+            .history-row:hover {{ background-color: {entry_tint}; }}
             .calc-mono {{ font-family: monospace; }}
             button.compact {{ padding-left: 2px; padding-right: 2px; }}
             .numeric-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}
