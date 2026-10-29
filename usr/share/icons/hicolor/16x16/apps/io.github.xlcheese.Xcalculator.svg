@@ -1,0 +1,15 @@
+<!-- Xcalculator icon. Copyright (C) 2026 Wesley Hayslip. GPL-3.0-or-later. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dcdcdc"/><stop offset="1" stop-color="#b9b9b9"/></linearGradient></defs>
+  <rect x="0.5" y="0.5" width="15" height="15" rx="3" fill="url(#bg)" stroke="#9c9c9c"/>
+  <g shape-rendering="crispEdges">
+    <rect x="3" y="3" width="10" height="3" fill="#ffffff"/>
+    <rect x="8" y="4" width="4" height="1" fill="#3a3a3a"/>
+    <rect x="3" y="8" width="3" height="2" fill="#ffffff"/>
+    <rect x="7" y="8" width="3" height="2" fill="#ffffff"/>
+    <rect x="11" y="8" width="3" height="2" fill="#ffffff"/>
+    <rect x="3" y="11" width="3" height="2" fill="#ffffff"/>
+    <rect x="7" y="11" width="3" height="2" fill="#ffffff"/>
+    <rect x="11" y="11" width="3" height="2" fill="#7cc242"/>
+  </g>
+</svg>

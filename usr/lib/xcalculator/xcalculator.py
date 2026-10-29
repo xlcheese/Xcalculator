@@ -11,6 +11,7 @@
 
 Start it with "python3 xcalculator.py", or "xcalculator" once it is installed. The other
 files in this folder hold the modes, the history, printing, Preferences and the documentation."""
+import os
 import sys
 
 if __name__ == "__main__" and sys.argv[1:] == ["--refresh-rates"]:
@@ -39,5 +40,8 @@ if __name__ == "__main__":
     GLib.set_prgname("xcalculator")         # the window's class matches the .desktop file,
     Gdk.set_program_class("Xcalculator")    # so the panel groups the window with its menu entry
     GLib.set_application_name("Xcalculator")
-    Gtk.Window.set_default_icon_name("accessories-calculator")    # the icon theme's calculator, like Xed's
+    # the icon is installed under the app's ID; from the source folder, it's in usr/share/icons
+    Gtk.IconTheme.get_default().append_search_path(
+        os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "share", "icons")))
+    Gtk.Window.set_default_icon_name(APP_ID)
     sys.exit(XcalculatorApplication().run(sys.argv))
