@@ -356,12 +356,15 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.conv_bottom_row.pack_start(self.display_bottom, True, True, 0)
         self.conv_bottom_row.pack_start(self.conv_combos[1], False, False, 0)
         self.conv_bottom_row.set_no_show_all(True)
-        self.display_vbox.pack_start(self.conv_bottom_row, False, True, 4)
+        self.display_vbox.pack_start(self.conv_bottom_row, False, True, 0)
+        self.conv_bottom_row.set_margin_top(4)  # 6 px between the boxes; nothing extra below
 
         self.error_label = Gtk.Label(label="")
         self.error_label.set_xalign(1.0)
         self.error_label.get_style_context().add_class("calc-error-label")
-        self.display_vbox.pack_start(self.error_label, False, True, 2)
+        self.display_vbox.pack_start(self.error_label, False, True, 0)
+        self.error_label.set_margin_top(1)      # error text 6 px under the display, like the history above it
+        self.error_label.set_margin_bottom(2)
 
         self.status_label = Gtk.Label(label="")
         self.status_label.set_xalign(0.0)
