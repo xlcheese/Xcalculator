@@ -1,3 +1,5 @@
+<img src="usr/share/icons/hicolor/scalable/apps/io.github.xlcheese.Xcalculator.svg" alt="" width="96" align="right">
+
 # Xcalculator
 
 A calculator for Linux Mint and the Cinnamon desktop, made in the style of the

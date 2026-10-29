@@ -6,7 +6,7 @@ Comment=Basic, scientific, financial, and programmer calculations, and unit and 
 # Translators: search words for the menu, separated by semicolons (keep the last one)
 Keywords=calculator;calculation;arithmetic;scientific;financial;programmer;hex;binary;unit;converter;currency;exchange;
 Exec=xcalculator
-Icon=accessories-calculator
+Icon=io.github.xlcheese.Xcalculator
 Terminal=false
 Categories=GTK;Utility;Calculator;
 StartupNotify=true
