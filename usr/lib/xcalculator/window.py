@@ -235,7 +235,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         mode_menu.append(currency_radio)
         self.mode_items = dict(zip(VALID_MODES, (basic_radio, sci_radio, financial_radio,
                                                  programmer_radio, converter_radio, currency_radio)))
-        for mode, item in self.mode_items.items():      # Ctrl+Alt+B, S, F, P, U like GNOME Calculator, and C
+        for mode, item in self.mode_items.items():      # Ctrl+Alt and the first letter: B, S, F, P, U and C
             item.add_accelerator("activate", accel_group, Gdk.keyval_from_name(MODE_KEYS[mode]),
                                  Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK,
                                  Gtk.AccelFlags.VISIBLE)
