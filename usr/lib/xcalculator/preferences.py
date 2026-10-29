@@ -19,10 +19,10 @@ from history import SavedHistory
 
 MODE_DESCRIPTIONS = {
     "Basic": _("Everyday arithmetic"),
-    "Scientific": _("Powers, roots, trigonometry, logarithms and more"),
-    "Financial": _("Loans, savings, cash flows and depreciation"),
-    "Programmer": _("Hexadecimal, binary and bitwise operations"),
-    "Unit Converter": _("Lengths, weights, temperatures and more"),
+    "Scientific": _("Powers, roots, trigonometry, logarithms, and more"),
+    "Financial": _("Loans, savings, cash flows, and depreciation"),
+    "Programmer": _("Hexadecimal, binary, and bitwise operations"),
+    "Unit Converter": _("Lengths, weights, temperatures, and more"),
     "Currency Converter": _("Exchange rates from the European Central Bank"),
 }
 
@@ -160,7 +160,7 @@ class PreferencesWindow(Gtk.Window):
         self.row(box, _("Word size"), self.word, _("Also changed by the QWORD/DWORD/WORD/BYTE button."))
         self.base = self.combo(PREF_BASES, lambda w: self.changed(
             lambda: c.set_programmer_format(PREF_BASES[w.get_active()][1], c.prog_bits)))
-        self.row(box, _("Starting number base"), self.base, _("Also changed by the HEX, DEC, OCT and BIN buttons."))
+        self.row(box, _("Starting number base"), self.base, _("Also changed by the HEX, DEC, OCT, and BIN buttons."))
 
         self.heading(box, _("Currency Converter"))
         self.currency_auto_switch = Gtk.Switch()

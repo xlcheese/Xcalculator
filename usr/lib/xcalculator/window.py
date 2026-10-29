@@ -1160,7 +1160,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         dialog.set_program_name("Xcalculator")
         dialog.set_version(APP_VERSION)
         dialog.set_comments(_("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
-                              "Scientific, Financial, Programmer, Unit Converter and Currency Converter modes."))
+                              "Scientific, Financial, Programmer, Unit Converter, and Currency Converter modes."))
         dialog.set_logo_icon_name("accessories-calculator")
         # Translators: your name (and email), one translator per line; shown in About → Credits
         dialog.set_translator_credits(_("translator-credits"))
