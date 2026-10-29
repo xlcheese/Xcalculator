@@ -8,8 +8,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Help → Documentation and Keyboard Shortcuts: the pages, and the window that shows them."""
 import gi
+import re
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, Gdk, GLib, Pango
 from i18n import N_, _
 
 
@@ -45,6 +46,14 @@ SHORTCUT_COLUMNS = (
                         ("<Control>o", _("Switch to OCT")),
                         ("<Control>b", _("Switch to BIN"))))),
 )
+
+
+LIST_ITEM_RE = re.compile(r'^  (•|\d+\.) (.*)$')     # "  • text" and "  1. text" in the pages below
+
+
+def section_heading(title):
+    """A heading one step bigger than "Numbers" and smaller than the page title, like General."""
+    return f'<span size="110%"><b>{GLib.markup_escape_text(title)}</b></span>'
 
 
 # Help → Documentation: (page name, the mode it explains or None, paragraphs of Pango markup).
@@ -212,19 +221,24 @@ HELP_PAGES = (
     )),
     (N_("Preferences"), None, (
         _("Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history."),
-        _("<b>General</b>\n"
-          "  <b>Decimal places</b>  how many places answers are rounded to, from 0 to 50 (10 to start). Up to 50 places uses high-precision math from the python3-mpmath package, which is installed with Xcalculator; without it the limit is 15. Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
-          "  <b>Show all decimal places</b>  pads answers with zeros, so with 2 places 19.5 shows as 19.50. Handy for money.\n"
-          "  <b>Thousands separators</b>  1234567 shows as 1,234,567 in answers, the history, and the printout (not while typing, and not in Programmer mode). Copy still gives plain digits.\n"
-          "  <b>Angle units</b>  degrees or radians for sin, cos, and tan. The Rad/Deg button in Scientific changes the same setting.\n"
-          "  <b>Word size</b> and <b>Starting number base</b>  for Programmer mode; its buttons change the same settings.\n"
-          "  <b>Keep history after closing</b>  shows the saved history when Xcalculator opens. The history is always saved in ~/.config/xcalculator/history.json (the newest 500 lines). <b>View → Clear History</b> only empties the window. <b>Delete Saved History</b> clears the history and deletes the file."),
+        section_heading(_("General")),
+        _("<b>Numbers</b>\n"
+          "  • <b>Decimal places:</b> Rounds answers to 0–50 decimal places (default 10). Uses high-precision math from the python3-mpmath package, which is installed with Xcalculator (falls back to 15 places if it's missing). Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
+          "  • <b>Show all decimal places:</b> Pads answers with trailing zeros (with 2 places, 19.5 becomes 19.50). Useful for tracking currency.\n"
+          "  • <b>Thousands separators:</b> 1234567 shows as 1,234,567 in answers, history, and the printout. Not used while typing or in Programmer mode. Copy retains plain digits."),
+        _("<b>Scientific</b>\n"
+          "  • <b>Angle units:</b> Sets degrees or radians for sin, cos, and tan. The Rad/Deg button in Scientific changes the same setting."),
+        _("<b>Programmer</b>\n"
+          "  • <b>Word size</b> and <b>Starting number base:</b> For Programmer mode; its buttons change the same settings."),
         _("<b>Currency Converter</b>\n"
-          "  <b>Refresh rates automatically</b>  the same setting as the Auto Refresh button. It can be switched on once rates have been downloaded.\n"
-          "  <b>Refresh interval in days</b>  how old the rates may get before they are refreshed: 1 to 30 days, 3 to start.\n"
-          "  <b>Also when Xcalculator is closed</b>  refresh in the background too, once a day, even when Xcalculator isn't running. Off to start."),
-        _("<b>Modes</b>\n"
-          "Switch off the modes you don't use, and they disappear from the Mode menu. At least one mode stays on."),
+          "  • <b>Refresh rates automatically:</b> The same setting as the Auto Refresh button. It can be switched on once rates have been downloaded.\n"
+          "  • <b>Refresh interval in days:</b> How often rates refresh: every 1 to 30 days (default 3).\n"
+          "  • <b>Also when Xcalculator is closed:</b> Also refreshes in the background, once a day, even when Xcalculator isn't running (default off)."),
+        _("<b>History</b>\n"
+          "  • <b>Keep history after closing:</b> Restores history upon launch. Continuously logs the last 500 lines to ~/.config/xcalculator/history.json. <b>View → Clear History</b> only empties the window.\n"
+          "  • <b>Delete Saved History:</b> Clears the history and deletes the file."),
+        section_heading(_("Modes")),
+        _("Switch off unused modes to hide them from the Mode menu. At least one mode stays on."),
     )),
     (N_("Keyboard"), None, SHORTCUTS_PAGE),     # drawn with key caps, like Xed's shortcuts window
 )
@@ -244,17 +258,9 @@ class HelpWindow(Gtk.Window):
             if paragraphs == SHORTCUTS_PAGE:
                 self.stack.add_titled(self.build_shortcuts_page(), name, title)
                 continue
-            label = Gtk.Label()
-            label.set_markup(f"<big><b>{GLib.markup_escape_text(title)}</b></big>\n\n" + "\n\n".join(paragraphs))
-            label.set_line_wrap(True)
-            label.set_xalign(0)
-            label.set_yalign(0)
-            label.set_selectable(True)
-            label.set_max_width_chars(70)
-            label.set_margin_start(24); label.set_margin_end(24); label.set_margin_top(18); label.set_margin_bottom(24)
             scroller = Gtk.ScrolledWindow()
             scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-            scroller.add(label)
+            scroller.add(self.build_text_page(title, paragraphs))
             self.stack.add_titled(scroller, name, title)
             if mode:
                 self.page_for_mode[mode] = name
@@ -267,6 +273,55 @@ class HelpWindow(Gtk.Window):
         self.add(box)
         self.connect("key-press-event", lambda w, e: Gdk.keyval_name(e.keyval) == "Escape" and (self.destroy() or True))
         self.show_all()
+
+    @staticmethod
+    def text_label(markup):
+        label = Gtk.Label(xalign=0)
+        label.set_markup(markup)
+        label.set_line_wrap(True)
+        label.set_selectable(True)
+        label.set_max_width_chars(70)
+        return label
+
+    def build_text_page(self, title, paragraphs):
+        """A page of paragraphs. List items ("  • text", "  1. text") get their own row, so
+        a long item wraps under its own text instead of under the bullet."""
+        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=14)
+        page.set_margin_start(24); page.set_margin_end(24); page.set_margin_top(18); page.set_margin_bottom(24)
+        page.pack_start(self.text_label(f"<big><b>{GLib.markup_escape_text(title)}</b></big>"), False, False, 0)
+        for paragraph in paragraphs:
+            lines = paragraph.split("\n")
+            if not all(self.valid_markup(line) for line in lines):
+                page.pack_start(self.text_label(paragraph), False, False, 0)     # markup across lines
+                continue
+            block = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+            for line in lines:
+                item = LIST_ITEM_RE.match(line)
+                if item:
+                    row = Gtk.Box(spacing=6)
+                    row.set_margin_start(12)
+                    marker = self.text_label(item.group(1))
+                    marker.set_valign(Gtk.Align.START)
+                    marker.set_selectable(False)
+                    row.pack_start(marker, False, False, 0)
+                    row.pack_start(self.text_label(item.group(2)), True, True, 0)
+                    block.pack_start(row, False, False, 0)
+                elif line.startswith("  "):                 # an indented line, such as a key and what it does
+                    label = self.text_label(line[2:])
+                    label.set_margin_start(12)
+                    block.pack_start(label, False, False, 0)
+                else:
+                    block.pack_start(self.text_label(line), False, False, 0)
+            page.pack_start(block, False, False, 0)
+        return page
+
+    @staticmethod
+    def valid_markup(text):
+        try:
+            Pango.parse_markup(text, -1, "\0")
+            return True
+        except GLib.Error:
+            return False
 
     @staticmethod
     def build_shortcuts_page():
