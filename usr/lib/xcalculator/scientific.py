@@ -59,7 +59,7 @@ class ScientificMode:
         'sinh': 'sinh⁻¹', 'cosh': 'cosh⁻¹', 'tanh': 'tanh⁻¹',
     }
 
-    SCIENTIFIC_CONTROL_KEYS = {"r": "²√x", "i": "1/x"}     # GNOME Calculator's square root and inverse
+    SCIENTIFIC_CONTROL_KEYS = {"r": "²√x", "i": "1/x"}     # square root and inverse
 
     def build_functions(self):
         M = MATH                            # ordinary floats, or mpmath when installed
