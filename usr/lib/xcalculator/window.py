@@ -615,23 +615,35 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
 
     @staticmethod
     def theme_entry_look():
-        """The theme's input field as CSS: (border color, corner radius, background color)."""
+        """The theme's input field as CSS: (border color, corner radius, background color,
+        text color, a faint tint of the text color for pointing at a history line)."""
         probe = Gtk.Entry()
         context = probe.get_style_context()
         border = context.get_property("border-top-color", Gtk.StateFlags.NORMAL)
         radius = context.get_property("border-radius", Gtk.StateFlags.NORMAL)
         background = context.get_property("background-color", Gtk.StateFlags.NORMAL)
+        text = context.get_color(Gtk.StateFlags.NORMAL)
         probe.destroy()
+        tint = f"rgba({round(text.red * 255)}, {round(text.green * 255)}, {round(text.blue * 255)}, 0.08)"
         return (border.to_string() if border is not None and border.alpha > 0 else "@borders",
                 radius if isinstance(radius, int) else 3,
-                background.to_string() if background is not None and background.alpha >= 0.5 else "@theme_base_color")
+                background.to_string() if background is not None and background.alpha >= 0.5 else "@theme_base_color",
+                text.to_string(), tint)
+
+    @staticmethod
+    def theme_button_text_color():
+        """The color the theme writes button labels in, as CSS."""
+        probe = Gtk.Button()
+        color = probe.get_style_context().get_color(Gtk.StateFlags.NORMAL)
+        probe.destroy()
+        return color.to_string()
 
     def apply_custom_styles(self):
         display_font = self.base_font_size + 5
         error_font = max(10, self.base_font_size - 2)
         error_color = self.theme_destructive_color() or "@error_color"
         # the history is a box drawn like the display: the same border, corners and background
-        entry_border, entry_radius, entry_background = self.theme_entry_look()
+        entry_border, entry_radius, entry_background, entry_text, entry_tint = self.theme_entry_look()
 
         style_css = f"""
             .calc-display {{
@@ -647,10 +659,10 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             }}
             .calc-status-label {{
                 font-size: {max(9, self.base_font_size - 4)}px;
-                color: gray;
+                color: {self.theme_button_text_color()};    /* like the buttons: easy to read on the window's grey */
                 padding-left: 6px;
             }}
-            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent;
+            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent; color: {entry_text};
                              padding: 2px 12px 2px 4px; }}  /* room on the right for the scrollbar when it shows */
             scrolledwindow.calc-history-frame {{
                 border: 1px solid {entry_border};
@@ -659,7 +671,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             }}
             scrolledwindow.calc-history-frame viewport {{ background-color: transparent; }}
             .history-row {{ padding: 2px; border-radius: 3px; }}
-            .history-row:hover {{ background-color: rgba(200, 200, 200, 0.2); }}
+            .history-row:hover {{ background-color: {entry_tint}; }}
             .calc-mono {{ font-family: monospace; }}
             button.compact {{ padding-left: 2px; padding-right: 2px; }}
             .numeric-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}

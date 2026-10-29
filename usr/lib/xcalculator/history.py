@@ -162,7 +162,8 @@ class HistoryPanel:
             expr_box.set_visible_window(False)
             is_calculation = formula_clickable and not restore   # Basic/Scientific: × ÷ − on screen
             shown_formula = show_math(formula) if is_calculation else show_minus(formula)
-            expr_label = Gtk.Label(label=f"<span color='gray'>{GLib.markup_escape_text(shown_formula)}  =</span>")
+            # the calculation in the history's own text color, softer, so the answer stands out
+            expr_label = Gtk.Label(label=f"<span alpha='60%'>{GLib.markup_escape_text(shown_formula)}  =</span>")
             expr_label.set_use_markup(True)
             expr_label.set_ellipsize(Pango.EllipsizeMode.START)
             expr_box.add(expr_label)
