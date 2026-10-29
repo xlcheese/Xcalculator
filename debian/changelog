@@ -1,3 +1,17 @@
+xcalculator (0.9.2) unstable; urgency=medium
+
+  * New Currency Converter mode (Ctrl+Alt+C), with the European Central
+    Bank's exchange rates for about 30 currencies. Nothing is downloaded
+    until Download Rates is clicked; the rates are kept for offline use.
+  * Auto Refresh refreshes the rates every 1 to 30 days (3 to start),
+    while Xcalculator is open, or also when it's closed if switched on in
+    Preferences (a systemd user timer that only Xcalculator enables).
+  * Preferences and Documentation wording reviewed: US English, serial
+    commas, and a hint for every setting ending with a period.
+  * Documentation pages wrap list items under their own text.
+
+ -- Wesley Hayslip <xl_cheese@hotmail.com>  Thu, 29 Oct 2026 12:00:00 +0000
+
 xcalculator (0.9.1) unstable; urgency=medium
 
   * Opening Xcalculator again, or File → New Window, opens another window in
