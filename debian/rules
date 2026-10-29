@@ -7,3 +7,7 @@
 # compiled copies again on uninstall
 override_dh_python3:
 	dh_python3 /usr/lib/xcalculator
+
+# the rates timer is switched on per person by Xcalculator itself (Preferences → Currency
+# Converter), never for everyone when the package is installed
+override_dh_installsystemduser:

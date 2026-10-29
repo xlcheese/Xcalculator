@@ -11,10 +11,11 @@ place next to Xed or Xviewer.
 Choose a mode from the **Mode** menu (or Ctrl+Alt and the mode's first letter).
 
 - **Basic**: everyday sums
-- **Scientific**: powers, roots, trigonometry, logarithms, factorials, combinations and a menu of more functions
-- **Financial**: loans and savings (N, I/Y, PV, PMT, FV), cash flows (NPV, IRR) and depreciation
-- **Programmer**: HEX, DEC, OCT and BIN, word sizes from 8 to 64 bits, and bitwise operators
+- **Scientific**: powers, roots, trigonometry, logarithms, factorials, combinations, and a menu of more functions
+- **Financial**: loans and savings (N, I/Y, PV, PMT, FV), cash flows (NPV, IRR), and depreciation
+- **Programmer**: HEX, DEC, OCT, and BIN; word sizes from 8 to 64 bits; and bitwise operators
 - **Unit Converter**: twelve categories, converted as you type
+- **Currency Converter**: about 30 currencies, with exchange rates from the European Central Bank
 
 Every answer goes into a history you can click to reuse. The history can be
 printed like an adding-machine tape. With `python3-mpmath` installed, answers
@@ -56,11 +57,11 @@ The program is in `usr/lib/xcalculator/`, one file for each part:
 | File | What it holds |
 |---|---|
 | `xcalculator.py` | starts the program (one `Gtk.Application`, any number of windows) |
-| `window.py` | the calculator window: menus, display, keypad layouts, keyboard and clipboard |
-| `basic.py` | typing a calculation and working it out, shared by Basic, Scientific and Financial |
-| `scientific.py` | Scientific's functions, the 2nd key, angle units and the f(x) menu |
-| `financial.py` | loans and savings, cash flows, amortization and depreciation |
-| `programmer.py` | bases, word sizes and bitwise operators |
+| `window.py` | the calculator window: menus, display, keypad layouts, keyboard, and clipboard |
+| `basic.py` | typing a calculation and working it out, shared by Basic, Scientific, and Financial |
+| `scientific.py` | Scientific's functions, the 2nd key, angle units, and the f(x) menu |
+| `financial.py` | loans and savings, cash flows, amortization, and depreciation |
+| `programmer.py` | bases, word sizes, and bitwise operators |
 | `converter.py` | the Unit Converter and its exact conversion factors |
 | `engine.py` | the arithmetic behind every mode, and how answers are written |
 | `history.py` | the history above the display, and the saved history file |
@@ -103,7 +104,7 @@ add `fr` to `po/LINGUAS`, and run `make`. To try it from the source folder:
 LANGUAGE=fr python3 usr/lib/xcalculator/xcalculator.py
 ```
 
-Calculator notation stays as it is: sin, HEX, NPV, MR and the like are the same
+Calculator notation stays as it is: sin, HEX, NPV, MR, and the like are the same
 in every language. Text in braces, such as `{mode}`, and markup such as
 `<b>…</b>` must be kept exactly.
 

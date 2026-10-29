@@ -38,7 +38,7 @@ class ScientificMode:
         ('ceil', _("round up to a whole number:  ceil(2.1) = 3")),
         ('int', _("the whole-number part:  int(−2.7) = −2")),
         ('frac', _("the part after the decimal point:  frac(2.75) = 0.75")),
-        ('sgn', _("the sign:  −1, 0 or 1")),
+        ('sgn', _("the sign:  −1, 0, or 1")),
         ('log₂', _("logarithm base 2:  log₂(8) = 3")),
         ('sec', _("secant, 1 ÷ cos")),
         ('csc', _("cosecant, 1 ÷ sin")),

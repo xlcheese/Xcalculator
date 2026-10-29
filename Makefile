@@ -49,6 +49,11 @@ install: all
 	install -Dm644 $(DESKTOP) $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
 	install -Dm644 usr/share/metainfo/$(APP_ID).metainfo.xml $(DESTDIR)$(PREFIX)/share/metainfo/$(APP_ID).metainfo.xml
 	install -Dm644 usr/share/man/man1/xcalculator.1 $(DESTDIR)$(PREFIX)/share/man/man1/xcalculator.1
+	install -d $(DESTDIR)$(PREFIX)/lib/systemd/user
+	for unit in xcalculator-rates.service xcalculator-rates.timer; do \
+		sed 's|@BINDIR@|$(PREFIX)/bin|' data/$$unit.in > $(DESTDIR)$(PREFIX)/lib/systemd/user/$$unit; \
+		chmod 644 $(DESTDIR)$(PREFIX)/lib/systemd/user/$$unit; \
+	done
 	for lang in $(LANGUAGES); do \
 		install -Dm644 $(LOCALE)/$$lang/LC_MESSAGES/$(DOMAIN).mo \
 			$(DESTDIR)$(PREFIX)/share/locale/$$lang/LC_MESSAGES/$(DOMAIN).mo; \

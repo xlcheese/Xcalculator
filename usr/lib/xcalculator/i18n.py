@@ -24,6 +24,7 @@ except locale.Error:
 gettext.bindtextdomain(TEXT_DOMAIN, LOCALE_DIR)
 gettext.textdomain(TEXT_DOMAIN)
 _ = gettext.gettext
+ngettext = gettext.ngettext         # for text with a number in it: "1 day", "3 days"
 
 
 def N_(text):

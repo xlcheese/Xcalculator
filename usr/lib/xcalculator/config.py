@@ -52,10 +52,13 @@ HISTORY_MIN_HEIGHT = 75     # results area: first-time height and the smallest a
 
 # window width for each mode; the height fits the buttons plus the results area
 MODE_WIDTHS = {"Basic": 340, "Scientific": 460, "Financial": 500,
-               "Programmer": 500, "Unit Converter": 500}
+               "Programmer": 500, "Unit Converter": 500, "Currency Converter": 500}
 
 
-VALID_MODES = (N_("Basic"), N_("Scientific"), N_("Financial"), N_("Programmer"), N_("Unit Converter"))
+VALID_MODES = (N_("Basic"), N_("Scientific"), N_("Financial"), N_("Programmer"), N_("Unit Converter"),
+               N_("Currency Converter"))
+CONVERTER_MODES = ("Unit Converter", "Currency Converter")     # the modes with two boxes
 
 
-MODE_KEYS = {"Basic": "b", "Scientific": "s", "Financial": "f", "Programmer": "p", "Unit Converter": "u"}
+MODE_KEYS = {"Basic": "b", "Scientific": "s", "Financial": "f", "Programmer": "p", "Unit Converter": "u",
+             "Currency Converter": "c"}

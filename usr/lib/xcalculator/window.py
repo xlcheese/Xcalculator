@@ -13,11 +13,11 @@ import os
 import random
 import re
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, Gdk, GLib, Pango
 from i18n import N_, _
 from config import (
     APP_AUTHORS, APP_COPYRIGHT, APP_CREDIT, APP_VERSION, APP_WEBSITE, CONFIG_FILE,
-    DEFAULT_FONT_SIZE, HISTORY_MIN_HEIGHT, MODE_KEYS, MODE_WIDTHS, VALID_MODES
+    CONVERTER_MODES, DEFAULT_FONT_SIZE, HISTORY_MIN_HEIGHT, MODE_KEYS, MODE_WIDTHS, VALID_MODES
 )
 from engine import (
     DEFAULT_DECIMALS, MAX_DECIMALS, NUMBER_FORMAT, PLAIN_MATH, fit_text, format_number,
@@ -33,15 +33,16 @@ from printing import TapePrinting
 from preferences import PreferencesActions
 from documentation import HelpWindow
 from easter_egg import UpsideDown
+from currency import CURRENCY, CURRENCY_START, CODE_RE, DEFAULT_INTERVAL, MAX_INTERVAL, CurrencyMode
 
 
-class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, ConverterMode,
+class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, ConverterMode, CurrencyMode,
                   HistoryPanel, TapePrinting, PreferencesActions, UpsideDown, Gtk.Window):
     """One calculator window: the menus, the display, the keypad for the current mode,
     and the history. Each mode's own keys come from its module (see the classes above)."""
 
     # buttons whose label is a word: translated on screen, still known by the English name
-    WORD_BUTTONS = (N_("Clear"), N_("Clear All"), N_("Capture"))
+    WORD_BUTTONS = (N_("Clear"), N_("Clear All"), N_("Capture"), N_("Swap"), N_("Auto Refresh"), N_("Refresh Rates"))
 
     def __init__(self, application=None):
         super().__init__(title="Xcalculator", application=application)
@@ -87,6 +88,11 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         # Unit Converter state
         self.conv_category = "Length"
         self.conv_units = {c: list(pair) for c, pair in CONVERTER_START.items()}   # [top, bottom]
+        self.conv_units[CURRENCY] = list(CURRENCY_START)
+        self.currency_auto = False      # Preferences → Currency Converter, and the Auto Refresh button
+        self.currency_interval = DEFAULT_INTERVAL
+        self.currency_background = False
+        self.currency_window_ready()
         self.conv_active = 0            # 0: typing in the top box, 1: the bottom box
         self.conv_formula = ""
         self.edit_tail = ""             # text after the cursor while edit_at_cursor runs an action
@@ -222,9 +228,14 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         converter_radio.set_active(self.current_mode == "Unit Converter")
         converter_radio.connect("activate", self.on_menu_mode_changed, "Unit Converter")
         mode_menu.append(converter_radio)
+
+        currency_radio = Gtk.RadioMenuItem(group=basic_radio, label=_("Currency Converter"))
+        currency_radio.set_active(self.current_mode == "Currency Converter")
+        currency_radio.connect("activate", self.on_menu_mode_changed, "Currency Converter")
+        mode_menu.append(currency_radio)
         self.mode_items = dict(zip(VALID_MODES, (basic_radio, sci_radio, financial_radio,
-                                                 programmer_radio, converter_radio)))
-        for mode, item in self.mode_items.items():      # Ctrl+Alt+B, S, F, P, U like GNOME Calculator
+                                                 programmer_radio, converter_radio, currency_radio)))
+        for mode, item in self.mode_items.items():      # Ctrl+Alt+B, S, F, P, U like GNOME Calculator, and C
             item.add_accelerator("activate", accel_group, Gdk.keyval_from_name(MODE_KEYS[mode]),
                                  Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK,
                                  Gtk.AccelFlags.VISIBLE)
@@ -409,6 +420,14 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 [('4', 4), ('5', 4), ('6', 4)],
                 [('1', 4), ('2', 4), ('3', 4)],
                 [('±', 4), ('0', 4), ('.', 4)]
+            ],
+            "Currency Converter": [
+                [('Swap', 4), ('Auto Refresh', 4), ('Refresh Rates', 4)],
+                [('⌫', 4), ('Clear', 4), ('Capture', 4)],
+                [('7', 4), ('8', 4), ('9', 4)],
+                [('4', 4), ('5', 4), ('6', 4)],
+                [('1', 4), ('2', 4), ('3', 4)],
+                [('±', 4), ('0', 4), ('.', 4)]
             ]
         }
 
@@ -438,7 +457,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.second_active = False
 
         programmer = self.current_mode == "Programmer"
-        converter = self.current_mode == "Unit Converter"
+        converter = self.current_mode in CONVERTER_MODES
+        currency = self.current_mode == "Currency Converter"
         rows_data = self.layouts.get(self.current_mode, self.layouts["Scientific"])
 
         for row_idx, row_items in enumerate(rows_data):
@@ -446,13 +466,16 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             for item in row_items:
                 label, span = item
                 # bases and categories stay selected, drawn with the theme's selected look
-                selectable = (programmer and label in PROG_BASES) or (converter and label in CONVERTER_UNITS)
+                selectable = ((programmer and label in PROG_BASES) or (converter and label in CONVERTER_UNITS)
+                              or (currency and label == 'Auto Refresh'))
                 if label == 'f(x)':
                     button = self.make_more_functions_button()
                 else:
                     shown = _(label) if label in self.WORD_BUTTONS or label in CONVERTER_UNITS else label
+                    if label == 'Swap':
+                        shown = "⇅ " + shown
                     button = Gtk.ToggleButton(label=shown) if selectable else Gtk.Button(label=shown)
-                    if shown != label:
+                    if shown != label or label in self.WORD_BUTTONS:
                         button.key = label      # what on_button_clicked goes by
                     button.connect("clicked", self.on_button_clicked)
                 button.set_focus_on_click(False)    # keep the cursor in the display
@@ -470,6 +493,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                     context.add_class("compact")    # long labels: narrower padding keeps the width
                 if label == 'Capture':
                     button.set_tooltip_text(_("Add this conversion to the history"))
+                if currency and label in self.CURRENCY_TOOLTIPS:
+                    button.set_tooltip_text(_(self.CURRENCY_TOOLTIPS[label]))
                 if label == 'Clear All':
                     button.set_tooltip_text(_("Clear all stored financial values: N, I/Y, PV, PMT, FV, "
                                               "cash flows, P1/P2, and the P/Y and BGN settings"))
@@ -491,7 +516,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             for widget in (self.conv_bottom_row, self.display_bottom, *self.conv_combos):
                 widget.show()
             self.conv_use_box(0)            # start in the top box
-            self.conv_set_category(self.conv_category)
+            self.conv_set_category(CURRENCY if currency else self.conv_category)
+            if currency:
+                self.currency_entered()
         else:
             self.conv_bottom_row.hide()
             self.conv_combos[0].hide()
@@ -548,7 +575,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
 
     def on_menu_mode_changed(self, radio_item, mode_name):
         if radio_item.get_active() and self.current_mode != mode_name:
-            if {"Programmer", "Unit Converter"} & {mode_name, self.current_mode}:
+            if {"Programmer", *CONVERTER_MODES} & {mode_name, self.current_mode}:
                 # programmer, converter and decimal expressions don't mix
                 self.expression = ""
                 self.is_result_active = False
@@ -648,8 +675,15 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                     saved_units = config.get("conv_units", {})
                     for name, pair in (saved_units.items() if isinstance(saved_units, dict) else []):
                         symbols = [unit[1] for unit in CONVERTER_UNITS.get(name, [])]
-                        if isinstance(pair, list) and len(pair) == 2 and all(s in symbols for s in pair):
+                        valid = (lambda s: isinstance(s, str) and CODE_RE.fullmatch(s)) if name == CURRENCY \
+                            else (lambda s: s in symbols)
+                        if isinstance(pair, list) and len(pair) == 2 and all(valid(s) for s in pair):
                             self.conv_units[name] = list(pair)
+                    self.currency_auto = config.get("currency_auto") is True
+                    interval = config.get("currency_interval")
+                    if isinstance(interval, int) and 1 <= interval <= MAX_INTERVAL:
+                        self.currency_interval = interval
+                    self.currency_background = config.get("currency_background") is True
                     return
         except Exception as e:
             print(f"Failed to read settings cache: {e}")
@@ -674,6 +708,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 "prog_bits": self.prog_bits,
                 "conv_category": self.conv_category,
                 "conv_units": self.conv_units,
+                "currency_auto": self.currency_auto,
+                "currency_interval": self.currency_interval,
+                "currency_background": self.currency_background,
             }
             os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
             with open(CONFIG_FILE, "w") as f:
@@ -710,7 +747,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.set_display(self.expression or "0", fit=self.is_result_active)
         if self.current_mode == "Programmer":
             self.update_status()
-        elif self.current_mode == "Unit Converter":
+        elif self.current_mode in CONVERTER_MODES:
             self.conv_refresh()
 
     def set_display(self, text, fit=False):
@@ -754,13 +791,13 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.refit_pending = False
         if self.display_fit:
             self.refit_display()
-        if self.current_mode == "Unit Converter":
+        if self.current_mode in CONVERTER_MODES:
             self.refit_result()
         return False
 
     def queue_display_refit(self):
         # after a resize: refit once the new size is settled
-        if (self.display_fit or self.current_mode == "Unit Converter") and not self.refit_pending:
+        if (self.display_fit or self.current_mode in CONVERTER_MODES) and not self.refit_pending:
             self.refit_pending = True
             GLib.idle_add(self.refit_after_resize)
 
@@ -793,12 +830,12 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             return
         if entry is self.display:
             self.refit_display()
-        elif self.current_mode == "Unit Converter":
+        elif self.current_mode in CONVERTER_MODES:
             self.refit_result()
 
     def on_display_focus_in(self, entry, event):
-        """Unit Converter: clicking the other box makes it the one you type in."""
-        if self.current_mode == "Unit Converter" and entry is not self.display:
+        """The converters: clicking the other box makes it the one you type in."""
+        if self.current_mode in CONVERTER_MODES and entry is not self.display:
             self.conv_switch_box(0 if entry is self.display_top else 1)
         return False
 
@@ -970,7 +1007,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         text = re.sub(r'(?<=\d)[,\s_](?=\d)', '', text.strip())
         if self.current_mode == "Programmer":
             self.paste_programmer(text)
-        elif self.current_mode == "Unit Converter":
+        elif self.current_mode in CONVERTER_MODES:
             self.conv_paste_number(text)
         else:
             self.paste_labels(text, "0123456789.+-*/^()%!×÷−e")
@@ -1002,6 +1039,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             return
         if self.current_mode == "Unit Converter":
             self.converter_action(label)
+            return
+        if self.current_mode == "Currency Converter":
+            self.currency_action(label)
             return
 
         if self.cpt_pending and label not in self.FIN_TVM_KEYS and label != 'CPT':
@@ -1045,7 +1085,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
 
     def update_status(self):
         """Show stored financial values, or the value in every base, under the display."""
-        visible = self.current_mode in ("Financial", "Programmer", "Unit Converter")
+        visible = self.current_mode in ("Financial", "Programmer", *CONVERTER_MODES)
         self.status_label.set_visible(visible)
         context = self.status_label.get_style_context()
         if self.current_mode == "Programmer":
@@ -1053,7 +1093,13 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             self.status_label.set_text(show_minus(self.programmer_status_text()))
             return
         context.remove_class("calc-mono")
-        if self.current_mode == "Unit Converter":
+        # the Currency Converter's two lines never wrap, so its boxes don't move when the
+        # message changes; a line too long for the window ends in "…" (the tooltip has it all)
+        currency = self.current_mode == "Currency Converter"
+        self.status_label.set_line_wrap(not currency)
+        self.status_label.set_ellipsize(Pango.EllipsizeMode.END if currency else Pango.EllipsizeMode.NONE)
+        self.status_label.set_tooltip_text(self.conv_formula.strip() if currency else None)
+        if self.current_mode in CONVERTER_MODES:
             self.status_label.set_text(self.conv_formula)
             return
         if not visible:
@@ -1114,7 +1160,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         dialog.set_program_name("Xcalculator")
         dialog.set_version(APP_VERSION)
         dialog.set_comments(_("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
-                              "Scientific, Financial, Programmer and Unit Converter modes."))
+                              "Scientific, Financial, Programmer, Unit Converter, and Currency Converter modes."))
         dialog.set_logo_icon_name("accessories-calculator")
         # Translators: your name (and email), one translator per line; shown in About → Credits
         dialog.set_translator_credits(_("translator-credits"))

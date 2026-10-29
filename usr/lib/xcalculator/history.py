@@ -13,9 +13,10 @@ import os
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib, Pango
 from i18n import _
-from config import CONFIG_DIR, HISTORY_FILE, MAX_SAVED_HISTORY
+from config import CONFIG_DIR, CONVERTER_MODES, HISTORY_FILE, MAX_SAVED_HISTORY
 from engine import fit_text, show_math, show_minus
 from converter import CONVERTER_UNITS
+from currency import CURRENCY
 
 
 class FitLabel(Gtk.Label):
@@ -212,7 +213,7 @@ class HistoryPanel:
         """A captured conversion: bring it back, or use its number in the other modes."""
         if event.button != 1:
             return False
-        if self.current_mode == "Unit Converter":
+        if self.current_mode == ("Currency Converter" if restore[0] == CURRENCY else "Unit Converter"):
             self.error_label.set_text("")
             self.conv_restore(*restore)
         elif number is not None:
@@ -222,7 +223,7 @@ class HistoryPanel:
     def on_history_res_clicked(self, widget, event, result):
         if event.button == 1:
             self.error_label.set_text("")
-            if self.current_mode == "Unit Converter":
+            if self.current_mode in CONVERTER_MODES:
                 self.conv_paste_number(result)
             elif self.current_mode == "Programmer":
                 self.edit_at_cursor(lambda: self.prog_insert_decimal(result))
@@ -246,7 +247,7 @@ class HistoryPanel:
         try:
             for row in list(rows):
                 restore = row.get("restore")
-                if restore and not (len(restore) == 4 and restore[0] in CONVERTER_UNITS):
+                if restore and not (len(restore) == 4 and (restore[0] in CONVERTER_UNITS or restore[0] == CURRENCY)):
                     restore = None
                 self.add_to_history_display(str(row["formula"]), str(row["result"]), row.get("clickable") is True,
                                             row.get("click_text"), tuple(restore) if restore else None,

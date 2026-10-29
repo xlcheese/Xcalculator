@@ -11,7 +11,9 @@ import re
 from decimal import Decimal, localcontext
 from fractions import Fraction
 from i18n import N_, _
+from config import CONVERTER_MODES
 from engine import DECIMAL_RE, format_fraction
+from currency import CURRENCY, CURRENCY_START
 
 
 PI = Fraction("3.14159265358979323846264338327950288419716939937510582097494")
@@ -178,9 +180,19 @@ class ConverterMode:
         self.conv_active = index
         self.display = (self.display_top, self.display_bottom)[index]
 
+    def conv_current_category(self):
+        """The category on screen; the Currency Converter's is CURRENCY."""
+        return CURRENCY if self.current_mode == "Currency Converter" else self.conv_category
+
     def conv_set_category(self, category):
-        self.conv_category = category
-        units = CONVERTER_UNITS[category]
+        if category == CURRENCY:
+            units = self.currency_units()
+            codes = [code for name, code, size in units]
+            if not all(code in codes for code in self.conv_units[CURRENCY]):
+                self.conv_units[CURRENCY] = list(CURRENCY_START)    # a currency the bank dropped
+        else:
+            self.conv_category = category
+            units = CONVERTER_UNITS[category]
         self.syncing_widgets = True
         for name in CONVERTER_UNITS:
             button = self.buttons.get(name)
@@ -189,7 +201,7 @@ class ConverterMode:
         for index, combo in enumerate(self.conv_combos):
             combo.remove_all()
             for name, symbol, size in units:
-                combo.append(symbol, f"{_(name)} ({symbol})")
+                combo.append(symbol, f"{_(name)} ({symbol})" if name != symbol else symbol)
             combo.set_active_id(self.conv_units[category][index])
         self.syncing_widgets = False
         self.conv_refresh()
@@ -197,7 +209,7 @@ class ConverterMode:
     def on_conv_unit_changed(self, combo, index):
         if self.syncing_widgets or combo.get_active_id() is None:
             return
-        self.conv_units[self.conv_category][index] = combo.get_active_id()
+        self.conv_units[self.conv_current_category()][index] = combo.get_active_id()
         self.conv_refresh()
         self.save_window_settings()
 
@@ -213,16 +225,19 @@ class ConverterMode:
 
     def conv_refresh(self):
         """Convert the typed number into the other box and update the formula line."""
-        if self.current_mode != "Unit Converter":
+        if self.current_mode not in CONVERTER_MODES:
             return
-        category = self.conv_category
+        category = self.conv_current_category()
         from_symbol = self.conv_units[category][self.conv_active]
         to_symbol = self.conv_units[category][1 - self.conv_active]
         value = self.conv_input_value()
-        self.conv_result_full = ("" if value is None else
-                                 format_fraction(convert_units(value, category, from_symbol, to_symbol)))
+        if category == CURRENCY:
+            self.conv_result_full, self.conv_formula = self.currency_convert(value, from_symbol, to_symbol)
+        else:
+            self.conv_result_full = ("" if value is None else
+                                     format_fraction(convert_units(value, category, from_symbol, to_symbol)))
+            self.conv_formula = converter_formula(category, from_symbol, to_symbol)
         self.refit_result()
-        self.conv_formula = converter_formula(category, from_symbol, to_symbol)
         self.update_status()
 
     def conv_switch_box(self, index):
@@ -292,7 +307,7 @@ class ConverterMode:
         """Capture: add the conversion on screen to the history."""
         if not self.conv_result_full:
             return
-        category = self.conv_category
+        category = self.conv_current_category()
         from_symbol = self.conv_units[category][self.conv_active]
         to_symbol = self.conv_units[category][1 - self.conv_active]
         typed = self.expression if self.expression not in ("", "-", ".", "-.") else "0"
