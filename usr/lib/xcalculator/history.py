@@ -136,12 +136,21 @@ class HistoryPanel:
     HISTORY_KEYS = ("formula", "result", "clickable", "click_text", "restore", "grouping")
 
     def scroll_to_bottom(self):
-        try:
-            adj = self.scrolled_window.get_vadjustment()
-            if adj: adj.set_value(adj.get_upper() - adj.get_page_size())
-        except Exception as e:
-            print(f"Scrolling warning: {e}")
+        """Show the newest line. GTK measures a new row a little later, so keep following
+        the history's height for a moment (see on_history_height_changed)."""
+        self.follow_history = True
+        adj = self.scrolled_window.get_vadjustment()
+        adj.set_value(adj.get_upper() - adj.get_page_size())
+        GLib.timeout_add(500, self.stop_following_history)
         return False
+
+    def stop_following_history(self):
+        self.follow_history = False
+        return False
+
+    def on_history_height_changed(self, adj):
+        if getattr(self, "follow_history", False):
+            adj.set_value(adj.get_upper() - adj.get_page_size())
 
     def add_to_history_display(self, formula, result, formula_clickable=True, click_text=None,
                                restore=None, grouping=True, save=True):

@@ -308,8 +308,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.scrolled_window.set_propagate_natural_height(True)
         self.scrolled_window.set_min_content_height(HISTORY_MIN_HEIGHT)
         self.scrolled_window.connect("size-allocate", self.on_history_allocated)
+        self.scrolled_window.get_vadjustment().connect("changed", self.on_history_height_changed)
         self.scrolled_window.set_vexpand(True)
-        self.scrolled_window.set_overlay_scrolling(False)
+        self.scrolled_window.set_overlay_scrolling(True)    # the scrollbar shows only when needed, as in Xed
         self.scrolled_window.set_shadow_type(Gtk.ShadowType.IN)     # a box like the display (see apply_custom_styles)
         self.scrolled_window.get_style_context().add_class("calc-history-frame")
 
@@ -583,7 +584,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 self.expression = ""
                 self.is_result_active = False
                 self.token_stack = []
-                self.error_label.set_text("")
+            self.error_label.set_text("")           # an error belongs to the mode it happened in
             self.current_mode = mode_name
             self.update_view_mode_layout()
             self.update_display()
@@ -646,7 +647,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 color: gray;
                 padding-left: 6px;
             }}
-            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent; padding: 2px 4px; }}
+            .calc-history {{ font-size: {self.base_font_size}px; background-color: transparent;
+                             padding: 2px 12px 2px 4px; }}  /* room on the right for the scrollbar when it shows */
             scrolledwindow.calc-history-frame {{
                 border: 1px solid {entry_border};
                 border-radius: {entry_radius}px;
