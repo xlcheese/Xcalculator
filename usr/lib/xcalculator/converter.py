@@ -201,7 +201,8 @@ class ConverterMode:
         for index, combo in enumerate(self.conv_combos):
             combo.remove_all()
             for name, symbol, size in units:
-                combo.append(symbol, f"{_(name)} ({symbol})" if name != symbol else symbol)
+                shown = name if category == CURRENCY else _(name)     # currency names come translated
+                combo.append(symbol, f"{shown} ({symbol})" if name != symbol else symbol)
             combo.set_active_id(self.conv_units[category][index])
         self.syncing_widgets = False
         self.conv_refresh()

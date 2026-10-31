@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-29 14:52+0000\n"
+"POT-Creation-Date: 2026-10-31 04:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -527,168 +527,44 @@ msgstr ""
 msgid "Formula:  {formula}"
 msgstr ""
 
-#: usr/lib/xcalculator/converter.py:297 usr/lib/xcalculator/programmer.py:221
-#: usr/lib/xcalculator/window.py:1018
+#: usr/lib/xcalculator/converter.py:298 usr/lib/xcalculator/programmer.py:221
+#: usr/lib/xcalculator/window.py:1059
 msgid "Can't paste that"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:50
-msgid "Australian Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:50
-msgid "Bulgarian Lev"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:50
-msgid "Brazilian Real"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:51
-msgid "Canadian Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:51
-msgid "Swiss Franc"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:51
-msgid "Chinese Yuan"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:52
-msgid "Czech Koruna"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:52
-msgid "Danish Krone"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:52
-msgid "Euro"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:53
-msgid "British Pound"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:53
-msgid "Hong Kong Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:53
-msgid "Hungarian Forint"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:54
-msgid "Indonesian Rupiah"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:54
-msgid "Israeli New Shekel"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:54
-msgid "Indian Rupee"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:55
-msgid "Icelandic Króna"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:55
-msgid "Japanese Yen"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:55
-msgid "South Korean Won"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:56
-msgid "Mexican Peso"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:56
-msgid "Malaysian Ringgit"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:56
-msgid "Norwegian Krone"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:57
-msgid "New Zealand Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:57
-msgid "Philippine Peso"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:57
-msgid "Polish Złoty"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:58
-msgid "Romanian Leu"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:58
-msgid "Swedish Krona"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:58
-msgid "Singapore Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:59
-msgid "Thai Baht"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:59
-msgid "Turkish Lira"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:59
-msgid "US Dollar"
-msgstr ""
-
-#: usr/lib/xcalculator/currency.py:60
-msgid "South African Rand"
 msgstr ""
 
 #. Translators: the date of the exchange rates, in Python's strftime format
 #. (%b month, %d day, %Y year), e.g. "Oct 28, 2026"
-#: usr/lib/xcalculator/currency.py:147
+#: usr/lib/xcalculator/currency.py:141
 msgid "%b %d, %Y"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:224
+#: usr/lib/xcalculator/currency.py:236
 msgid "Exchange the two currencies"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:225
+#: usr/lib/xcalculator/currency.py:237
 msgid ""
 "Refresh the exchange rates automatically. Change how often in Edit → "
 "Preferences."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:226
+#: usr/lib/xcalculator/currency.py:238
 msgid "Download today's rates from the European Central Bank"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:260 usr/lib/xcalculator/window.py:45
+#: usr/lib/xcalculator/currency.py:271 usr/lib/xcalculator/window.py:45
 msgid "Refresh Rates"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:260
+#: usr/lib/xcalculator/currency.py:271
 msgid "Download Rates"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:302
+#: usr/lib/xcalculator/currency.py:313
 msgid "Auto refresh off."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:305
+#: usr/lib/xcalculator/currency.py:316
 #, python-brace-format
 msgid "Auto refresh on, every day, also when Xcalculator is closed."
 msgid_plural ""
@@ -696,43 +572,43 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: usr/lib/xcalculator/currency.py:307 usr/lib/xcalculator/currency.py:310
+#: usr/lib/xcalculator/currency.py:318 usr/lib/xcalculator/currency.py:321
 msgid "Change how often in Edit → Preferences."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:308
+#: usr/lib/xcalculator/currency.py:319
 #, python-brace-format
 msgid "Auto refresh on, every day while Xcalculator is open."
 msgid_plural "Auto refresh on, every {days} days while Xcalculator is open."
 msgstr[0] ""
 msgstr[1] ""
 
-#: usr/lib/xcalculator/currency.py:343
+#: usr/lib/xcalculator/currency.py:354
 msgid "Downloading exchange rates from the European Central Bank…"
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:346
+#: usr/lib/xcalculator/currency.py:357
 msgid "Couldn't reach the European Central Bank."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:347
+#: usr/lib/xcalculator/currency.py:358
 msgid "Check the internet connection, then click Download Rates again."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:348
+#: usr/lib/xcalculator/currency.py:359
 msgid "Exchange rates come from the European Central Bank, once a day."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:349
+#: usr/lib/xcalculator/currency.py:360
 msgid "Click Download Rates to get today's rates."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:356
+#: usr/lib/xcalculator/currency.py:367
 #, python-brace-format
 msgid "Couldn't download new rates. Using the rates from {date}."
 msgstr ""
 
-#: usr/lib/xcalculator/currency.py:358
+#: usr/lib/xcalculator/currency.py:369
 #, python-brace-format
 msgid "European Central Bank rates, {date}"
 msgstr ""
@@ -1492,15 +1368,15 @@ msgstr ""
 msgid "Enter a rate % first"
 msgstr ""
 
-#: usr/lib/xcalculator/history.py:162 usr/lib/xcalculator/history.py:172
+#: usr/lib/xcalculator/history.py:172 usr/lib/xcalculator/history.py:182
 msgid "Click to bring back this conversion"
 msgstr ""
 
-#: usr/lib/xcalculator/history.py:165
+#: usr/lib/xcalculator/history.py:175
 msgid "Click to use this calculation again"
 msgstr ""
 
-#: usr/lib/xcalculator/history.py:175
+#: usr/lib/xcalculator/history.py:185
 msgid "Click to use this number"
 msgstr ""
 
@@ -2025,23 +1901,23 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: usr/lib/xcalculator/window.py:495
+#: usr/lib/xcalculator/window.py:502
 msgid "Add this conversion to the history"
 msgstr ""
 
-#: usr/lib/xcalculator/window.py:499
+#: usr/lib/xcalculator/window.py:506
 msgid ""
 "Clear all stored financial values: N, I/Y, PV, PMT, FV, cash flows, P1/P2, "
 "and the P/Y and BGN settings"
 msgstr ""
 
 #. Translators: the window title, e.g. "Basic - Xcalculator"
-#: usr/lib/xcalculator/window.py:530
+#: usr/lib/xcalculator/window.py:537
 #, python-brace-format
 msgid "{mode} - Xcalculator"
 msgstr ""
 
-#: usr/lib/xcalculator/window.py:1162
+#: usr/lib/xcalculator/window.py:1203
 msgid ""
 "A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
 "Scientific, Financial, Programmer, Unit Converter, and Currency Converter "
@@ -2049,7 +1925,7 @@ msgid ""
 msgstr ""
 
 #. Translators: your name (and email), one translator per line; shown in About → Credits
-#: usr/lib/xcalculator/window.py:1166
+#: usr/lib/xcalculator/window.py:1207
 msgid "translator-credits"
 msgstr ""
 

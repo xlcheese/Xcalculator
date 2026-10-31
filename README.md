@@ -45,7 +45,7 @@ To run it without installing, you need Python 3 and GTK 3 (both come with Linux
 Mint):
 
 ```
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-mpmath
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-mpmath iso-codes
 python3 usr/lib/xcalculator/xcalculator.py
 ```
 
