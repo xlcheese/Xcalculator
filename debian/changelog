@@ -1,3 +1,16 @@
+xcalculator (0.9.4) unstable; urgency=medium
+
+  * A calmer keypad: the number keys and decimal point are left white and
+    every other key takes a shade of the theme's text color, so the
+    numbers stand out in any theme, light or dark.
+  * Clear and backspace are no longer red. Clear is bold, and backspace is
+    an icon at the right end of the display.
+  * Basic has a square root key (Ctrl+R) that works like a pocket
+    calculator's: 9 √ gives 3.
+  * The icon has a darker border, with a sharp edge at 16, 24, and 32 px.
+
+ -- Wesley Hayslip <xl_cheese@hotmail.com>  Sat, 31 Oct 2026 18:00:00 +0000
+
 xcalculator (0.9.3) unstable; urgency=medium
 
   * Draft translations into Spanish, French, German, and Brazilian

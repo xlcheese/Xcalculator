@@ -33,6 +33,11 @@
   </provides>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.9.4" date="2026-10-31">
+      <description>
+        <p>A calmer keypad: the number keys stand out, Clear is no longer red, backspace sits in the display, and Basic has a square root key. The icon has a darker border.</p>
+      </description>
+    </release>
     <release version="0.9.3" date="2026-10-31">
       <description>
         <p>Spanish, French, German, and Brazilian Portuguese translations, a new icon, and a bordered history that follows the system theme.</p>
