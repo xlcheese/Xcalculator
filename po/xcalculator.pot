@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-31 04:27+0000\n"
+"POT-Creation-Date: 2026-10-31 04:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1927,10 +1927,6 @@ msgstr ""
 #. Translators: your name (and email), one translator per line; shown in About → Credits
 #: usr/lib/xcalculator/window.py:1207
 msgid "translator-credits"
-msgstr ""
-
-#: data/io.github.xlcheese.Xcalculator.desktop.in:4
-msgid "Xcalculator"
 msgstr ""
 
 #: data/io.github.xlcheese.Xcalculator.desktop.in:5
