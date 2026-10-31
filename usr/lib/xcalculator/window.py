@@ -1204,7 +1204,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                               "Scientific, Financial, Programmer, Unit Converter, and Currency Converter modes."))
         dialog.set_logo_icon_name(APP_ID)
         # Translators: your name (and email), one translator per line; shown in About → Credits
-        dialog.set_translator_credits(_("translator-credits"))
+        credits = _("translator-credits")
+        if credits != "translator-credits":     # untranslated (English, or no translator named yet)
+            dialog.set_translator_credits(credits)
         dialog.set_website(APP_WEBSITE)
         dialog.set_authors(APP_AUTHORS)
         dialog.set_copyright(f"{APP_COPYRIGHT}\n{APP_CREDIT}")    # the credit sits right below the author

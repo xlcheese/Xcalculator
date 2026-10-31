@@ -12,6 +12,7 @@ Nothing is downloaded until the person clicks Download Rates. After that, rates 
 refreshed when they click Refresh Rates, or automatically every few days if they switch
 Auto Refresh on: while Xcalculator is open, and also when it's closed if they choose that
 in Preferences (a systemd user timer runs "xcalculator --refresh-rates" once a day)."""
+import gettext
 import json
 import os
 import re
@@ -44,21 +45,14 @@ TIMER = "xcalculator-rates.timer"           # the systemd user timer for refresh
 TIMER_FOLDERS = ("/usr/lib/systemd/user", "/usr/local/lib/systemd/user",
                  os.path.join(GLib.get_user_data_dir(), "systemd", "user"))
 
-# The European Central Bank's currencies (and the euro). The list itself comes from the
-# bank's file: a currency it adds still works, shown by its code until it gets a name here.
-CURRENCY_NAMES = {
-    "AUD": N_("Australian Dollar"), "BGN": N_("Bulgarian Lev"), "BRL": N_("Brazilian Real"),
-    "CAD": N_("Canadian Dollar"), "CHF": N_("Swiss Franc"), "CNY": N_("Chinese Yuan"),
-    "CZK": N_("Czech Koruna"), "DKK": N_("Danish Krone"), "EUR": N_("Euro"),
-    "GBP": N_("British Pound"), "HKD": N_("Hong Kong Dollar"), "HUF": N_("Hungarian Forint"),
-    "IDR": N_("Indonesian Rupiah"), "ILS": N_("Israeli New Shekel"), "INR": N_("Indian Rupee"),
-    "ISK": N_("Icelandic Króna"), "JPY": N_("Japanese Yen"), "KRW": N_("South Korean Won"),
-    "MXN": N_("Mexican Peso"), "MYR": N_("Malaysian Ringgit"), "NOK": N_("Norwegian Krone"),
-    "NZD": N_("New Zealand Dollar"), "PHP": N_("Philippine Peso"), "PLN": N_("Polish Złoty"),
-    "RON": N_("Romanian Leu"), "SEK": N_("Swedish Krona"), "SGD": N_("Singapore Dollar"),
-    "THB": N_("Thai Baht"), "TRY": N_("Turkish Lira"), "USD": N_("US Dollar"),
-    "ZAR": N_("South African Rand"),
-}
+# The European Central Bank's currencies (and the euro), offered before any rates are downloaded.
+# After that, the list comes from the bank's own file.
+BANK_CURRENCIES = ("AUD", "BRL", "CAD", "CHF", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR",
+                   "ILS", "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN", "RON",
+                   "SEK", "SGD", "THB", "TRY", "USD", "ZAR")
+# Currency names come from the iso-codes package (in every Linux Mint), already translated
+# into over 160 languages: the official ISO 4217 names, such as "Yen" and "Pound Sterling".
+ISO_4217_FILE = "/usr/share/iso-codes/json/iso_4217.json"
 # decimal places each currency is written with (ISO 4217); all the others use 2
 CURRENCY_DECIMALS = {"JPY": 0, "KRW": 0, "ISK": 0}
 CODE_RE = re.compile(r'[A-Z]{3}')
@@ -148,7 +142,25 @@ def rates_date_text(data):
 
 
 def currency_name(code):
-    return _(CURRENCY_NAMES[code]) if code in CURRENCY_NAMES else code
+    """The currency's ISO 4217 name in the person's language, or just its code."""
+    if CurrencyNames.names is None:
+        CurrencyNames.load()
+    name = CurrencyNames.names.get(code)
+    return CurrencyNames.translation.gettext(name) if name else code
+
+
+class CurrencyNames:
+    names = None                            # code -> English ISO name, read the first time
+    translation = gettext.NullTranslations()
+
+    @classmethod
+    def load(cls):
+        try:
+            with open(ISO_4217_FILE) as f:
+                cls.names = {row["alpha_3"]: row["name"] for row in json.load(f)["4217"]}
+        except (OSError, ValueError, KeyError, TypeError):
+            cls.names = {}                  # no iso-codes: the codes alone
+        cls.translation = gettext.translation("iso_4217", fallback=True)
 
 
 class Rates:
@@ -242,9 +254,8 @@ class CurrencyMode:
     def currency_units(self):
         """(name, code, None) for each currency the menus offer, by name."""
         data = Rates.get()
-        codes = data["rates"] if data else CURRENCY_NAMES
-        return sorted(((CURRENCY_NAMES.get(c, c), c, None) for c in codes),
-                      key=lambda unit: currency_name(unit[1]).casefold())
+        codes = data["rates"] if data else BANK_CURRENCIES
+        return sorted(((currency_name(c), c, None) for c in codes), key=lambda unit: unit[0].casefold())
 
     def currency_entered(self):
         """The Currency Converter has just been shown."""

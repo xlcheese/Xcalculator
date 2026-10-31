@@ -286,6 +286,7 @@ class FinancialMode:
         elif label == 'NPV':
             rate = self.typed_value()
             if rate is None:
+                # xgettext: no-python-format
                 raise FinanceError(_("Enter the discount rate % first"))
             self.show_result(self.compute_npv(rate), record="NPV")
         elif label == 'IRR':
@@ -311,6 +312,7 @@ class FinancialMode:
             rate = None if rate is None else float(rate)
             m = self.periods_per_year
             if rate is None:
+                # xgettext: no-python-format
                 raise FinanceError(_("Enter a rate % first"))
             if m <= 0:
                 raise FinanceError(_("P/Y must be positive"))
