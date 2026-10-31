@@ -29,7 +29,7 @@ MAX_SAVED_HISTORY = 500
 APP_ID = "io.github.xlcheese.Xcalculator"     # also the name of the .desktop and metainfo files
 
 
-APP_VERSION = "0.9.3"
+APP_VERSION = "0.9.4"
 
 
 APP_WEBSITE = "https://github.com/xlcheese/Xcalculator"
