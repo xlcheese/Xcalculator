@@ -1,3 +1,16 @@
+xcalculator (0.9.3) unstable; urgency=medium
+
+  * Draft translations into Spanish, French, German, and Brazilian
+    Portuguese, waiting for a review by native speakers.
+  * Currency names are the official ISO 4217 names from iso-codes, in the
+    desktop's language (iso-codes is now a dependency).
+  * A new icon.
+  * The history sits in a bordered box like the input field, with a
+    scrollbar that only shows while scrolling, and takes its colors from
+    the system theme. Status and error messages use the theme's text color.
+
+ -- Wesley Hayslip <xl_cheese@hotmail.com>  Sat, 31 Oct 2026 12:00:00 +0000
+
 xcalculator (0.9.2) unstable; urgency=medium
 
   * New Currency Converter mode (Ctrl+Alt+C), with the European Central

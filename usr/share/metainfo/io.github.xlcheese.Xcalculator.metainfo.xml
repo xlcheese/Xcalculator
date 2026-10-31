@@ -33,6 +33,11 @@
   </provides>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.9.3" date="2026-10-31">
+      <description>
+        <p>Spanish, French, German, and Brazilian Portuguese translations, a new icon, and a bordered history that follows the system theme.</p>
+      </description>
+    </release>
     <release version="0.9.2" date="2026-10-29">
       <description>
         <p>A new Currency Converter mode, with the European Central Bank's exchange rates and optional automatic refresh.</p>
