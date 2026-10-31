@@ -49,7 +49,7 @@ install: all
 	install -Dm644 $(DESKTOP) $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
 	install -Dm644 usr/share/metainfo/$(APP_ID).metainfo.xml $(DESTDIR)$(PREFIX)/share/metainfo/$(APP_ID).metainfo.xml
 	install -Dm644 usr/share/man/man1/xcalculator.1 $(DESTDIR)$(PREFIX)/share/man/man1/xcalculator.1
-	for size in scalable 16x16 24x24; do \
+	for size in scalable 16x16 24x24 32x32; do \
 		install -Dm644 usr/share/icons/hicolor/$$size/apps/$(APP_ID).svg \
 			$(DESTDIR)$(PREFIX)/share/icons/hicolor/$$size/apps/$(APP_ID).svg; \
 	done
