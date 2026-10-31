@@ -17,7 +17,7 @@ LOCALE  = usr/share/locale
 LANGUAGES = $(shell grep -v "^\s*#" po/LINGUAS)
 MO_FILES  = $(foreach lang,$(LANGUAGES),$(LOCALE)/$(lang)/LC_MESSAGES/$(DOMAIN).mo)
 # the menu entry's words that are translated (its Name, Xcalculator, is not)
-DESKTOP_KEYWORDS = --keyword --keyword=GenericName --keyword=Comment --keyword=Keywords
+DESKTOP_KEYWORDS = --keyword= --keyword=GenericName --keyword=Comment --keyword=Keywords
 
 all: $(MO_FILES) $(DESKTOP)
 

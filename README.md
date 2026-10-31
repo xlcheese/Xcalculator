@@ -93,18 +93,25 @@ Makefile, which can also be used on its own:
 
 ## Translate
 
-Xcalculator uses gettext. To start a new language, for example French:
+Xcalculator uses gettext. Spanish, French, German, and Brazilian Portuguese
+are included as drafts that still need a review by native speakers:
+corrections are very welcome.
+
+To start a new language, for example Italian:
 
 ```
-msginit -i po/xcalculator.pot -l fr -o po/fr.po
+msginit -i po/xcalculator.pot -l it -o po/it.po
 ```
 
-Translate the `msgstr` lines in `po/fr.po` (with Poedit, or any text editor),
-add `fr` to `po/LINGUAS`, and run `make`. To try it from the source folder:
+Translate the `msgstr` lines in `po/it.po` (with Poedit, or any text editor),
+add `it` to `po/LINGUAS`, and run `make`. To try it from the source folder:
 
 ```
-LANGUAGE=fr python3 usr/lib/xcalculator/xcalculator.py
+make
+LANGUAGE=it python3 usr/lib/xcalculator/xcalculator.py
 ```
+
+Currency names come already translated from the `iso-codes` package.
 
 Calculator notation stays as it is: sin, HEX, NPV, MR, and the like are the same
 in every language. Text in braces, such as `{mode}`, and markup such as
