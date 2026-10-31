@@ -26,9 +26,13 @@ can have up to 50 decimal places.
 Press **F1** in the app for the documentation, and **Ctrl+F1** for the keyboard
 shortcuts.
 
-| Basic | Programmer | Unit Converter |
+| Basic | Financial | Programmer |
 |---|---|---|
-| ![Basic](screenshots/basic.png) | ![Programmer](screenshots/programmer.png) | ![Unit Converter](screenshots/unit-converter.png) |
+| ![Basic](screenshots/basic.png) | ![Financial](screenshots/financial.png) | ![Programmer](screenshots/programmer.png) |
+
+| Unit Converter | Currency Converter |
+|---|---|
+| ![Unit Converter](screenshots/unit-converter.png) | ![Currency Converter](screenshots/currency-converter.png) |
 
 ## Install
 
