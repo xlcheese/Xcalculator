@@ -89,7 +89,7 @@ HELP_PAGES = (
           "  <b>%</b>  percent: 50% = 0.5, and 200 × 15% = 30\n"
           "  <b>±</b>  change the sign of the number you are typing\n"
           "  <b>=</b>  work out the answer (or press Enter)\n"
-          "  <b>⌫</b>  at the right end of the display: delete the character before the cursor"),
+          "  <b>⌫</b>  at the right end of the display (and on the keypad in the other modes): delete the character before the cursor"),
         _("Multiplication and division are done before addition and subtraction, so 2 + 3 × 4 = 14."),
         _("<b>Typing with the keyboard</b>\n"
           "  <b>0–9</b>, <b>.</b>  numbers\n"
