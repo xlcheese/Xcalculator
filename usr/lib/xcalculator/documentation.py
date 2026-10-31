@@ -176,6 +176,7 @@ HELP_PAGES = (
           "1. Click HEX, type FF, press =. The lines below show DEC 255.\n"
           "2. Click BYTE (cycle the word size) and DEC 255 becomes -1.\n"
           "3. Click BIN and try 1100 XOR 1010 =."),
+        # xgettext: no-python-format
         _("<b>Keyboard</b>\n"
           "All of Basic's keys work here too (except the decimal point: whole numbers only), plus:\n"
           "  <b>a–f</b>  hex digits\n"
