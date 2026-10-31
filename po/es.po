@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-31 04:29+0000\n"
+"POT-Creation-Date: 2026-10-31 21:10+0000\n"
 "PO-Revision-Date: 2026-10-31 04:29+0000\n"
 "Last-Translator: Draft by Claude (needs native review)\n"
 "Language-Team: Spanish\n"
@@ -41,34 +41,34 @@ msgstr "Error de cálculo"
 msgid "Developed with the help of Claude, an AI assistant by Anthropic"
 msgstr "Desarrollado con la ayuda de Claude, un asistente de IA de Anthropic"
 
-#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:84
-#: usr/lib/xcalculator/window.py:207
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:42
+#: usr/lib/xcalculator/documentation.py:85 usr/lib/xcalculator/window.py:207
 msgid "Basic"
 msgstr "Básico"
 
-#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:42
-#: usr/lib/xcalculator/documentation.py:102
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:43
+#: usr/lib/xcalculator/documentation.py:104
 #: usr/lib/xcalculator/preferences.py:152 usr/lib/xcalculator/window.py:212
 msgid "Scientific"
 msgstr "Científico"
 
-#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:129
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:131
 #: usr/lib/xcalculator/window.py:217
 msgid "Financial"
 msgstr "Financiero"
 
-#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:44
-#: usr/lib/xcalculator/documentation.py:161
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:45
+#: usr/lib/xcalculator/documentation.py:163
 #: usr/lib/xcalculator/preferences.py:157 usr/lib/xcalculator/window.py:222
 msgid "Programmer"
 msgstr "Programador"
 
-#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:189
+#: usr/lib/xcalculator/config.py:58 usr/lib/xcalculator/documentation.py:191
 #: usr/lib/xcalculator/window.py:227
 msgid "Unit Converter"
 msgstr "Conversor de unidades"
 
-#: usr/lib/xcalculator/config.py:59 usr/lib/xcalculator/documentation.py:205
+#: usr/lib/xcalculator/config.py:59 usr/lib/xcalculator/documentation.py:207
 #: usr/lib/xcalculator/preferences.py:165 usr/lib/xcalculator/window.py:232
 msgid "Currency Converter"
 msgstr "Conversor de divisas"
@@ -526,8 +526,8 @@ msgstr "Misma unidad"
 msgid "Formula:  {formula}"
 msgstr "Fórmula:  {formula}"
 
-#: usr/lib/xcalculator/converter.py:298 usr/lib/xcalculator/programmer.py:221
-#: usr/lib/xcalculator/window.py:1059
+#: usr/lib/xcalculator/converter.py:299 usr/lib/xcalculator/programmer.py:221
+#: usr/lib/xcalculator/window.py:1086
 msgid "Can't paste that"
 msgstr "No se puede pegar eso"
 
@@ -570,8 +570,11 @@ msgstr "Actualización automática desactivada."
 msgid "Auto refresh on, every day, also when Xcalculator is closed."
 msgid_plural ""
 "Auto refresh on, every {days} days, also when Xcalculator is closed."
-msgstr[0] "Actualización automática activada, cada día, también con Xcalculator cerrado."
-msgstr[1] "Actualización automática activada, cada {days} días, también con Xcalculator cerrado."
+msgstr[0] ""
+"Actualización automática activada, cada día, también con Xcalculator cerrado."
+msgstr[1] ""
+"Actualización automática activada, cada {days} días, también con Xcalculator "
+"cerrado."
 
 #: usr/lib/xcalculator/currency.py:318 usr/lib/xcalculator/currency.py:321
 msgid "Change how often in Edit → Preferences."
@@ -581,8 +584,12 @@ msgstr "Cambie la frecuencia en Editar → Preferencias."
 #, python-brace-format
 msgid "Auto refresh on, every day while Xcalculator is open."
 msgid_plural "Auto refresh on, every {days} days while Xcalculator is open."
-msgstr[0] "Actualización automática activada, cada día mientras Xcalculator está abierto."
-msgstr[1] "Actualización automática activada, cada {days} días mientras Xcalculator está abierto."
+msgstr[0] ""
+"Actualización automática activada, cada día mientras Xcalculator está "
+"abierto."
+msgstr[1] ""
+"Actualización automática activada, cada {days} días mientras Xcalculator "
+"está abierto."
 
 #: usr/lib/xcalculator/currency.py:354
 msgid "Downloading exchange rates from the European Central Bank…"
@@ -632,7 +639,7 @@ msgid "Quit Xcalculator"
 msgstr "Salir de Xcalculator"
 
 #: usr/lib/xcalculator/documentation.py:25
-#: usr/lib/xcalculator/documentation.py:241
+#: usr/lib/xcalculator/documentation.py:243
 #: usr/lib/xcalculator/preferences.py:49
 msgid "Modes"
 msgstr "Modos"
@@ -722,35 +729,39 @@ msgid "Normal text size"
 msgstr "Tamaño de texto normal"
 
 #: usr/lib/xcalculator/documentation.py:42
+msgid "Square root (√)"
+msgstr "Raíz cuadrada (√)"
+
+#: usr/lib/xcalculator/documentation.py:43
 msgid "Square root (²√x)"
 msgstr "Raíz cuadrada (²√x)"
 
-#: usr/lib/xcalculator/documentation.py:43
+#: usr/lib/xcalculator/documentation.py:44
 msgid "Reciprocal (1/x)"
 msgstr "Recíproco (1/x)"
 
-#: usr/lib/xcalculator/documentation.py:44
+#: usr/lib/xcalculator/documentation.py:45
 msgid "Switch to HEX"
 msgstr "Cambiar a HEX"
 
-#: usr/lib/xcalculator/documentation.py:45
+#: usr/lib/xcalculator/documentation.py:46
 msgid "Switch to DEC"
 msgstr "Cambiar a DEC"
 
-#: usr/lib/xcalculator/documentation.py:46
+#: usr/lib/xcalculator/documentation.py:47
 msgid "Switch to OCT"
 msgstr "Cambiar a OCT"
 
-#: usr/lib/xcalculator/documentation.py:47
+#: usr/lib/xcalculator/documentation.py:48
 msgid "Switch to BIN"
 msgstr "Cambiar a BIN"
 
-#: usr/lib/xcalculator/documentation.py:62
+#: usr/lib/xcalculator/documentation.py:63
 msgid "Getting Started"
 msgstr "Primeros pasos"
 
 #. Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
-#: usr/lib/xcalculator/documentation.py:64
+#: usr/lib/xcalculator/documentation.py:65
 msgid ""
 "Xcalculator has six modes. Pick one from the <b>Mode</b> menu:\n"
 "  • <b>Basic</b> for everyday sums.\n"
@@ -775,7 +786,7 @@ msgstr ""
 "  • <b>Conversor de divisas</b> para los tipos de cambio del Banco Central "
 "Europeo."
 
-#: usr/lib/xcalculator/documentation.py:71
+#: usr/lib/xcalculator/documentation.py:72
 msgid ""
 "<b>Typing</b>\n"
 "Click the buttons or use the keyboard. Click in the display or use the arrow "
@@ -788,7 +799,7 @@ msgstr ""
 "funcionan en la posición del cursor. El texto resaltado se sustituye por lo "
 "que escriba."
 
-#: usr/lib/xcalculator/documentation.py:73
+#: usr/lib/xcalculator/documentation.py:74
 msgid ""
 "<b>The history</b>\n"
 "Every answer is added to the history above the display. Click an answer to "
@@ -805,7 +816,7 @@ msgstr ""
 "guarda sobre la marcha; en Preferencias puede hacer que vuelva a mostrarse "
 "la próxima vez que abra Xcalculator."
 
-#: usr/lib/xcalculator/documentation.py:75
+#: usr/lib/xcalculator/documentation.py:76
 msgid ""
 "<b>Long numbers</b>\n"
 "An answer too wide for the window is shown in scientific notation, like "
@@ -817,7 +828,7 @@ msgstr ""
 "científica, como 3.7×10²⁰. Ensanche la ventana para verlo completo. Copiar y "
 "el historial siempre conservan el número completo."
 
-#: usr/lib/xcalculator/documentation.py:77
+#: usr/lib/xcalculator/documentation.py:78
 msgid ""
 "<b>Copy and paste</b>\n"
 "<b>Edit → Copy</b> copies the display. <b>Edit → Paste</b> pastes a number "
@@ -827,7 +838,7 @@ msgstr ""
 "<b>Editar → Copiar</b> copia la pantalla. <b>Editar → Pegar</b> pega un "
 "número o un cálculo sencillo."
 
-#: usr/lib/xcalculator/documentation.py:79
+#: usr/lib/xcalculator/documentation.py:80
 msgid ""
 "<b>Window size and text size</b>\n"
 "Stretch the history taller and every mode keeps that height. Each mode "
@@ -842,7 +853,7 @@ msgstr ""
 "texto, y <b>Ver → Restablecer vista</b> devuelve la ventana a su tamaño "
 "original."
 
-#: usr/lib/xcalculator/documentation.py:81
+#: usr/lib/xcalculator/documentation.py:82
 msgid ""
 "<b>Preferences</b>\n"
 "<b>Edit → Preferences</b> sets decimal places, thousands separators, angle "
@@ -853,25 +864,31 @@ msgstr ""
 "miles, las unidades de ángulo y más. También permite elegir qué modos "
 "aparecen en el menú Modo."
 
-#: usr/lib/xcalculator/documentation.py:85
+#: usr/lib/xcalculator/documentation.py:86
 msgid "The everyday keypad. Every other mode builds on it."
 msgstr "El teclado de todos los días. Todos los demás modos parten de él."
 
-#: usr/lib/xcalculator/documentation.py:86
+#: usr/lib/xcalculator/documentation.py:87
 msgid ""
-"  <b>⌫</b>  delete the character before the cursor\n"
 "  <b>Clear</b>  start again\n"
+"  <b>√</b>  square root of the number you just typed, or of the answer: 9 √ "
+"= 3\n"
 "  <b>%</b>  percent: 50% = 0.5, and 200 × 15% = 30\n"
 "  <b>±</b>  change the sign of the number you are typing\n"
-"  <b>=</b>  work out the answer (or press Enter)"
+"  <b>=</b>  work out the answer (or press Enter)\n"
+"  <b>⌫</b>  at the right end of the display: delete the character before the "
+"cursor"
 msgstr ""
-"  <b>⌫</b>  borra el carácter anterior al cursor\n"
 "  <b>Borrar</b>  empieza de nuevo\n"
+"  <b>√</b>  raíz cuadrada del número que acaba de escribir, o del resultado: "
+"9 √ = 3\n"
 "  <b>%</b>  porcentaje: 50% = 0.5, y 200 × 15% = 30\n"
 "  <b>±</b>  cambia el signo del número que está escribiendo\n"
-"  <b>=</b>  calcula el resultado (o pulse Intro)"
+"  <b>=</b>  calcula el resultado (o pulse Intro)\n"
+"  <b>⌫</b>  en el extremo derecho de la pantalla: borra el carácter anterior "
+"al cursor"
 
-#: usr/lib/xcalculator/documentation.py:91
+#: usr/lib/xcalculator/documentation.py:93
 msgid ""
 "Multiplication and division are done before addition and subtraction, so 2 + "
 "3 × 4 = 14."
@@ -879,7 +896,7 @@ msgstr ""
 "La multiplicación y la división se hacen antes que la suma y la resta, así "
 "que 2 + 3 × 4 = 14."
 
-#: usr/lib/xcalculator/documentation.py:92
+#: usr/lib/xcalculator/documentation.py:94
 msgid ""
 "<b>Typing with the keyboard</b>\n"
 "  <b>0–9</b>, <b>.</b>  numbers\n"
@@ -901,7 +918,7 @@ msgstr ""
 "  <b>← →  Inicio  Fin</b>  mueven el cursor;  mantenga <b>Mayús</b> para "
 "resaltar"
 
-#: usr/lib/xcalculator/documentation.py:100
+#: usr/lib/xcalculator/documentation.py:102
 msgid ""
 "The other modes use these keys too; each mode's page lists what it adds or "
 "changes. For the Ctrl shortcuts, see the Keyboard page."
@@ -909,11 +926,11 @@ msgstr ""
 "Los demás modos también usan estas teclas; la página de cada modo indica lo "
 "que añade o cambia. Para los atajos con Ctrl, vea la página Teclado."
 
-#: usr/lib/xcalculator/documentation.py:103
+#: usr/lib/xcalculator/documentation.py:105
 msgid "Everything in Basic, plus:"
 msgstr "Todo lo de Básico, más:"
 
-#: usr/lib/xcalculator/documentation.py:104
+#: usr/lib/xcalculator/documentation.py:106
 msgid ""
 "<b>Powers and roots</b>\n"
 "  <b>x²</b>, <b>x³</b>, <b>xʸ</b>  powers;  <b>eˣ</b>, <b>10ˣ</b>  powers of "
@@ -929,7 +946,7 @@ msgstr ""
 "<b>1/x</b>  recíproco\n"
 "  <b>EE</b>  por diez elevado a: 3 EE 5 = 300000"
 
-#: usr/lib/xcalculator/documentation.py:108
+#: usr/lib/xcalculator/documentation.py:110
 msgid ""
 "<b>Trigonometry</b>\n"
 "  <b>sin</b>, <b>cos</b>, <b>tan</b>, and the hyperbolic <b>sinh</b>, "
@@ -945,7 +962,7 @@ msgstr ""
 "  <b>Rad</b> / <b>Deg</b>  alterna entre radianes y grados. Se usan grados "
 "hasta que cambie."
 
-#: usr/lib/xcalculator/documentation.py:112
+#: usr/lib/xcalculator/documentation.py:114
 msgid ""
 "<b>Logarithms and constants</b>\n"
 "  <b>ln</b>  natural logarithm;  <b>log₁₀</b>  base-10 logarithm\n"
@@ -959,7 +976,7 @@ msgstr ""
 "entre 0 y 1\n"
 "  <b>x!</b>  factorial: 5! = 120"
 
-#: usr/lib/xcalculator/documentation.py:116
+#: usr/lib/xcalculator/documentation.py:118
 msgid ""
 "<b>More functions</b>\n"
 "  <b>|x|</b>  absolute value: |−5| = 5\n"
@@ -977,7 +994,7 @@ msgstr ""
 "  <b>mod</b>  el resto: 17 mod 5 = 2\n"
 "  <b>f(x)</b>  un menú con más funciones, cada una con una breve explicación"
 
-#: usr/lib/xcalculator/documentation.py:123
+#: usr/lib/xcalculator/documentation.py:125
 msgid ""
 "<b>Memory</b>\n"
 "  <b>M+</b> adds the display to the memory, <b>M−</b> subtracts it, <b>MR</"
@@ -987,7 +1004,7 @@ msgstr ""
 "  <b>M+</b> suma la pantalla a la memoria, <b>M−</b> la resta, <b>MR</b> la "
 "recupera y <b>MC</b> la borra."
 
-#: usr/lib/xcalculator/documentation.py:125
+#: usr/lib/xcalculator/documentation.py:127
 msgid ""
 "<b>Keyboard</b>\n"
 "All of Basic's keys work here too, plus:\n"
@@ -999,13 +1016,13 @@ msgstr ""
 "  <b>^</b>  potencia;  <b>( )</b>  paréntesis;  <b>!</b>  factorial;  <b>e</"
 "b>  la constante e;  <b>p</b>  π"
 
-#: usr/lib/xcalculator/documentation.py:130
+#: usr/lib/xcalculator/documentation.py:132
 msgid "The lines under the display always show the values stored so far."
 msgstr ""
 "Las líneas bajo la pantalla muestran siempre los valores guardados hasta el "
 "momento."
 
-#: usr/lib/xcalculator/documentation.py:131
+#: usr/lib/xcalculator/documentation.py:133
 msgid ""
 "<b>Loans and savings (time value of money)</b>\n"
 "The five keys <b>N</b>, <b>I/Y</b>, <b>PV</b>, <b>PMT</b>, and <b>FV</b> are "
@@ -1037,7 +1054,7 @@ msgstr ""
 "  <b>BGN</b>  alterna entre pagos al final de cada período (END) y al "
 "principio (BGN)"
 
-#: usr/lib/xcalculator/documentation.py:139
+#: usr/lib/xcalculator/documentation.py:141
 msgid ""
 "<b>Cash flows</b>\n"
 "  <b>CFj</b>  type an amount and press CFj; the first one is the starting "
@@ -1057,7 +1074,7 @@ msgstr ""
 "obtener el valor actual neto\n"
 "  <b>IRR</b>  la tasa interna de retorno"
 
-#: usr/lib/xcalculator/documentation.py:144
+#: usr/lib/xcalculator/documentation.py:146
 msgid ""
 "<b>Loan schedule (amortization)</b>\n"
 "With the loan stored, type a payment number and press <b>P1</b>, then "
@@ -1071,7 +1088,7 @@ msgstr ""
 "  <b>BAL</b>  el saldo pendiente tras el pago P2\n"
 "  <b>PRN</b>, <b>INT</b>  el capital y los intereses pagados de P1 a P2"
 
-#: usr/lib/xcalculator/documentation.py:148
+#: usr/lib/xcalculator/documentation.py:150
 msgid ""
 "<b>Depreciation</b>\n"
 "Store the asset's life in years as N, its cost as PV, and its salvage value "
@@ -1085,7 +1102,7 @@ msgstr ""
 "(suma de los dígitos de los años) o <b>DB</b> (saldo decreciente; guarde el "
 "porcentaje de decrecimiento, por ejemplo 200, como I/Y)."
 
-#: usr/lib/xcalculator/documentation.py:150
+#: usr/lib/xcalculator/documentation.py:152
 msgid ""
 "<b>Interest rates</b>\n"
 "  <b>EFF</b>  type a nominal yearly rate for the effective yearly rate, "
@@ -1097,7 +1114,7 @@ msgstr ""
 "anual, con capitalización P/Y veces al año\n"
 "  <b>NOM</b>  lo inverso"
 
-#: usr/lib/xcalculator/documentation.py:153
+#: usr/lib/xcalculator/documentation.py:155
 msgid ""
 "<b>Business</b>\n"
 "  <b>Mrgn</b>  profit margin: cost Mrgn price, then =. 60 Mrgn 100 = 40 "
@@ -1110,11 +1127,11 @@ msgstr ""
 "  <b>Δ%</b>  variación porcentual: anterior Δ% nuevo, y luego =. 80 Δ% 100 = "
 "25 (por ciento)"
 
-#: usr/lib/xcalculator/documentation.py:156
+#: usr/lib/xcalculator/documentation.py:158
 msgid "<b>Clear All</b> erases every stored financial value."
 msgstr "<b>Borrar todo</b> borra todos los valores financieros guardados."
 
-#: usr/lib/xcalculator/documentation.py:157
+#: usr/lib/xcalculator/documentation.py:159
 msgid ""
 "Financial answers are worked out to about 15 significant digits, whatever "
 "the decimal places setting: far more than money needs."
@@ -1122,7 +1139,7 @@ msgstr ""
 "Los resultados financieros se calculan con unas 15 cifras significativas, "
 "sea cual sea el ajuste de decimales: mucho más de lo que necesita el dinero."
 
-#: usr/lib/xcalculator/documentation.py:158
+#: usr/lib/xcalculator/documentation.py:160
 msgid ""
 "<b>Keyboard</b>\n"
 "All of Basic's keys work here too, plus <b>( )</b> for parentheses. The "
@@ -1133,7 +1150,7 @@ msgstr ""
 "paréntesis. Las teclas financieras (N, PMT, CPT, etc.) solo están en los "
 "botones."
 
-#: usr/lib/xcalculator/documentation.py:162
+#: usr/lib/xcalculator/documentation.py:164
 msgid ""
 "Programmer mode works with whole numbers stored in a fixed number of bits, "
 "the way a computer does."
@@ -1141,7 +1158,7 @@ msgstr ""
 "El modo Programador trabaja con números enteros guardados en un número fijo "
 "de bits, como hace un ordenador."
 
-#: usr/lib/xcalculator/documentation.py:163
+#: usr/lib/xcalculator/documentation.py:165
 msgid ""
 "<b>Number bases (HEX, DEC, OCT, BIN)</b>\n"
 "Click a base to type and show numbers in it. The number on screen is "
@@ -1153,7 +1170,7 @@ msgstr ""
 "pantalla se convierte al cambiar. Las líneas bajo la pantalla siempre "
 "muestran el valor actual en las cuatro bases."
 
-#: usr/lib/xcalculator/documentation.py:165
+#: usr/lib/xcalculator/documentation.py:167
 msgid ""
 "<b>Word size (QWORD / DWORD / WORD / BYTE)</b>\n"
 "The number of bits: 64, 32, 16, or 8. Numbers are signed: in BYTE the range "
@@ -1165,7 +1182,7 @@ msgstr ""
 "rango va de -128 a 127, y 127 + 1 da la vuelta a -128. En HEX, OCT y BIN se "
 "ven los bits tal cual, así que -1 en BYTE aparece como FF."
 
-#: usr/lib/xcalculator/documentation.py:167
+#: usr/lib/xcalculator/documentation.py:169
 msgid ""
 "<b>Bitwise operators</b>\n"
 "AND, OR, and XOR compare two numbers bit by bit. NOT flips every bit of the "
@@ -1177,7 +1194,7 @@ msgstr ""
 "del número siguiente. NAND y NOR son NOT AND y NOT OR. Ejemplo: en BIN, 1100 "
 "AND 1010 = 1000."
 
-#: usr/lib/xcalculator/documentation.py:169
+#: usr/lib/xcalculator/documentation.py:171
 msgid ""
 "<b>Shifts</b>\n"
 "&lt;&lt; moves bits left (each step doubles the number); &gt;&gt; moves them "
@@ -1187,7 +1204,7 @@ msgstr ""
 "&lt;&lt; desplaza los bits a la izquierda (cada paso duplica el número); &gt;"
 "&gt; los desplaza a la derecha (cada paso lo divide entre dos)."
 
-#: usr/lib/xcalculator/documentation.py:171
+#: usr/lib/xcalculator/documentation.py:173
 msgid ""
 "<b>Arithmetic</b>\n"
 "+, −, × work as usual. ÷ drops the remainder and mod gives it: 17 ÷ 5 = 3 "
@@ -1197,7 +1214,7 @@ msgstr ""
 "+, −, × funcionan como siempre. ÷ descarta el resto y mod lo da: 17 ÷ 5 = 3 "
 "y 17 mod 5 = 2."
 
-#: usr/lib/xcalculator/documentation.py:173
+#: usr/lib/xcalculator/documentation.py:175
 msgid ""
 "<b>Order of operations (first to last)</b>\n"
 "NOT and minus sign, then × ÷ mod, then + −, then &lt;&lt; &gt;&gt;, then "
@@ -1207,7 +1224,7 @@ msgstr ""
 "NOT y el signo menos, luego × ÷ mod, luego + −, luego &lt;&lt; &gt;&gt;, "
 "luego AND, luego XOR, luego OR. Use paréntesis si tiene dudas."
 
-#: usr/lib/xcalculator/documentation.py:175
+#: usr/lib/xcalculator/documentation.py:177
 msgid ""
 "<b>Try it</b>\n"
 "1. Click HEX, type FF, press =. The lines below show DEC 255.\n"
@@ -1219,7 +1236,7 @@ msgstr ""
 "2. Pulse BYTE (cambia el tamaño de palabra) y DEC 255 pasa a ser -1.\n"
 "3. Pulse BIN y pruebe 1100 XOR 1010 =."
 
-#: usr/lib/xcalculator/documentation.py:180
+#: usr/lib/xcalculator/documentation.py:182
 #, no-python-format
 msgid ""
 "<b>Keyboard</b>\n"
@@ -1242,11 +1259,11 @@ msgstr ""
 "Dos teclas significan algo distinto aquí: ^ es XOR (no potencia) y % es mod "
 "(no porcentaje)."
 
-#: usr/lib/xcalculator/documentation.py:187
+#: usr/lib/xcalculator/documentation.py:189
 msgid "Hover over any button for a short explanation."
 msgstr "Pase el puntero sobre cualquier botón para ver una breve explicación."
 
-#: usr/lib/xcalculator/documentation.py:190
+#: usr/lib/xcalculator/documentation.py:192
 msgid ""
 "  1. Pick a category: Angle, Area, Density, Digital Storage, Energy, Length, "
 "Mass, Pressure, Speed, Temperature, Time, or Volume.\n"
@@ -1261,7 +1278,7 @@ msgstr ""
 "convierte mientras escribe; la casilla con el borde verde es la que está "
 "usando."
 
-#: usr/lib/xcalculator/documentation.py:193
+#: usr/lib/xcalculator/documentation.py:195
 msgid ""
 "The line under the boxes shows the formula used. ≈ means the number in it is "
 "rounded."
@@ -1269,7 +1286,7 @@ msgstr ""
 "La línea bajo las casillas muestra la fórmula usada. ≈ indica que el número "
 "que contiene está redondeado."
 
-#: usr/lib/xcalculator/documentation.py:194
+#: usr/lib/xcalculator/documentation.py:196
 msgid ""
 "  <b>Capture</b> (or Enter)  saves the conversion to the history\n"
 "  <b>±</b>  makes the number negative, for temperatures below zero"
@@ -1277,7 +1294,7 @@ msgstr ""
 "  <b>Capturar</b> (o Intro)  guarda la conversión en el historial\n"
 "  <b>±</b>  hace negativo el número, para temperaturas bajo cero"
 
-#: usr/lib/xcalculator/documentation.py:196
+#: usr/lib/xcalculator/documentation.py:198
 msgid ""
 "Click a captured line in the history to bring back that conversion: its "
 "category, both units, and the number."
@@ -1285,7 +1302,7 @@ msgstr ""
 "Haga clic en una línea capturada del historial para recuperar esa "
 "conversión: su categoría, las dos unidades y el número."
 
-#: usr/lib/xcalculator/documentation.py:197
+#: usr/lib/xcalculator/documentation.py:199
 msgid ""
 "Conversions use the official definitions (for example, 1 inch is exactly "
 "2.54 cm) and are shown with the decimal places set in Preferences. The "
@@ -1296,7 +1313,7 @@ msgstr ""
 "Preferencias. El conversor recuerda su categoría y las unidades que eligió "
 "en cada una."
 
-#: usr/lib/xcalculator/documentation.py:198
+#: usr/lib/xcalculator/documentation.py:200
 msgid ""
 "<b>Keyboard</b>\n"
 "Basic's number, Backspace, Delete, Escape, and cursor keys work here too. "
@@ -1314,7 +1331,7 @@ msgstr ""
 "Las demás teclas de operadores (+ * / %) no hacen nada aquí, porque el "
 "conversor no tiene operadores."
 
-#: usr/lib/xcalculator/documentation.py:206
+#: usr/lib/xcalculator/documentation.py:208
 msgid ""
 "Converts between the euro and about 30 other currencies, using the European "
 "Central Bank's reference rates. The bank publishes new rates once a day on "
@@ -1324,7 +1341,7 @@ msgstr ""
 "del Banco Central Europeo. El banco publica tipos nuevos una vez al día, los "
 "días laborables."
 
-#: usr/lib/xcalculator/documentation.py:207
+#: usr/lib/xcalculator/documentation.py:209
 msgid ""
 "<b>Getting the rates</b>\n"
 "Xcalculator doesn't go online until you ask it to. The first time, click "
@@ -1341,7 +1358,7 @@ msgstr ""
 "conexión, con los últimos tipos descargados. La línea bajo las casillas "
 "siempre indica su antigüedad."
 
-#: usr/lib/xcalculator/documentation.py:209
+#: usr/lib/xcalculator/documentation.py:211
 msgid ""
 "<b>Converting</b>\n"
 "  1. Pick a currency beside each box. The first time it's US Dollar and "
@@ -1358,7 +1375,7 @@ msgstr ""
 "Cada divisa se muestra con sus propios decimales: dos para dólares y euros, "
 "ninguno para yenes. La línea bajo las casillas da el tipo en ambos sentidos."
 
-#: usr/lib/xcalculator/documentation.py:213
+#: usr/lib/xcalculator/documentation.py:215
 msgid ""
 "  <b>⇅ Swap</b>  exchanges the two currencies; the amount in the top box "
 "stays\n"
@@ -1372,7 +1389,7 @@ msgstr ""
 "en la línea más tarde para recuperarla\n"
 "  <b>±</b>  hace negativo el importe"
 
-#: usr/lib/xcalculator/documentation.py:216
+#: usr/lib/xcalculator/documentation.py:218
 msgid ""
 "<b>Auto Refresh</b>\n"
 "Click <b>Auto Refresh</b> (or switch on <b>Refresh rates automatically</b> "
@@ -1386,7 +1403,7 @@ msgstr ""
 "principio; en Preferencias puede elegir de 1 a 30 días. Se puede activar una "
 "vez descargados los tipos."
 
-#: usr/lib/xcalculator/documentation.py:218
+#: usr/lib/xcalculator/documentation.py:220
 msgid ""
 "Normally rates refresh only while Xcalculator is open. With <b>Also when "
 "Xcalculator is closed</b> switched on in Preferences, a small scheduled job "
@@ -1403,7 +1420,7 @@ msgstr ""
 "sesión; sin conexión a Internet, lo vuelve a intentar al día siguiente. Al "
 "desactivar cualquiera de los dos ajustes, se detiene."
 
-#: usr/lib/xcalculator/documentation.py:219
+#: usr/lib/xcalculator/documentation.py:221
 msgid ""
 "These are reference rates, the middle of the market. A bank or a card "
 "usually charges a little more."
@@ -1411,7 +1428,7 @@ msgstr ""
 "Son tipos de referencia, el punto medio del mercado. Un banco o una tarjeta "
 "suelen cobrar algo más."
 
-#: usr/lib/xcalculator/documentation.py:220
+#: usr/lib/xcalculator/documentation.py:222
 msgid ""
 "<b>Keyboard</b>\n"
 "The same keys as the Unit Converter: numbers, Backspace, Delete, Escape, and "
@@ -1423,11 +1440,11 @@ msgstr ""
 "Esc y las teclas de cursor; <b>-</b> hace negativo el importe e <b>Intro</b> "
 "o <b>=</b> captura."
 
-#: usr/lib/xcalculator/documentation.py:223 usr/lib/xcalculator/window.py:199
+#: usr/lib/xcalculator/documentation.py:225 usr/lib/xcalculator/window.py:199
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: usr/lib/xcalculator/documentation.py:224
+#: usr/lib/xcalculator/documentation.py:226
 msgid ""
 "Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to "
 "Defaults</b> puts every preference back the way it was the first time; it "
@@ -1437,12 +1454,12 @@ msgstr ""
 "<b>Restablecer valores predeterminados</b> devuelve todas las preferencias a "
 "como estaban la primera vez; no toca el historial guardado."
 
-#: usr/lib/xcalculator/documentation.py:225
+#: usr/lib/xcalculator/documentation.py:227
 #: usr/lib/xcalculator/preferences.py:48
 msgid "General"
 msgstr "General"
 
-#: usr/lib/xcalculator/documentation.py:226
+#: usr/lib/xcalculator/documentation.py:228
 msgid ""
 "<b>Numbers</b>\n"
 "  • <b>Decimal places:</b> Rounds answers to 0–50 decimal places (default "
@@ -1472,7 +1489,7 @@ msgstr ""
 "resultados, el historial y la impresión. No se usan al escribir ni en el "
 "modo Programador. Copiar da las cifras sin separadores."
 
-#: usr/lib/xcalculator/documentation.py:230
+#: usr/lib/xcalculator/documentation.py:232
 msgid ""
 "<b>Scientific</b>\n"
 "  • <b>Angle units:</b> Sets degrees or radians for sin, cos, and tan. The "
@@ -1482,7 +1499,7 @@ msgstr ""
 "  • <b>Unidades de ángulo:</b> Grados o radianes para sin, cos y tan. El "
 "botón Rad/Deg de Científico cambia el mismo ajuste."
 
-#: usr/lib/xcalculator/documentation.py:232
+#: usr/lib/xcalculator/documentation.py:234
 msgid ""
 "<b>Programmer</b>\n"
 "  • <b>Word size</b> and <b>Starting number base:</b> For Programmer mode; "
@@ -1492,7 +1509,7 @@ msgstr ""
 "  • <b>Tamaño de palabra</b> y <b>Base numérica inicial:</b> Para el modo "
 "Programador; sus botones cambian los mismos ajustes."
 
-#: usr/lib/xcalculator/documentation.py:234
+#: usr/lib/xcalculator/documentation.py:236
 msgid ""
 "<b>Currency Converter</b>\n"
 "  • <b>Refresh rates automatically:</b> The same setting as the Auto Refresh "
@@ -1511,7 +1528,7 @@ msgstr ""
 "plano, una vez al día, aunque Xcalculator no esté abierto (desactivado por "
 "defecto)."
 
-#: usr/lib/xcalculator/documentation.py:238
+#: usr/lib/xcalculator/documentation.py:240
 msgid ""
 "<b>History</b>\n"
 "  • <b>Keep history after closing:</b> Restores history upon launch. "
@@ -1527,7 +1544,7 @@ msgstr ""
 "  • <b>Eliminar historial guardado:</b> Borra el historial y elimina el "
 "archivo."
 
-#: usr/lib/xcalculator/documentation.py:242
+#: usr/lib/xcalculator/documentation.py:244
 msgid ""
 "Switch off unused modes to hide them from the Mode menu. At least one mode "
 "stays on."
@@ -1535,11 +1552,11 @@ msgstr ""
 "Desactive los modos que no use para ocultarlos del menú Modo. Al menos un "
 "modo queda activado."
 
-#: usr/lib/xcalculator/documentation.py:244
+#: usr/lib/xcalculator/documentation.py:246
 msgid "Keyboard"
 msgstr "Teclado"
 
-#: usr/lib/xcalculator/documentation.py:252
+#: usr/lib/xcalculator/documentation.py:254
 msgid "Help - Xcalculator"
 msgstr "Ayuda - Xcalculator"
 
@@ -2208,11 +2225,11 @@ msgstr "Atajos de teclado"
 msgid "About"
 msgstr "Acerca de"
 
-#: usr/lib/xcalculator/window.py:502
+#: usr/lib/xcalculator/window.py:503
 msgid "Add this conversion to the history"
 msgstr "Añadir esta conversión al historial"
 
-#: usr/lib/xcalculator/window.py:506
+#: usr/lib/xcalculator/window.py:507
 msgid ""
 "Clear all stored financial values: N, I/Y, PV, PMT, FV, cash flows, P1/P2, "
 "and the P/Y and BGN settings"
@@ -2221,12 +2238,16 @@ msgstr ""
 "de caja, P1/P2 y los ajustes P/Y y BGN"
 
 #. Translators: the window title, e.g. "Basic - Xcalculator"
-#: usr/lib/xcalculator/window.py:537
+#: usr/lib/xcalculator/window.py:538
 #, python-brace-format
 msgid "{mode} - Xcalculator"
 msgstr "{mode} - Xcalculator"
 
-#: usr/lib/xcalculator/window.py:1203
+#: usr/lib/xcalculator/window.py:881
+msgid "Delete the character before the cursor (Backspace)"
+msgstr "Borrar el carácter anterior al cursor (Retroceso)"
+
+#: usr/lib/xcalculator/window.py:1230
 msgid ""
 "A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
 "Scientific, Financial, Programmer, Unit Converter, and Currency Converter "
@@ -2237,7 +2258,7 @@ msgstr ""
 "Conversor de divisas."
 
 #. Translators: your name (and email), one translator per line; shown in About → Credits
-#: usr/lib/xcalculator/window.py:1207
+#: usr/lib/xcalculator/window.py:1234
 msgid "translator-credits"
 msgstr ""
 

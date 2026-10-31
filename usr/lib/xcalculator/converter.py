@@ -179,6 +179,7 @@ class ConverterMode:
     def conv_use_box(self, index):
         self.conv_active = index
         self.display = (self.display_top, self.display_bottom)[index]
+        self.show_backspace_icon()
 
     def conv_current_category(self):
         """The category on screen; the Currency Converter's is CURRENCY."""

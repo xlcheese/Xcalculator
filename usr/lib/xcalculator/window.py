@@ -376,7 +376,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.layouts = {
             # Basic is the keypad every mode shares; the other modes add rows above it
             "Basic": [
-                [('⌫', 3), ('Clear', 3), ('%', 3), ('÷', 3)],
+                [('Clear', 3), ('√', 3), ('%', 3), ('÷', 3)],
                 [('7', 3), ('8', 3), ('9', 3), ('×', 3)],
                 [('4', 3), ('5', 3), ('6', 3), ('−', 3)],
                 [('1', 3), ('2', 3), ('3', 3), ('+', 3)],
@@ -389,7 +389,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 [('x!', 2), ('sin', 2), ('cos', 2), ('tan', 2), ('e', 2), ('EE', 2)],
                 [('Rand', 2), ('sinh', 2), ('cosh', 2), ('tanh', 2), ('π', 2), ('Rad', 2)],
                 [('|x|', 2), ('nCr', 2), ('nPr', 2), ('round', 2), ('f(x)', 2), ('mod', 2)],
-                [('⌫', 3), ('Clear', 3), ('%', 3), ('÷', 3)],
+                [('Clear', 6), ('%', 3), ('÷', 3)],
                 [('7', 3), ('8', 3), ('9', 3), ('×', 3)],
                 [('4', 3), ('5', 3), ('6', 3), ('−', 3)],
                 [('1', 3), ('2', 3), ('3', 3), ('+', 3)],
@@ -401,7 +401,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 [('P1', 2), ('P2', 2), ('BAL', 2), ('PRN', 2), ('INT', 2), ('Mrgn', 2)],
                 [('SL', 2), ('SYD', 2), ('DB', 2), ('EFF', 2), ('NOM', 2), ('Δ%', 2)],
                 [('M+', 2), ('M−', 2), ('MR', 2), ('(', 2), (')', 2), ('Clear All', 2)],
-                [('⌫', 3), ('Clear', 3), ('%', 3), ('÷', 3)],
+                [('Clear', 6), ('%', 3), ('÷', 3)],
                 [('7', 3), ('8', 3), ('9', 3), ('×', 3)],
                 [('4', 3), ('5', 3), ('6', 3), ('−', 3)],
                 [('1', 3), ('2', 3), ('3', 3), ('+', 3)],
@@ -412,7 +412,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 [('QWORD', 2), ('<<', 2), ('>>', 2), ('(', 2), (')', 2), ('mod', 2)],
                 [('AND', 2), ('OR', 2), ('XOR', 2), ('NOT', 2), ('NAND', 2), ('NOR', 2)],
                 [('A', 2), ('B', 2), ('C', 2), ('D', 2), ('E', 2), ('F', 2)],
-                [('⌫', 3), ('Clear', 3), ('±', 3), ('÷', 3)],
+                [('Clear', 6), ('±', 3), ('÷', 3)],
                 [('7', 3), ('8', 3), ('9', 3), ('×', 3)],
                 [('4', 3), ('5', 3), ('6', 3), ('−', 3)],
                 [('1', 3), ('2', 3), ('3', 3), ('+', 3)],
@@ -422,7 +422,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 [(c, 3) for c in CONVERTER_CATEGORIES[0:4]],
                 [(c, 3) for c in CONVERTER_CATEGORIES[4:8]],
                 [(c, 3) for c in CONVERTER_CATEGORIES[8:12]],
-                [('⌫', 4), ('Clear', 4), ('Capture', 4)],
+                [('Clear', 6), ('Capture', 6)],
                 [('7', 4), ('8', 4), ('9', 4)],
                 [('4', 4), ('5', 4), ('6', 4)],
                 [('1', 4), ('2', 4), ('3', 4)],
@@ -430,7 +430,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             ],
             "Currency Converter": [
                 [('Swap', 4), ('Auto Refresh', 4), ('Refresh Rates', 4)],
-                [('⌫', 4), ('Clear', 4), ('Capture', 4)],
+                [('Clear', 6), ('Capture', 6)],
                 [('7', 4), ('8', 4), ('9', 4)],
                 [('4', 4), ('5', 4), ('6', 4)],
                 [('1', 4), ('2', 4), ('3', 4)],
@@ -443,6 +443,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.grid.set_column_spacing(6)
         self.grid.set_row_homogeneous(True)
         self.grid.set_column_homogeneous(True)
+        self.grid.get_style_context().add_class("calc-keypad")
         vbox.pack_start(self.grid, False, True, 0)
 
         self.update_view_mode_layout()
@@ -488,12 +489,12 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 button.set_focus_on_click(False)    # keep the cursor in the display
                 context = button.get_style_context()
 
-                if label in ('Clear', 'Clr', '⌫') or (label == 'C' and not programmer):   # C is a hex digit there
-                    context.add_class("destructive-action")
-                elif label in ('=', 'Capture'):
+                if label in ('=', 'Capture'):
                     context.add_class("suggested-action")
-                elif label.isdigit() or (programmer and len(label) == 1 and label in 'ABCDEF'):
-                    context.add_class("numeric-button")
+                elif label.isdigit() or label == '.' or (programmer and len(label) == 1 and label in 'ABCDEF'):
+                    context.add_class("numeric-button")     # left plain; the other keys are shaded
+                elif label == 'Clear':
+                    context.add_class("clear-button")       # shaded like the others, but bold
                 if programmer and label in PROG_TOOLTIPS:
                     button.set_tooltip_text(PROG_TOOLTIPS[label])
                 if (converter and label in CONVERTER_UNITS) or label == 'Clear All':
@@ -631,11 +632,13 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
                 text.to_string(), tint)
 
     @staticmethod
-    def theme_button_text_color():
-        """The color the theme writes button labels in, as CSS."""
+    def theme_button_text_color(alpha=None):
+        """The color the theme writes button labels in, as CSS; with alpha, a see-through tint of it."""
         probe = Gtk.Button()
         color = probe.get_style_context().get_color(Gtk.StateFlags.NORMAL)
         probe.destroy()
+        if alpha is not None:
+            color.alpha = alpha
         return color.to_string()
 
     def apply_custom_styles(self):
@@ -674,7 +677,12 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             .history-row:hover {{ background-color: {entry_tint}; }}
             .calc-mono {{ font-family: monospace; }}
             button.compact {{ padding-left: 2px; padding-right: 2px; }}
-            .numeric-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}
+            .numeric-button label, .clear-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}
+            /* the number keys stay as the theme draws them; every other key gets a faint tint of the
+               theme's text color on top, so it reads a shade darker (or lighter, in a dark theme) */
+            .calc-keypad button:not(.numeric-button):not(.suggested-action) {{
+                box-shadow: inset 0 0 0 999px {self.theme_button_text_color(0.06)};
+            }}
             button {{ padding: 8px; }}
             button label {{ font-size: {self.base_font_size}px; }}
         """.encode('utf-8')
@@ -777,6 +785,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         entry.connect("button-press-event", self.on_display_button_pressed)
         entry.connect("changed", self.on_display_changed)
         entry.drag_dest_unset()             # no dropping text into it
+        entry.connect("icon-press", self.on_backspace_icon)
         entry.connect("paste-clipboard", self.on_display_paste)
         entry.connect("cut-clipboard", self.on_display_cut)
         entry.connect("notify::cursor-position", self.on_display_cursor_moved)
@@ -860,6 +869,21 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         if event.state & Gdk.ModifierType.CONTROL_MASK and keyname in ("a", "A", "c", "x"):
             return False                    # select all, copy, cut
         return True
+
+    def show_backspace_icon(self):
+        """Backspace is an icon at the right end of the box being typed in (only that one, in the converters)."""
+        for entry in (self.display_top, self.display_bottom):
+            typing_here = entry is self.display
+            entry.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY,
+                                          "edit-clear-symbolic" if typing_here else None)
+            if typing_here:
+                entry.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY,
+                                            _("Delete the character before the cursor (Backspace)"))
+
+    def on_backspace_icon(self, entry, position, event):
+        if entry is self.display:
+            self.execute_action_by_label("⌫")
+        self.display.grab_focus_without_selecting()
 
     def on_display_button_pressed(self, entry, event):
         return event.button == 2            # no middle-click paste
@@ -961,6 +985,9 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             key = keyname.lower()
             if self.current_mode == "Scientific" and key in self.SCIENTIFIC_CONTROL_KEYS:
                 self.execute_action_by_label(self.SCIENTIFIC_CONTROL_KEYS[key])
+                return True
+            if self.current_mode == "Basic" and key == "r":
+                self.execute_action_by_label("√")      # square root, as Ctrl+R is in Scientific
                 return True
             if self.current_mode == "Programmer" and key in self.PROGRAMMER_CONTROL_KEYS:
                 self.execute_action_by_label(self.PROGRAMMER_CONTROL_KEYS[key])

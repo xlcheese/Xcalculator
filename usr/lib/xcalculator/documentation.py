@@ -39,6 +39,7 @@ SHORTCUT_COLUMNS = (
      (_("Text Size"), (("<Control>equal", _("Larger text")),
                        ("<Control>minus", _("Smaller text")),
                        ("<Control>0", _("Normal text size")))),
+     (_("Basic"), (("<Control>r", _("Square root (√)")),)),
      (_("Scientific"), (("<Control>r", _("Square root (²√x)")),
                         ("<Control>i", _("Reciprocal (1/x)")))),
      (_("Programmer"), (("<Control>h", _("Switch to HEX")),
@@ -83,11 +84,12 @@ HELP_PAGES = (
     )),
     (N_("Basic"), "Basic", (
         _("The everyday keypad. Every other mode builds on it."),
-        _("  <b>⌫</b>  delete the character before the cursor\n"
-          "  <b>Clear</b>  start again\n"
+        _("  <b>Clear</b>  start again\n"
+          "  <b>√</b>  square root of the number you just typed, or of the answer: 9 √ = 3\n"
           "  <b>%</b>  percent: 50% = 0.5, and 200 × 15% = 30\n"
           "  <b>±</b>  change the sign of the number you are typing\n"
-          "  <b>=</b>  work out the answer (or press Enter)"),
+          "  <b>=</b>  work out the answer (or press Enter)\n"
+          "  <b>⌫</b>  at the right end of the display: delete the character before the cursor"),
         _("Multiplication and division are done before addition and subtraction, so 2 + 3 × 4 = 14."),
         _("<b>Typing with the keyboard</b>\n"
           "  <b>0–9</b>, <b>.</b>  numbers\n"

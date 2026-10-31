@@ -181,6 +181,8 @@ class BasicMode:
             kind = 'postfix'
         elif label == '1/x':
             kind = 'recip'
+        elif label == '√':
+            kind = 'root'
         elif label in self.FUNCTION_MAP:
             kind = 'func'
         elif label in ('π', 'e', 'eˣ', '10ˣ'):
@@ -193,7 +195,7 @@ class BasicMode:
             return
 
         # Operators and postfix actions continue from a result; anything else starts fresh.
-        continuing = kind in ('binary', 'postfix', 'recip')
+        continuing = kind in ('binary', 'postfix', 'recip', 'root')
         if self.is_result_active:
             if not continuing:
                 self.expression = ""
@@ -270,6 +272,18 @@ class BasicMode:
                 self.token_stack = []
             elif expr.endswith('(') or self.ends_with_operator(expr) or expr == '-':
                 self.push('1/')
+
+        elif kind == 'root':
+            # Basic's √, as on a pocket calculator: the square root of the number just typed
+            # (or of the answer). 9 √ gives sqrt(9); √ with no number yet starts sqrt(.
+            start = operand_start(expr) if expr else None
+            if re.fullmatch(r'-[\d.]+', expr):
+                start = 0                                   # a negative answer, sign and all
+            if start is not None:
+                self.expression = expr[:start] + 'sqrt(' + expr[start:] + ')'
+                self.token_stack = []
+            elif expr == '' or expr == '-' or expr.endswith('(') or self.ends_with_operator(expr):
+                self.push('sqrt(')
 
         elif kind == 'func':
             self.push(self.FUNCTION_MAP[label])
