@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xcalculator 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/xlcheese/Xcalculator/issues\n"
-"POT-Creation-Date: 2026-10-31 23:28+0000\n"
+"POT-Creation-Date: 2026-11-01 18:38+0000\n"
 "PO-Revision-Date: 2026-10-31 04:29+0000\n"
 "Last-Translator: Draft by Claude (needs native review)\n"
 "Language-Team: Spanish\n"
@@ -527,7 +527,7 @@ msgid "Formula:  {formula}"
 msgstr "Fórmula:  {formula}"
 
 #: usr/lib/xcalculator/converter.py:299 usr/lib/xcalculator/programmer.py:221
-#: usr/lib/xcalculator/window.py:1086
+#: usr/lib/xcalculator/window.py:1085
 msgid "Can't paste that"
 msgstr "No se puede pegar eso"
 
@@ -2237,17 +2237,11 @@ msgstr ""
 "Borrar todos los valores financieros guardados: N, I/Y, PV, PMT, FV, flujos "
 "de caja, P1/P2 y los ajustes P/Y y BGN"
 
-#. Translators: the window title, e.g. "Basic - Xcalculator"
-#: usr/lib/xcalculator/window.py:538
-#, python-brace-format
-msgid "{mode} - Xcalculator"
-msgstr "{mode} - Xcalculator"
-
-#: usr/lib/xcalculator/window.py:881
+#: usr/lib/xcalculator/window.py:880
 msgid "Delete the character before the cursor (Backspace)"
 msgstr "Borrar el carácter anterior al cursor (Retroceso)"
 
-#: usr/lib/xcalculator/window.py:1230
+#: usr/lib/xcalculator/window.py:1229
 msgid ""
 "A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
 "Scientific, Financial, Programmer, Unit Converter, and Currency Converter "
@@ -2258,7 +2252,7 @@ msgstr ""
 "Conversor de divisas."
 
 #. Translators: your name (and email), one translator per line; shown in About → Credits
-#: usr/lib/xcalculator/window.py:1234
+#: usr/lib/xcalculator/window.py:1233
 msgid "translator-credits"
 msgstr ""
 
