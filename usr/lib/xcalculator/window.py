@@ -534,8 +534,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         if self.display_bottom.is_focus() or converter:
             self.display_top.grab_focus_without_selecting()
         self.update_status()
-        # Translators: the window title, e.g. "Basic - Xcalculator"
-        self.set_title(_("{mode} - Xcalculator").format(mode=_(self.current_mode)))
+        self.set_title(_(self.current_mode))   # just the mode: the icon already says which program it is
         self.apply_mode_size()
 
     def apply_mode_size(self):
