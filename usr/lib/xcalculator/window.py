@@ -343,6 +343,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.conv_result_full = "0"     # what the converter's other box holds
 
         self.conv_combos = [Gtk.ComboBoxText(), Gtk.ComboBoxText()]     # units for top, bottom
+        for combo in self.conv_combos:
+            combo.get_style_context().add_class("calc-unit-menu")
         for index, combo in enumerate(self.conv_combos):
             combo.set_size_request(190, -1)
             combo.set_no_show_all(True)
@@ -676,15 +678,16 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             .history-row {{ padding: 2px; border-radius: 3px; }}
             .history-row:hover {{ background-color: {entry_tint}; }}
             .calc-mono {{ font-family: monospace; }}
-            button.compact {{ padding-left: 2px; padding-right: 2px; }}
+            .calc-keypad button.compact {{ padding-left: 2px; padding-right: 2px; }}
             .numeric-button label, .clear-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}
             /* the number keys stay as the theme draws them; every other key gets a faint tint of the
                theme's text color on top, so it reads a shade darker (or lighter, in a dark theme) */
             .calc-keypad button:not(.numeric-button):not(.suggested-action) {{
                 box-shadow: inset 0 0 0 999px {self.theme_button_text_color(0.06)};
             }}
-            button {{ padding: 8px; }}
-            button label {{ font-size: {self.base_font_size}px; }}
+            /* only the calculator's own keys and unit menus: the title bar and dialogs keep the theme's look */
+            .calc-keypad button, .calc-unit-menu button {{ padding: 8px; }}
+            .calc-keypad button label {{ font-size: {self.base_font_size}px; }}
         """.encode('utf-8')
         self.css_provider.load_from_data(style_css)
 
