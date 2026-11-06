@@ -6,8 +6,8 @@
 # the program's modules are in their own folder: compile them on install, remove the
 # compiled copies again on uninstall
 override_dh_python3:
-	dh_python3 /usr/lib/xcalculator
+	dh_python3 /usr/lib/xl-calculator
 
-# the rates timer is switched on per person by Xcalculator itself (Preferences → Currency
+# the rates timer is switched on per person by xl-Calculator itself (Preferences → Currency
 # Converter), never for everyone when the package is installed
 override_dh_installsystemduser:

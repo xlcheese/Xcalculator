@@ -1,8 +1,8 @@
-# Once a day (and a few minutes after logging in), check whether Xcalculator's exchange
+# Once a day (and a few minutes after logging in), check whether xl-Calculator's exchange
 # rates are older than the number of days chosen in Preferences, and refresh them if so.
 [Unit]
-Description=Check Xcalculator's exchange rates once a day
-Documentation=https://github.com/xlcheese/Xcalculator
+Description=Check xl-Calculator's exchange rates once a day
+Documentation=https://github.com/xlcheese/xl-calculator
 
 [Timer]
 OnStartupSec=5min

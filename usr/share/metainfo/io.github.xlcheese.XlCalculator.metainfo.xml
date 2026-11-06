@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.xlcheese.Xcalculator</id>
+  <id>io.github.xlcheese.XlCalculator</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Xcalculator</name>
+  <name>xl-Calculator</name>
   <summary>A calculator for Linux Mint and the Cinnamon desktop</summary>
   <description>
     <p>
-      Xcalculator is a calculator in the style of the Linux Mint X-Apps, with a classic menubar,
+      xl-Calculator is a calculator in the style of the Linux Mint X-Apps, with a classic menubar,
       the system theme and a history you can click to reuse earlier answers.
     </p>
     <ul>
@@ -22,17 +22,25 @@
       It works to up to 50 decimal places, and can print its history like an adding-machine tape.
     </p>
   </description>
-  <launchable type="desktop-id">io.github.xlcheese.Xcalculator.desktop</launchable>
+  <launchable type="desktop-id">io.github.xlcheese.XlCalculator.desktop</launchable>
   <developer id="io.github.xlcheese">
     <name>Wesley Hayslip</name>
   </developer>
-  <url type="homepage">https://github.com/xlcheese/Xcalculator</url>
-  <url type="bugtracker">https://github.com/xlcheese/Xcalculator/issues</url>
+  <url type="homepage">https://github.com/xlcheese/xl-calculator</url>
+  <url type="bugtracker">https://github.com/xlcheese/xl-calculator/issues</url>
+  <replaces>
+    <id>io.github.xlcheese.Xcalculator</id>
+  </replaces>
   <provides>
-    <binary>xcalculator</binary>
+    <binary>xl-calculator</binary>
   </provides>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="0.10" date="2026-11-06">
+      <description>
+        <p>Xcalculator is now called xl-Calculator, alongside xl-Screenshot and xl-Annotate. Settings, history and downloaded rates are copied over the first time it starts. The title bar shows just the mode.</p>
+      </description>
+    </release>
     <release version="0.9.4" date="2026-10-31">
       <description>
         <p>A calmer keypad: the number keys stand out, Clear is no longer red, backspace is also in the display, and Basic has a square root key. The icon has a darker border.</p>
@@ -50,8 +58,8 @@
     </release>
     <release version="0.9.1" date="2026-10-28">
       <description>
-        <p>Opening Xcalculator again opens another window, and the windows share their settings and history.
-          Settings are now kept in ~/.config/xcalculator. Every word on screen can now be translated.</p>
+        <p>Opening xl-Calculator again opens another window, and the windows share their settings and history.
+          Settings are now kept in ~/.config/xl-calculator. Every word on screen can now be translated.</p>
       </description>
     </release>
     <release version="0.9" date="2026-10-26"/>

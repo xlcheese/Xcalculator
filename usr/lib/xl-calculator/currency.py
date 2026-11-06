@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -10,8 +10,8 @@
 
 Nothing is downloaded until the person clicks Download Rates. After that, rates are
 refreshed when they click Refresh Rates, or automatically every few days if they switch
-Auto Refresh on: while Xcalculator is open, and also when it's closed if they choose that
-in Preferences (a systemd user timer runs "xcalculator --refresh-rates" once a day)."""
+Auto Refresh on: while xl-Calculator is open, and also when it's closed if they choose that
+in Preferences (a systemd user timer runs "xl-calculator --refresh-rates" once a day)."""
 import gettext
 import json
 import os
@@ -29,10 +29,10 @@ from config import APP_VERSION, CONFIG_FILE
 from engine import DECIMAL_RE
 
 # the bank's reference rates, published once a day on working days (about 4 pm in Frankfurt);
-# XCALCULATOR_RATES_URL lets the tests use a local copy instead
-RATES_URL = os.environ.get("XCALCULATOR_RATES_URL",
+# XL_CALCULATOR_RATES_URL lets the tests use a local copy instead
+RATES_URL = os.environ.get("XL_CALCULATOR_RATES_URL",
                            "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml")
-RATES_DIR = os.path.join(GLib.get_user_cache_dir(), "xcalculator")      # ~/.cache/xcalculator
+RATES_DIR = os.path.join(GLib.get_user_cache_dir(), "xl-calculator")      # ~/.cache/xl-calculator
 RATES_FILE = os.path.join(RATES_DIR, "rates.json")
 MAX_RATES_SIZE = 200000                     # bytes; the real file is about 2 kB
 CURRENCY = "Currency"                       # the converter's "category" in this mode
@@ -41,7 +41,7 @@ DEFAULT_INTERVAL = 3                        # days between automatic refreshes
 MAX_INTERVAL = 30
 CHECK_SECONDS = 3600                        # while open: look once an hour whether rates are due
 MESSAGE_SECONDS = 6                         # how long "Auto refresh on" and the like stay up
-TIMER = "xcalculator-rates.timer"           # the systemd user timer for refreshing when closed
+TIMER = "xl-calculator-rates.timer"           # the systemd user timer for refreshing when closed
 TIMER_FOLDERS = ("/usr/lib/systemd/user", "/usr/local/lib/systemd/user",
                  os.path.join(GLib.get_user_data_dir(), "systemd", "user"))
 
@@ -76,7 +76,7 @@ def parse_rates(text):
 
 def download_rates():
     """Download today's rates and keep a copy. Raises OSError or ValueError on failure."""
-    request = urllib.request.Request(RATES_URL, headers={"User-Agent": f"Xcalculator/{APP_VERSION}"})
+    request = urllib.request.Request(RATES_URL, headers={"User-Agent": f"xl-Calculator/{APP_VERSION}"})
     with urllib.request.urlopen(request, timeout=20) as response:
         text = response.read(MAX_RATES_SIZE).decode("utf-8", "replace")
     date, rates = parse_rates(text)
@@ -178,7 +178,7 @@ class Rates:
 
 
 # ---------------------------------------------------------------------------
-# Refreshing when Xcalculator is closed: a systemd user timer
+# Refreshing when xl-Calculator is closed: a systemd user timer
 # ---------------------------------------------------------------------------
 
 background_refresh_requested = None     # what this program last asked systemd for
@@ -206,7 +206,7 @@ def set_background_refresh(enabled):
 
 
 def refresh_from_command_line():
-    """"xcalculator --refresh-rates", run once a day by the timer: refresh rates that are due.
+    """"xl-calculator --refresh-rates", run once a day by the timer: refresh rates that are due.
     It does nothing unless the person switched on both automatic and background refresh."""
     try:
         with open(CONFIG_FILE) as f:
@@ -313,11 +313,11 @@ class CurrencyMode:
             return _("Auto refresh off.")
         days = self.currency_interval
         if self.currency_background and background_refresh_available():
-            return ngettext("Auto refresh on, every day, also when Xcalculator is closed.",
-                            "Auto refresh on, every {days} days, also when Xcalculator is closed.",
+            return ngettext("Auto refresh on, every day, also when xl-Calculator is closed.",
+                            "Auto refresh on, every {days} days, also when xl-Calculator is closed.",
                             days).format(days=days) + "\n" + _("Change how often in Edit → Preferences.")
-        return ngettext("Auto refresh on, every day while Xcalculator is open.",
-                        "Auto refresh on, every {days} days while Xcalculator is open.",
+        return ngettext("Auto refresh on, every day while xl-Calculator is open.",
+                        "Auto refresh on, every {days} days while xl-Calculator is open.",
                         days).format(days=days) + "\n" + _("Change how often in Edit → Preferences.")
 
     def show_currency_message(self, text):

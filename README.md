@@ -1,6 +1,6 @@
-<img src="usr/share/icons/hicolor/scalable/apps/io.github.xlcheese.Xcalculator.svg" alt="" width="96" align="right">
+<img src="usr/share/icons/hicolor/scalable/apps/io.github.xlcheese.XlCalculator.svg" alt="" width="96" align="right">
 
-# Xcalculator
+# xl-Calculator
 
 A calculator for Linux Mint and the Cinnamon desktop, made in the style of the
 Mint X-Apps: a classic menubar, the system theme, and nothing that looks out of
@@ -36,33 +36,37 @@ shortcuts.
 
 ## Install
 
-Download the `.deb` from the [latest release](https://github.com/xlcheese/Xcalculator/releases/latest)
+Download the `.deb` from the [latest release](https://github.com/xlcheese/xl-calculator/releases/latest)
 and open it, or install it from a terminal:
 
 ```
-sudo apt install ./xcalculator_0.9.4_all.deb
+sudo apt install ./xl-calculator_0.10_all.deb
 ```
 
-Xcalculator then appears in the menu under **Accessories**.
+xl-Calculator then appears in the menu under **Accessories**.
+
+Until version 0.10, xl-Calculator was called Xcalculator. Installing xl-Calculator
+replaces it, and the first time it starts it copies over your settings, history,
+and downloaded exchange rates.
 
 To run it without installing, you need Python 3 and GTK 3 (both come with Linux
 Mint):
 
 ```
 sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-mpmath iso-codes
-python3 usr/lib/xcalculator/xcalculator.py
+python3 usr/lib/xl-calculator/xl_calculator.py
 ```
 
 `python3-gi-cairo` is needed for printing, and `python3-mpmath` for more than
-15 decimal places. Xcalculator still runs without them.
+15 decimal places. xl-Calculator still runs without them.
 
 ## The code
 
-The program is in `usr/lib/xcalculator/`, one file for each part:
+The program is in `usr/lib/xl-calculator/`, one file for each part:
 
 | File | What it holds |
 |---|---|
-| `xcalculator.py` | starts the program (one `Gtk.Application`, any number of windows) |
+| `xl_calculator.py` | starts the program (one `Gtk.Application`, any number of windows) |
 | `window.py` | the calculator window: menus, display, keypad layouts, keyboard, and clipboard |
 | `basic.py` | typing a calculation and working it out, shared by Basic, Scientific, and Financial |
 | `scientific.py` | Scientific's functions, the 2nd key, angle units, and the f(x) menu |
@@ -93,18 +97,18 @@ Makefile, which can also be used on its own:
 
 - `make` compiles the translations and writes the menu entry
 - `make install` installs everything under `/usr` (or `PREFIX`, into `DESTDIR`)
-- `make pot` updates `po/xcalculator.pot` after any text in the program changes
+- `make pot` updates `po/xl-calculator.pot` after any text in the program changes
 
 ## Translate
 
-Xcalculator uses gettext. Spanish, French, German, and Brazilian Portuguese
+xl-Calculator uses gettext. Spanish, French, German, and Brazilian Portuguese
 are included as drafts that still need a review by native speakers:
 corrections are very welcome.
 
 To start a new language, for example Italian:
 
 ```
-msginit -i po/xcalculator.pot -l it -o po/it.po
+msginit -i po/xl-calculator.pot -l it -o po/it.po
 ```
 
 Translate the `msgstr` lines in `po/it.po` (with Poedit, or any text editor),
@@ -112,7 +116,7 @@ add `it` to `po/LINGUAS`, and run `make`. To try it from the source folder:
 
 ```
 make
-LANGUAGE=it python3 usr/lib/xcalculator/xcalculator.py
+LANGUAGE=it python3 usr/lib/xl-calculator/xl_calculator.py
 ```
 
 Currency names come already translated from the `iso-codes` package.
@@ -125,7 +129,7 @@ in every language. Text in braces, such as `{mode}`, and markup such as
 
 Copyright © 2026 Wesley Hayslip
 
-Xcalculator is free software: you can redistribute it and/or modify it under
+xl-Calculator is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
 version. See [LICENSE](LICENSE).

@@ -1,13 +1,13 @@
 [Desktop Entry]
 Type=Application
-Name=Xcalculator
+Name=xl-Calculator
 GenericName=Calculator
 Comment=Basic, scientific, financial, and programmer calculations, and unit and currency conversion
 # Translators: search words for the menu, separated by semicolons (keep the last one)
 Keywords=calculator;calculation;arithmetic;scientific;financial;programmer;hex;binary;unit;converter;currency;exchange;
-Exec=xcalculator
-Icon=io.github.xlcheese.Xcalculator
+Exec=xl-calculator
+Icon=io.github.xlcheese.XlCalculator
 Terminal=false
 Categories=GTK;Utility;Calculator;
 StartupNotify=true
-StartupWMClass=Xcalculator
+StartupWMClass=xl-calculator

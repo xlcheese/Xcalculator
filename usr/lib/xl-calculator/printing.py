@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -50,7 +50,7 @@ def _tape_layout(new_layout, text, width, bold=False, size_scale=1.0, align=Pang
 def _tape_header_text(printed_at):
     # Translators: the date and time printed at the top of the tape, in Python's strftime format
     # (%b month, %d day, %Y year, %I hour, %M minute, %p AM/PM).
-    return _("Xcalculator  ·  {date}").format(date=printed_at.strftime(_("%b %d, %Y  %I:%M %p")))
+    return _("xl-Calculator  ·  {date}").format(date=printed_at.strftime(_("%b %d, %Y  %I:%M %p")))
 
 
 def _page_text(page, pages):
@@ -118,7 +118,7 @@ class PrintPreview(Gtk.Window):
     SCALE = 0.75                            # preview pixels per point
 
     def __init__(self, calculator, entries, page_setup):
-        super().__init__(title=_("Print Preview - Xcalculator"), transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("Print Preview - xl-Calculator"), transient_for=calculator, destroy_with_parent=True)
         self.calculator, self.entries, self.page_setup = calculator, entries, page_setup
         self.printed_at = datetime.now()
         self.paper_width = page_setup.get_paper_width(Gtk.Unit.POINTS)
@@ -230,7 +230,7 @@ class TapePrinting:
         entries, printed_at = self.tape_entries(), datetime.now()
         pages = []
         operation = Gtk.PrintOperation()
-        operation.set_job_name(_("Xcalculator tape"))
+        operation.set_job_name(_("xl-Calculator tape"))
         operation.set_unit(Gtk.Unit.POINTS)
         operation.set_default_page_setup(self.page_setup)
         if self.print_settings:

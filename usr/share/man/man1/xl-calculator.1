@@ -1,11 +1,11 @@
-.TH XCALCULATOR 1 "October 2026" "Xcalculator 0.9.4" "User Commands"
+.TH XL-CALCULATOR 1 "November 2026" "xl-Calculator 0.10" "User Commands"
 .SH NAME
-xcalculator \- a calculator for Linux Mint and the Cinnamon desktop
+xl-calculator \- a calculator for Linux Mint and the Cinnamon desktop
 .SH SYNOPSIS
-.B xcalculator
+.B xl-calculator
 [\-\-refresh\-rates]
 .SH DESCRIPTION
-.B Xcalculator
+.B xl-Calculator
 is a graphical calculator with Basic, Scientific, Financial, Programmer,
 Unit Converter, and Currency Converter modes, chosen from its Mode menu.
 .PP
@@ -16,20 +16,20 @@ Help \(-> Keyboard Shortcuts (Ctrl+F1) lists the shortcut keys.
 .B \-\-refresh\-rates
 Refresh the Currency Converter's exchange rates without opening a window, if they are
 older than the number of days set in Preferences. It does nothing unless both
-"Refresh rates automatically" and "Also when Xcalculator is closed" are switched on.
-The xcalculator-rates.timer systemd user timer runs it once a day; Xcalculator switches
+"Refresh rates automatically" and "Also when xl-Calculator is closed" are switched on.
+The xl-calculator-rates.timer systemd user timer runs it once a day; xl-Calculator switches
 the timer on and off with those two settings.
 .SH FILES
 .TP
-.I ~/.config/xcalculator/settings.json
+.I ~/.config/xl-calculator/settings.json
 Preferences, window sizes and the last mode used.
 .TP
-.I ~/.config/xcalculator/history.json
+.I ~/.config/xl-calculator/history.json
 The saved history.
 .TP
-.I ~/.cache/xcalculator/rates.json
+.I ~/.cache/xl-calculator/rates.json
 The exchange rates downloaded last, from the European Central Bank.
 .SH AUTHOR
 Wesley Hayslip.
 .SH SEE ALSO
-https://github.com/xlcheese/Xcalculator
+https://github.com/xlcheese/xl-calculator

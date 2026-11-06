@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -45,7 +45,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
     WORD_BUTTONS = (N_("Clear"), N_("Clear All"), N_("Capture"), N_("Swap"), N_("Auto Refresh"), N_("Refresh Rates"))
 
     def __init__(self, application=None):
-        super().__init__(title="Xcalculator", application=application)
+        super().__init__(title="xl-Calculator", application=application)
         self.set_border_width(0)
         self.set_decorated(True)
 
@@ -1227,7 +1227,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
 
     def show_about(self, widget=None):
         dialog = Gtk.AboutDialog(transient_for=self, modal=True)
-        dialog.set_program_name("Xcalculator")
+        dialog.set_program_name("xl-Calculator")
         dialog.set_version(APP_VERSION)
         dialog.set_comments(_("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
                               "Scientific, Financial, Programmer, Unit Converter, and Currency Converter modes."))
