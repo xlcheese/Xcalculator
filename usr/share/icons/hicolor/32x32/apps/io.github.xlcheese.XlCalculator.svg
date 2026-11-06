@@ -1,5 +1,5 @@
-<!-- Xcalculator icon. Copyright (C) 2026 Wesley Hayslip. GPL-3.0-or-later. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+<!-- xl-Calculator icon. Copyright (C) 2026 Wesley Hayslip. GPL-3.0-or-later. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 128 128">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#dcdcdc"/><stop offset="1" stop-color="#b9b9b9"/>
@@ -10,9 +10,9 @@
       <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <rect x="8" y="9" width="112" height="112" rx="22" fill="#000" opacity="0.18"/>
-  <rect x="8" y="8" width="112" height="112" rx="22" fill="url(#bg)" stroke="#666666" stroke-width="1"/>
-  <rect x="9" y="9" width="110" height="110" rx="21" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1"/>
+  <rect x="6" y="7" width="116" height="116" rx="23" fill="#000" opacity="0.18"/>
+  <rect x="6" y="6" width="116" height="116" rx="23" fill="url(#bg)" stroke="#777777" stroke-width="4"/>
+  <rect x="10" y="10" width="108" height="108" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="4"/>
 
     <rect x="26" y="22" width="76" height="26" rx="5" fill="#ffffff" stroke="#b9b9b9" stroke-width="0.8"/>
     <rect x="62" y="31" width="32" height="8" rx="4" fill="#3a3a3a"/>

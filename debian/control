@@ -1,16 +1,19 @@
-Source: xcalculator
+Source: xl-calculator
 Section: utils
 Priority: optional
 Maintainer: Wesley Hayslip <xl_cheese@hotmail.com>
 Build-Depends: debhelper-compat (= 13), dh-python, gettext, python3
 Standards-Version: 4.6.2
-Homepage: https://github.com/xlcheese/Xcalculator
-Vcs-Git: https://github.com/xlcheese/Xcalculator.git
-Vcs-Browser: https://github.com/xlcheese/Xcalculator
+Homepage: https://github.com/xlcheese/xl-calculator
+Vcs-Git: https://github.com/xlcheese/xl-calculator.git
+Vcs-Browser: https://github.com/xlcheese/xl-calculator
 Rules-Requires-Root: no
 
-Package: xcalculator
+Package: xl-calculator
 Architecture: all
+# the same program under its earlier name: installing this one replaces it
+Conflicts: xcalculator
+Replaces: xcalculator
 Depends: ${misc:Depends},
          ${python3:Depends},
          python3-gi,
@@ -20,10 +23,12 @@ Depends: ${misc:Depends},
          gir1.2-gtk-3.0,
          gir1.2-pango-1.0
 Description: calculator for Linux Mint and the Cinnamon desktop
- Xcalculator is a calculator in the style of the Linux Mint X-Apps, with a
+ xl-Calculator is a calculator in the style of the Linux Mint X-Apps, with a
  classic menubar, the system theme and a history you can click to reuse
  earlier answers.
  .
- It has Basic, Scientific, Financial, Programmer and Unit Converter modes,
- works to up to 50 decimal places, and can print its history like an
- adding-machine tape.
+ It has Basic, Scientific, Financial, Programmer, Unit Converter and
+ Currency Converter modes, works to up to 50 decimal places, and can print
+ its history like an adding-machine tape.
+ .
+ This program was called Xcalculator before version 0.10.

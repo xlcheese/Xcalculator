@@ -1,3 +1,17 @@
+xl-calculator (0.10) unstable; urgency=medium
+
+  * Xcalculator is now called xl-Calculator, alongside xl-Screenshot and
+    xl-Annotate: the command and package are xl-calculator, and the app ID
+    is io.github.xlcheese.XlCalculator. This package replaces xcalculator.
+  * The first time it starts, xl-Calculator copies the settings, history,
+    and downloaded rates kept under the old name, and moves the daily rates
+    check over if it was switched on.
+  * The title bar shows just the mode, such as "Basic".
+  * The keypad's larger buttons no longer enlarge the title bar's buttons
+    (when the title bar is a GTK header bar) or the Preferences window.
+
+ -- Wesley Hayslip <xl_cheese@hotmail.com>  Fri, 06 Nov 2026 12:00:00 +0000
+
 xcalculator (0.9.4) unstable; urgency=medium
 
   * A calmer keypad: the number keys and decimal point are left white and

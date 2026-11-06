@@ -1,22 +1,22 @@
-# Xcalculator: build the translations and install the program.
+# xl-Calculator: build the translations and install the program.
 #
 #   make           compile po/*.po and write the menu entry with its translations
-#   make pot       update po/xcalculator.pot from the source (after changing any text)
+#   make pot       update po/xl-calculator.pot from the source (after changing any text)
 #   make install   copy everything into $(DESTDIR)$(PREFIX); debian/rules runs this
 #   make clean     remove what make built
 
-APP_ID  = io.github.xlcheese.Xcalculator
-DOMAIN  = xcalculator
+APP_ID  = io.github.xlcheese.XlCalculator
+DOMAIN  = xl-calculator
 VERSION = $(shell sed -n '1s/.*(\(.*\)).*/\1/p' debian/changelog)
 PREFIX ?= /usr
 
-PROGRAM = usr/lib/xcalculator
+PROGRAM = usr/lib/xl-calculator
 SOURCES = $(sort $(wildcard $(PROGRAM)/*.py))
 DESKTOP = usr/share/applications/$(APP_ID).desktop
 LOCALE  = usr/share/locale
 LANGUAGES = $(shell grep -v "^\s*#" po/LINGUAS)
 MO_FILES  = $(foreach lang,$(LANGUAGES),$(LOCALE)/$(lang)/LC_MESSAGES/$(DOMAIN).mo)
-# the menu entry's words that are translated (its Name, Xcalculator, is not)
+# the menu entry's words that are translated (its Name, xl-Calculator, is not)
 DESKTOP_KEYWORDS = --keyword= --keyword=GenericName --keyword=Comment --keyword=Keywords
 
 all: $(MO_FILES) $(DESKTOP)
@@ -29,8 +29,8 @@ $(DESKTOP): data/$(APP_ID).desktop.in $(wildcard po/*.po)
 	mkdir -p $(dir $@)
 	msgfmt --desktop $(DESKTOP_KEYWORDS) --template=$< -d po --output-file=$@
 
-POT_HEADER = --package-name=Xcalculator --package-version=$(VERSION) --copyright-holder="Wesley Hayslip" \
-	--msgid-bugs-address=https://github.com/xlcheese/Xcalculator/issues
+POT_HEADER = --package-name=xl-Calculator --package-version=$(VERSION) --copyright-holder="Wesley Hayslip" \
+	--msgid-bugs-address=https://github.com/xlcheese/xl-calculator/issues
 
 pot:
 	xgettext --language=Python --from-code=UTF-8 --keyword=_ --keyword=N_ --add-comments=Translators \
@@ -41,20 +41,20 @@ pot:
 
 install: all
 	install -d $(DESTDIR)$(PREFIX)/bin
-	sed 's|/usr/lib/xcalculator/|$(PREFIX)/lib/xcalculator/|' usr/bin/xcalculator > $(DESTDIR)$(PREFIX)/bin/xcalculator
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/xcalculator
-	install -d $(DESTDIR)$(PREFIX)/lib/xcalculator
-	install -m644 $(SOURCES) $(DESTDIR)$(PREFIX)/lib/xcalculator/
-	chmod 755 $(DESTDIR)$(PREFIX)/lib/xcalculator/xcalculator.py
+	sed 's|/usr/lib/xl-calculator/|$(PREFIX)/lib/xl-calculator/|' usr/bin/xl-calculator > $(DESTDIR)$(PREFIX)/bin/xl-calculator
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/xl-calculator
+	install -d $(DESTDIR)$(PREFIX)/lib/xl-calculator
+	install -m644 $(SOURCES) $(DESTDIR)$(PREFIX)/lib/xl-calculator/
+	chmod 755 $(DESTDIR)$(PREFIX)/lib/xl-calculator/xl_calculator.py
 	install -Dm644 $(DESKTOP) $(DESTDIR)$(PREFIX)/share/applications/$(APP_ID).desktop
 	install -Dm644 usr/share/metainfo/$(APP_ID).metainfo.xml $(DESTDIR)$(PREFIX)/share/metainfo/$(APP_ID).metainfo.xml
-	install -Dm644 usr/share/man/man1/xcalculator.1 $(DESTDIR)$(PREFIX)/share/man/man1/xcalculator.1
+	install -Dm644 usr/share/man/man1/xl-calculator.1 $(DESTDIR)$(PREFIX)/share/man/man1/xl-calculator.1
 	for size in scalable 16x16 24x24 32x32; do \
 		install -Dm644 usr/share/icons/hicolor/$$size/apps/$(APP_ID).svg \
 			$(DESTDIR)$(PREFIX)/share/icons/hicolor/$$size/apps/$(APP_ID).svg; \
 	done
 	install -d $(DESTDIR)$(PREFIX)/lib/systemd/user
-	for unit in xcalculator-rates.service xcalculator-rates.timer; do \
+	for unit in xl-calculator-rates.service xl-calculator-rates.timer; do \
 		sed 's|@BINDIR@|$(PREFIX)/bin|' data/$$unit.in > $(DESTDIR)$(PREFIX)/lib/systemd/user/$$unit; \
 		chmod 644 $(DESTDIR)$(PREFIX)/lib/systemd/user/$$unit; \
 	done

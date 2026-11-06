@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -45,7 +45,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
     WORD_BUTTONS = (N_("Clear"), N_("Clear All"), N_("Capture"), N_("Swap"), N_("Auto Refresh"), N_("Refresh Rates"))
 
     def __init__(self, application=None):
-        super().__init__(title="Xcalculator", application=application)
+        super().__init__(title="xl-Calculator", application=application)
         self.set_border_width(0)
         self.set_decorated(True)
 
@@ -343,6 +343,8 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         self.conv_result_full = "0"     # what the converter's other box holds
 
         self.conv_combos = [Gtk.ComboBoxText(), Gtk.ComboBoxText()]     # units for top, bottom
+        for combo in self.conv_combos:
+            combo.get_style_context().add_class("calc-unit-menu")
         for index, combo in enumerate(self.conv_combos):
             combo.set_size_request(190, -1)
             combo.set_no_show_all(True)
@@ -534,8 +536,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
         if self.display_bottom.is_focus() or converter:
             self.display_top.grab_focus_without_selecting()
         self.update_status()
-        # Translators: the window title, e.g. "Basic - Xcalculator"
-        self.set_title(_("{mode} - Xcalculator").format(mode=_(self.current_mode)))
+        self.set_title(_(self.current_mode))   # just the mode: the icon already says which program it is
         self.apply_mode_size()
 
     def apply_mode_size(self):
@@ -676,15 +677,16 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
             .history-row {{ padding: 2px; border-radius: 3px; }}
             .history-row:hover {{ background-color: {entry_tint}; }}
             .calc-mono {{ font-family: monospace; }}
-            button.compact {{ padding-left: 2px; padding-right: 2px; }}
+            .calc-keypad button.compact {{ padding-left: 2px; padding-right: 2px; }}
             .numeric-button label, .clear-button label {{ font-weight: bold; font-size: {self.base_font_size}px; }}
             /* the number keys stay as the theme draws them; every other key gets a faint tint of the
                theme's text color on top, so it reads a shade darker (or lighter, in a dark theme) */
             .calc-keypad button:not(.numeric-button):not(.suggested-action) {{
                 box-shadow: inset 0 0 0 999px {self.theme_button_text_color(0.06)};
             }}
-            button {{ padding: 8px; }}
-            button label {{ font-size: {self.base_font_size}px; }}
+            /* only the calculator's own keys and unit menus: the title bar and dialogs keep the theme's look */
+            .calc-keypad button, .calc-unit-menu button {{ padding: 8px; }}
+            .calc-keypad button label {{ font-size: {self.base_font_size}px; }}
         """.encode('utf-8')
         self.css_provider.load_from_data(style_css)
 
@@ -1225,7 +1227,7 @@ class XCalculator(BasicMode, ScientificMode, FinancialMode, ProgrammerMode, Conv
 
     def show_about(self, widget=None):
         dialog = Gtk.AboutDialog(transient_for=self, modal=True)
-        dialog.set_program_name("Xcalculator")
+        dialog.set_program_name("xl-Calculator")
         dialog.set_version(APP_VERSION)
         dialog.set_comments(_("A calculator for Linux Mint and the Cinnamon desktop, with Basic, "
                               "Scientific, Financial, Programmer, Unit Converter, and Currency Converter modes."))

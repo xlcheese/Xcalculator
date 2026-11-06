@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -21,7 +21,7 @@ SHORTCUTS_PAGE = "shortcuts"
 SHORTCUT_COLUMNS = (
     ((_("Windows"), (("<Control>n", _("Open a new window")),
                      ("<Control>w", _("Close the window")),
-                     ("<Control>q", _("Quit Xcalculator")))),
+                     ("<Control>q", _("Quit xl-Calculator")))),
      (_("Modes"), (("<Control><Alt>b", _("Switch to Basic")),
                    ("<Control><Alt>s", _("Switch to Scientific")),
                    ("<Control><Alt>f", _("Switch to Financial")),
@@ -62,7 +62,7 @@ def section_heading(title):
 HELP_PAGES = (
     (N_("Getting Started"), None, (
         # Translators: the Documentation pages are Pango markup: keep <b>…</b> and &amp; &lt; &gt; as they are
-        _("Xcalculator has six modes. Pick one from the <b>Mode</b> menu:\n"
+        _("xl-Calculator has six modes. Pick one from the <b>Mode</b> menu:\n"
           "  • <b>Basic</b> for everyday sums.\n"
           "  • <b>Scientific</b> for powers, roots, trigonometry, logarithms, and more.\n"
           "  • <b>Financial</b> for loans, savings, cash flows, and depreciation.\n"
@@ -72,7 +72,7 @@ HELP_PAGES = (
         _("<b>Typing</b>\n"
           "Click the buttons or use the keyboard. Click in the display or use the arrow keys to move the cursor. Typed text, Backspace, and Delete all work at the cursor position. Highlighted text is replaced by what you type."),
         _("<b>The history</b>\n"
-          "Every answer is added to the history above the display. Click an answer to use it in your next calculation, or click a calculation to bring it back. <b>View → Clear History</b> empties it, and <b>File → Print</b> prints it like an adding-machine tape. The history is saved as you go; see Preferences to show it again the next time Xcalculator opens."),
+          "Every answer is added to the history above the display. Click an answer to use it in your next calculation, or click a calculation to bring it back. <b>View → Clear History</b> empties it, and <b>File → Print</b> prints it like an adding-machine tape. The history is saved as you go; see Preferences to show it again the next time xl-Calculator opens."),
         _("<b>Long numbers</b>\n"
           "An answer too wide for the window is shown in scientific notation, like 3.7×10²⁰. Widen the window to see it in full. Copy and the history always keep the full number."),
         _("<b>Copy and paste</b>\n"
@@ -207,7 +207,7 @@ HELP_PAGES = (
     (N_("Currency Converter"), "Currency Converter", (
         _("Converts between the euro and about 30 other currencies, using the European Central Bank's reference rates. The bank publishes new rates once a day on working days."),
         _("<b>Getting the rates</b>\n"
-          "Xcalculator doesn't go online until you ask it to. The first time, click <b>Download Rates</b>. After that the button reads <b>Refresh Rates</b>: click it whenever you want the latest rates. The rates are kept in ~/.cache/xcalculator, so the converter also works offline, with the last rates it downloaded. The line under the boxes always says how old they are."),
+          "xl-Calculator doesn't go online until you ask it to. The first time, click <b>Download Rates</b>. After that the button reads <b>Refresh Rates</b>: click it whenever you want the latest rates. The rates are kept in ~/.cache/xl-calculator, so the converter also works offline, with the last rates it downloaded. The line under the boxes always says how old they are."),
         _("<b>Converting</b>\n"
           "  1. Pick a currency beside each box. The first time it's US Dollar and Euro; after that, the pair you used last.\n"
           "  2. Type an amount in either box. The other box converts as you type.\n"
@@ -217,7 +217,7 @@ HELP_PAGES = (
           "  <b>±</b>  makes the amount negative"),
         _("<b>Auto Refresh</b>\n"
           "Click <b>Auto Refresh</b> (or switch on <b>Refresh rates automatically</b> in Preferences) to refresh the rates by themselves: every 3 days to start, and you can choose 1 to 30 days in Preferences. It can be switched on once you have downloaded rates."),
-        _("Normally rates refresh only while Xcalculator is open. With <b>Also when Xcalculator is closed</b> switched on in Preferences, a small scheduled job checks once a day, even when Xcalculator isn't running, and refreshes rates that are older than your number of days. If the computer was off, it checks a few minutes after you next log in; with no internet connection it tries again the next day. Switching either setting off stops it."),
+        _("Normally rates refresh only while xl-Calculator is open. With <b>Also when xl-Calculator is closed</b> switched on in Preferences, a small scheduled job checks once a day, even when xl-Calculator isn't running, and refreshes rates that are older than your number of days. If the computer was off, it checks a few minutes after you next log in; with no internet connection it tries again the next day. Switching either setting off stops it."),
         _("These are reference rates, the middle of the market. A bank or a card usually charges a little more."),
         _("<b>Keyboard</b>\n"
           "The same keys as the Unit Converter: numbers, Backspace, Delete, Escape, and the cursor keys; <b>-</b> makes the amount negative and <b>Enter</b> or <b>=</b> captures."),
@@ -226,7 +226,7 @@ HELP_PAGES = (
         _("Open <b>Edit → Preferences</b>. Changes take effect at once. <b>Reset to Defaults</b> puts every preference back the way it was the first time; it doesn't touch the saved history."),
         section_heading(_("General")),
         _("<b>Numbers</b>\n"
-          "  • <b>Decimal places:</b> Rounds answers to 0–50 decimal places (default 10). Uses high-precision math from the python3-mpmath package, which is installed with Xcalculator (falls back to 15 places if it's missing). Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
+          "  • <b>Decimal places:</b> Rounds answers to 0–50 decimal places (default 10). Uses high-precision math from the python3-mpmath package, which is installed with xl-Calculator (falls back to 15 places if it's missing). Very small answers keep their digits instead of rounding to 0, and switch to scientific notation if they don't fit. Changing it re-shows the answer on screen; lines already in the history keep their digits.\n"
           "  • <b>Show all decimal places:</b> Pads answers with trailing zeros (with 2 places, 19.5 becomes 19.50). Useful for tracking currency.\n"
           "  • <b>Thousands separators:</b> 1234567 shows as 1,234,567 in answers, history, and the printout. Not used while typing or in Programmer mode. Copy retains plain digits."),
         _("<b>Scientific</b>\n"
@@ -236,9 +236,9 @@ HELP_PAGES = (
         _("<b>Currency Converter</b>\n"
           "  • <b>Refresh rates automatically:</b> The same setting as the Auto Refresh button. It can be switched on once rates have been downloaded.\n"
           "  • <b>Refresh interval in days:</b> How often rates refresh: every 1 to 30 days (default 3).\n"
-          "  • <b>Also when Xcalculator is closed:</b> Also refreshes in the background, once a day, even when Xcalculator isn't running (default off)."),
+          "  • <b>Also when xl-Calculator is closed:</b> Also refreshes in the background, once a day, even when xl-Calculator isn't running (default off)."),
         _("<b>History</b>\n"
-          "  • <b>Keep history after closing:</b> Restores history upon launch. Continuously logs the last 500 lines to ~/.config/xcalculator/history.json. <b>View → Clear History</b> only empties the window.\n"
+          "  • <b>Keep history after closing:</b> Restores history upon launch. Continuously logs the last 500 lines to ~/.config/xl-calculator/history.json. <b>View → Clear History</b> only empties the window.\n"
           "  • <b>Delete Saved History:</b> Clears the history and deletes the file."),
         section_heading(_("Modes")),
         _("Switch off unused modes to hide them from the Mode menu. At least one mode stays on."),
@@ -251,7 +251,7 @@ class HelpWindow(Gtk.Window):
     """Help → Documentation: one page per topic, picked from a list on the left."""
 
     def __init__(self, calculator):
-        super().__init__(title=_("Help - Xcalculator"), transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("Help - xl-Calculator"), transient_for=calculator, destroy_with_parent=True)
         self.set_default_size(860, 700)
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)

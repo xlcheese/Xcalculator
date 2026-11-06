@@ -1,4 +1,4 @@
-# Xcalculator: a calculator for Linux Mint and the Cinnamon desktop.
+# xl-Calculator: a calculator for Linux Mint and the Cinnamon desktop.
 # Copyright (C) 2026 Wesley Hayslip
 #
 # This program is free software: you can redistribute it and/or modify it under the
@@ -38,7 +38,7 @@ class PreferencesWindow(Gtk.Window):
     Every change takes effect at once."""
 
     def __init__(self, calculator):
-        super().__init__(title=_("Xcalculator Preferences"), transient_for=calculator, destroy_with_parent=True)
+        super().__init__(title=_("xl-Calculator Preferences"), transient_for=calculator, destroy_with_parent=True)
         self.calculator = calculator
         self.syncing = False
         self.set_default_size(620, self.screen_height(820))    # every General setting, if the screen allows
@@ -174,14 +174,14 @@ class PreferencesWindow(Gtk.Window):
         self.currency_closed_switch = Gtk.Switch()
         self.currency_closed_switch.connect("notify::active", lambda s, p: self.changed(
             lambda: c.set_currency_background(s.get_active())))
-        self.currency_closed_hint = self.row(box, _("Also when Xcalculator is closed"), self.currency_closed_switch, "")
+        self.currency_closed_hint = self.row(box, _("Also when xl-Calculator is closed"), self.currency_closed_switch, "")
 
         self.heading(box, _("History"))
         self.keep_switch = Gtk.Switch()
         self.keep_switch.connect("notify::active", lambda s, p: self.changed(lambda: c.set_keep_history(s.get_active())))
         self.row(box, _("Keep history after closing"), self.keep_switch,
-                 _("Show the saved history when Xcalculator opens. It is always saved "
-                   "in ~/.config/xcalculator/history.json."))
+                 _("Show the saved history when xl-Calculator opens. It is always saved "
+                   "in ~/.config/xl-calculator/history.json."))
         delete = Gtk.Button(label=_("Delete Saved History…"))
         delete.connect("clicked", self.on_delete_history)
         self.row(box, _("Saved history"), delete, _("Clear the history and delete the saved file."))
@@ -235,9 +235,9 @@ class PreferencesWindow(Gtk.Window):
         self.currency_closed_switch.set_active(c.currency_background)
         self.currency_closed_switch.set_sensitive(c.currency_auto and available)
         self.currency_closed_hint.set_text(
-            _("Needs Xcalculator installed from its package.") if not available
+            _("Needs xl-Calculator installed from its package.") if not available
             else _("Rates will refresh in the background even when closed.") if c.currency_background
-            else _("Rates will only refresh while Xcalculator is open."))
+            else _("Rates will only refresh while xl-Calculator is open."))
         for mode, switch in self.mode_switches.items():
             on = mode in c.enabled_modes
             switch.set_active(on)

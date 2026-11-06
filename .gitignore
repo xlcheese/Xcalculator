@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
-debian/xcalculator/
+debian/xl-calculator/
 debian/.debhelper/
 debian/files
 debian/*.substvars
